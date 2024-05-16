@@ -1,1 +1,41 @@
+:root {
+  --priceFontColor: #BEEE11;
+  --priceBackground: #4C6B22;
+  --cardBackground: #434953;
+  --buttonColor: #DFE3E6;
+  --greyColor: #67707B;
+  --navColor: #171D25;
+  --fontColor: #DCDEDF;
+  --footerColor: #171A21;
+  --backGroundColor: #0E1014;
+  --galleryBgColor: #1b2838;
+}
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#root{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: lightgray;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  .header-container{
+    width: 100%;
+    background-color: var(--navColor);
+  }
+  .main-container{
+    text-align: center;
+    width: min(100%, 1280px);
+    flex: 1;
+    background-color: darkslategray;
+  }
+  .footer-container{
+    width: 100%;
+    background-color: lightgreen;
+  }
+}
