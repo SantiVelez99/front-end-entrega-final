@@ -15,6 +15,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 #root{
   height: 100vh;
@@ -24,7 +25,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  .header-container{
+  .main-header{
     width: 100%;
     background-color: var(--navColor);
   }
