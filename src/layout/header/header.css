@@ -255,9 +255,26 @@ body:has(.check-menu:checked) {
     }
 }
 
+@media screen and (width < 992px) and (width > 768px) {
+    .nav-list {
+        font-size: 1.2rem;
+
+        .nav-item {
+            margin: 1rem;
+            width: 75px;
+
+            &:hover {
+                font-size: 1.4rem;
+            }
+        }
+    }
+}
 @media screen and (width <= 768px) {
     .main-header {
         height: 75px;
+    }
+    .user-info{
+        display: none;
     }
     body:has(.check-menu:checked) {   
         .user-info {

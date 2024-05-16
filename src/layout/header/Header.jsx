@@ -1,7 +1,10 @@
 import './header.css'
 import { NavLink } from "react-router-dom"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDiceD20, faCartShopping } from '@fortawesome/free-solid-svg-icons'
+
 export default function Header() {
-    const isAdmin = true
+    const isAdmin = false
     return (
         <header className="main-header">
             <div className="bg-menu-container">
@@ -25,6 +28,24 @@ export default function Header() {
                 </ul>
             </nav>
             </div>
+            <div className="header-container">
+            <a href="/" className="title-link"><FontAwesomeIcon className="header-icon" icon={faDiceD20} /></a>
+            <a href="/" className="title-link">
+                <h1 className="header-title">G4G</h1>
+            </a>
+        </div>
+        <div className="user-info-container">
+            <div className="user-cart">
+                <a href="#" className="title-link"><FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} /></a>
+            </div>
+            <div className="user-info">
+                <img className="user-icon" src="src/assets/user/user-profile-default.png" alt="user profile default"/>
+                <div className="user-name-container">
+                    <span className="user-name">User</span>
+                    <span className="user-surname">Name</span>
+                </div>
+            </div>
+        </div>
         </header>
     )
 }
