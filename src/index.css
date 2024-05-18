@@ -18,12 +18,10 @@
   font-family: 'Roboto', sans-serif;
 }
 #root{
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: lightgray;
+  background-color: var(--backGroundColor);
   align-items: center;
-  justify-content: center;
   width: 100%;
   .main-header{
     width: 100%;
@@ -33,10 +31,11 @@
     text-align: center;
     width: min(100%, 1280px);
     flex: 1;
-    background-color: darkslategray;
   }
   .footer-container{
     width: 100%;
-    background-color: lightgreen;
   }
+}
+.underline {
+  border-bottom: 1px solid var(--fontColor);
 }

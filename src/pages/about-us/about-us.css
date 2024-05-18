@@ -1,0 +1,59 @@
+:root{
+    --galleryBgColor: #1b2838;
+    --fontColor: #DCDEDF;
+}
+#aboutUsContainer{
+    background-color: var(--galleryBgColor);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+    section{
+        width: 90%;
+        max-width: 480px;
+        margin: auto;
+        color: var(--fontColor);
+        margin-top: 2rem;
+    }
+}
+.about-us-section, .about-dev-section{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.aboutUs-icon{
+    font-size: 3rem;
+}
+.dev-profile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    ul{
+        list-style-type: none;
+        text-align: start;
+    }
+}
+.img-container{
+    height: 200px;
+    width: 150px;
+    border: none;
+    img{
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+}
+
+@media screen and (width >= 992px) {
+    #aboutUsContainer{
+        flex-direction: row !important;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 70vh;
+        section{
+            height: 300px;
+            max-width: 450px;
+            margin: 0;
+        }
+    }
+}

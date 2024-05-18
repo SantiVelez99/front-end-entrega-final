@@ -9,8 +9,10 @@ import AboutUs from './pages/about-us/AboutUs'
 import ProductDetail from './pages/product-detail/ProductDetail'
 import NotFound from './pages/not-found/NotFound'
 import { Route, Routes } from 'react-router-dom'
+import AdminProducts from './pages/admin-products/AdminProducts'
 
 function App() {
+  const isAdmin = true;
 
   return (
     <>
@@ -25,6 +27,11 @@ function App() {
           <Route path='/about-us' element={ <AboutUs/>}/>
           <Route path='/product-detail/:id' element={<ProductDetail/>}/>
           <Route path='*' element={<NotFound/>}/>
+          {
+            isAdmin && (
+              <Route path='admin-product' element={<AdminProducts/>}/>
+            ) 
+          }
         </Routes>
       </div>
         <Footer />

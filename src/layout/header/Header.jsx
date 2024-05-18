@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDiceD20, faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 export default function Header() {
-    const isAdmin = false
+    const isAdmin = true
     return (
         <header className="main-header">
             <div className="bg-menu-container">

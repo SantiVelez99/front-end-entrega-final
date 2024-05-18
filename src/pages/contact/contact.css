@@ -1,0 +1,92 @@
+:root {
+    --fontColor: #DCDEDF;
+    --galleryBgColor: #1b2838;
+    --backGroundColor: #0E1014;
+}
+#contactContainer, .main-container{
+    background-color: var(--galleryBgColor);
+}
+.contact-form-title{
+    width: 75%;
+    border-bottom: 1px solid var(--fontColor);
+    color: var(--fontColor);
+    padding-top: 1rem;
+    margin: 0 auto 1rem;
+}
+.contact-form, .contact-map-container{
+    width: 75%;
+    max-width: 540px;
+    margin: auto;
+}
+.contact-form-container{
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .contact-form-label{
+        margin-bottom: 8px;
+        color: var(--fontColor);
+        font-size: 18px;
+        text-decoration-line: underline;
+    }
+    
+}
+.contact-form-input{
+    height: 2rem;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    &[type="file"]{
+        color: var(--fontColor);
+    }
+}
+.contact-form-textarea{
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+}
+.contact-form-button{
+    margin: auto;
+    font-size: 16px;
+    width: 100px;
+    height: 40px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.contact-map{
+    width: 100%;
+    height: 300px;
+    border-radius: 5px;
+    margin: 8px 0;
+}
+.contact-map-title{
+    color: var(--fontColor);
+    border-bottom: 1px solid var(--fontColor);
+}
+
+@media screen and (width > 768px) {
+    #contactContainer{
+        flex-direction: column !important;
+    }
+    .contact-form-title{
+        width: 90%;
+        max-width: 1020px;
+    }
+    .contact-container{
+        display: flex;
+        margin: auto;
+        width: 90%;
+        max-width: 1020px;
+        gap: 8px;
+    }
+    .contact-form-button{
+        margin: 0;
+    }
+    .contact-map-container{
+        margin-top: 10px;
+    }
+}

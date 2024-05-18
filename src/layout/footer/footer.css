@@ -1,0 +1,126 @@
+.main-footer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--footerColor);
+    align-items: center;
+    color: var(--fontColor);
+}
+
+.social-media,
+.brand-footer-section,
+.copyright {
+    display: flex;
+    flex: 1;
+    padding: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: .5rem;
+    border-bottom: 1px solid var(--fontColor);
+}
+
+.footer-container {
+    width: 75%;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.social-media {
+    display: flex;
+    font-size: 1.5rem;
+
+    a {
+        padding: 1rem;
+        color: var(--fontColor);
+
+        &:hover {
+            font-size: 2rem;
+            font-weight: bold;
+            transition: all .3s;
+            padding: 11.5px;
+        }
+    }
+}
+
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2.5rem;
+
+    &:hover {
+        font-weight: bold;
+    }
+}
+
+.copyright {
+    text-align: center;
+    border: none;
+}
+
+.footer-list {
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    gap: 1rem;
+}
+
+.footer-list-item {
+    text-decoration: underline;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+@media screen and (width > 768px) {
+    .politics-section {
+        flex-direction: row;
+        border-bottom: 1px solid var(--fontColor);
+
+        .politics-container {
+            height: 150px;
+        }
+
+        .politics-container:not(:last-of-type) {
+            border-right: 1px solid var(--fontColor);
+        }
+    }
+    .footer-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+
+        .social-media,
+        .brand-footer-section {
+            border-right: 1px solid var(--fontColor);
+            border-bottom: none;
+        }
+
+        .social-media,
+        .brand-footer-section,
+        .copyright {
+            margin: 0px;
+            padding: 8px;
+        }
+   }
+}
+@media screen and (width <=768px) {
+    .social-media,
+    .brand-footer-section,
+    .copyright {
+        height: 200px;
+    }
+}
+@media screen and (width <=425px) {
+    .social-media,
+    .brand-footer-section,
+    .copyright {
+        height: auto;
+    }
+}

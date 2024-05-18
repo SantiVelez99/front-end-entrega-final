@@ -1,0 +1,57 @@
+:root{
+    --navColor: #171D25;
+    --galleryBgColor:#1b2838;
+    --fontColor: #DCDEDF;
+}
+.register-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    gap: 1rem;
+    background-color: var(--galleryBgColor);
+    color: var(--fontColor);
+}
+.inputs-container{
+    width: min(100%, 300px);
+}
+.input-group{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: center;
+    flex: 1;
+    height: 4rem;
+    gap: .5rem;
+    margin-bottom: 1rem;
+}
+.input-title{
+    font-weight: bold;
+    display: flex;
+}
+.form-input{
+    width: 100%;
+    max-width: 300px;
+    height: 2rem;
+    font-size: 1rem;
+    padding: .5rem;
+    border-radius: 8px;
+    border: none;
+    &#country{
+        height: 40px;
+    }
+}
+.form-button{
+    height: 2rem;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid white;
+    font-size: 1rem;
+    color: white;
+    background-color: var(--navColor);
+    &:hover{
+        cursor: pointer;
+        font-weight: bold;
+    }
+}

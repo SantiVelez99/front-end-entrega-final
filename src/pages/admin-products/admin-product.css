@@ -1,0 +1,83 @@
+:root {
+    --cardBackground: #434953;
+    --fontColor: #DCDEDF;
+    --galleryBgColor: #1b2838;
+}
+
+#productsTableContainer {
+    background-color: var(--galleryBgColor);
+    color: var(--fontColor);
+}
+
+.table-container {
+    background-color: var(--galleryBgColor);
+    width: 95%;
+    max-width: 980px;
+    padding: 1rem 0;
+    margin: auto;
+    overflow: auto;
+
+}
+
+.table-title {
+    border-bottom: 2px solid var(--fontColor);
+}
+
+.products-table {
+
+    th,
+    td {
+        padding: 4px;
+        text-align: center;
+        border: 1px solid var(--cardBackground);
+    }
+}
+
+.product-img {
+    height: 100px;
+    width: 100px;
+
+    img {
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.product-description {
+    p { 
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 100px;
+        overflow-y: auto;
+    }
+}
+
+.product-actions {
+    text-align: center;
+    button {
+        padding: 4px;
+        border: none;
+        border-radius: 3px;
+        width: 28px;
+        &:hover{
+            cursor: pointer;
+        }
+        &:not(:last-of-type){
+            margin-right: 4px;
+        }
+    }
+
+    .edit-button {
+        background-color: rgb(10, 66, 10);
+    }
+
+    .delete-button {
+        background-color: red;
+    }
+}
+
+.product-button-icon {
+    font-size: 20px;
+    color: var(--fontColor);
+}
