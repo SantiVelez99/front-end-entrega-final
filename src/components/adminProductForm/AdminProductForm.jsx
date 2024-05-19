@@ -19,11 +19,11 @@ export default function AdminProductForm() {
                 </div>
                 <div className="input-container">
                     <label htmlFor="productDate" className="input-title">Fecha de ingreso:</label>
-                    <input type="date" className="form-input" id="productDate" name="productDate" minLength={3} maxLength={60} />
+                    <input type="date" className="form-input" id="productDate" name="productDate"/>
                 </div>
                 <div className="input-container">
                     <label htmlFor="productPrice" className="input-title">Precio:</label>
-                    <input type="text" pattern='^[0-9]+(\.[0-9]+)?$' className="form-input" id="productPrice" name="productPrice" minLength={3} maxLength={60} />
+                    <input type="text" pattern='^[0-9]+(\.[0-9]+)?$' className="form-input" id="productPrice" name="productPrice" minLength={1} maxLength={60} />
                 </div>
                 <div className="input-container">
                     <label htmlFor="productDesc" className="input-title">Descripcion:</label>
