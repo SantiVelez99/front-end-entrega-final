@@ -1,0 +1,47 @@
+.form-product-container {
+    display: flex;
+    flex-direction: column;
+    width: min(90%, 500px);
+    padding: 1rem 0;
+    margin: auto;
+    overflow: auto;
+}
+.input-container{
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    gap: .25rem;
+    margin-bottom: .725rem;
+    .ap-input-title{
+        font-size: 1.2rem;
+    }
+    .ap-form-input{
+        font-size: 1.2rem;
+        padding: .25rem;
+        border: none;
+        border-radius: 10px;
+        &:focus{
+            background-color: rgb(163, 163, 163);
+        }
+        &[type="file"]:hover{
+            cursor: pointer;
+        }
+    }
+}
+.ap-form-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 100px;
+    font-size: 1rem;
+    margin-left: .25rem;
+    font-size: 1.25rem;
+    border: none;
+    border-radius: 10px;
+    &:hover{
+        cursor: pointer;
+        background-color: var(--priceBackground);
+        border: 2px solid var(--navColor);
+    }
+}

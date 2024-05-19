@@ -22,14 +22,14 @@
   flex-direction: column;
   background-color: var(--backGroundColor);
   align-items: center;
-  width: 100%;
+  width: 100vw;
   .main-header{
     width: 100%;
     background-color: var(--navColor);
   }
   .main-container{
     text-align: center;
-    width: min(100%, 1280px);
+    width: min(100%, 1280px);  
     flex: 1;
   }
   .footer-container{
@@ -38,4 +38,7 @@
 }
 .underline {
   border-bottom: 1px solid var(--fontColor);
+}
+.mb-16{
+  margin-bottom: 1rem;
 }

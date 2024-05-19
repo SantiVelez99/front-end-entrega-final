@@ -1,12 +1,14 @@
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import './admin-product.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import AdminProductForm from '../../components/adminProductForm/AdminProductForm'
 
 
 
 export default function AdminProducts() {
     return (
-        <main className="main-container" id='productsTableContainer'>
+        <main id='productsTableContainer'>
+            <AdminProductForm/>
             <div className="table-container">
                 <div className="table-title">
                     <h1>Administrador de Productos</h1>

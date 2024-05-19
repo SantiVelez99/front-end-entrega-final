@@ -3,20 +3,22 @@
     --fontColor: #DCDEDF;
     --galleryBgColor: #1b2838;
 }
-
-#productsTableContainer {
+.main-container, #productsTableContainer {
+    width: min(100vw, 100vw) !important;
+    min-height: 623px !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     background-color: var(--galleryBgColor);
     color: var(--fontColor);
 }
 
 .table-container {
     background-color: var(--galleryBgColor);
-    width: 95%;
-    max-width: 980px;
+    width: min(100%, 800px);
     padding: 1rem 0;
-    margin: auto;
-    overflow: auto;
-
+    margin: 0 auto;
 }
 
 .table-title {
@@ -24,7 +26,6 @@
 }
 
 .products-table {
-
     th,
     td {
         padding: 4px;
@@ -80,4 +81,10 @@
 .product-button-icon {
     font-size: 20px;
     color: var(--fontColor);
+}
+
+@media screen and (width <= 768px) {
+    #productsTableContainer {
+        flex-direction: column;
+    }
 }
