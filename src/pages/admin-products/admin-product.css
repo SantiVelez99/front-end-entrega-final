@@ -3,22 +3,21 @@
     --fontColor: #DCDEDF;
     --galleryBgColor: #1b2838;
 }
-.main-container, #productsTableContainer {
-    width: min(100vw, 100vw) !important;
-    min-height: 623px !important;
+#productsTableContainer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: var(--galleryBgColor);
-    color: var(--fontColor);
+    width: min(100vw, 100vw) !important;
+    margin: 0 !important;
 }
 
 .table-container {
     background-color: var(--galleryBgColor);
     width: min(100%, 800px);
     padding: 1rem 0;
-    margin: 0 auto;
+    margin: 1rem auto;
+    overflow: auto;
 }
 
 .table-title {

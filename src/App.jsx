@@ -10,6 +10,7 @@ import ProductDetail from './pages/product-detail/ProductDetail'
 import NotFound from './pages/not-found/NotFound'
 import { Route, Routes } from 'react-router-dom'
 import AdminProducts from './pages/admin-products/AdminProducts'
+import AdminUsers from './pages/admin-users/AdminUsers'
 
 function App() {
   const isAdmin = true;
@@ -17,7 +18,6 @@ function App() {
   return (
     <>
         <Header />
-      <div className="main-container">
 
         <Routes>
           <Route path='/' element={<Home/>}/>
@@ -29,11 +29,13 @@ function App() {
           <Route path='*' element={<NotFound/>}/>
           {
             isAdmin && (
+              <>
               <Route path='admin-product' element={<AdminProducts/>}/>
+              <Route path='admin-users' element={<AdminUsers/>}/>
+              </>
             ) 
           }
         </Routes>
-      </div>
         <Footer />
     </>
   )

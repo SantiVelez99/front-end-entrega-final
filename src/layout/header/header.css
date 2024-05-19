@@ -201,8 +201,11 @@
     }
 }
 body:has(.check-menu:checked) {
-    #root {
+    .main-header{
         overflow: hidden;
+    }
+    .main-container, .main-footer{
+        display: none;
     }
 }
 

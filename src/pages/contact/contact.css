@@ -3,8 +3,9 @@
     --galleryBgColor: #1b2838;
     --backGroundColor: #0E1014;
 }
-#contactContainer, .main-container{
+#contactContainer{
     background-color: var(--galleryBgColor);
+    width: 100vw !important;
 }
 .contact-form-title{
     width: 75%;

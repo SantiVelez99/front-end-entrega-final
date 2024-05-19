@@ -21,16 +21,19 @@
   display: flex;
   flex-direction: column;
   background-color: var(--backGroundColor);
-  align-items: center;
   width: 100vw;
+  min-height: 100vh;
   .main-header{
     width: 100%;
     background-color: var(--navColor);
   }
   .main-container{
     text-align: center;
-    width: min(100%, 1280px);  
+    width: min(100%, 1280px); 
     flex: 1;
+    margin: auto;
+    background-color: var(--galleryBgColor);
+    color: var(--fontColor);
   }
   .footer-container{
     width: 100%;
