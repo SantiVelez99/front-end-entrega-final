@@ -1,0 +1,15 @@
+.main-gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: var(--galleryBgColor);
+    margin: 0 auto;
+}
+
+.gallery-title {
+    width: 100%;
+    margin: 1rem;
+    color: var(--fontColor);
+    border-bottom: 2px solid var(--fontColor);
+}

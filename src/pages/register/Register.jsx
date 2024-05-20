@@ -36,7 +36,7 @@ export default function Register() {
                         <input type="date" className="form-input" name="bornDate" id="bornDate" />
                     </div>
                     <div className="input-group">
-                        <label className="input-title" htmlFor="userAvatar">Avatar:</label>
+                        <label className="input-title" htmlFor="userAvatar">Avatar: (URL)</label>
                         <input type="url" className="form-input" name="userAvatar" id="userAvatar" minLength="6" maxLength="300" autoFocus />
                     </div>
                     <div className="input-group">

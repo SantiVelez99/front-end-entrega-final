@@ -29,7 +29,7 @@ export default function AdminProductForm() {
                 </div>
                 <div className="input-container">
                     <label htmlFor="productImage" className="input-title">Imagen:</label>
-                    <input type="file" className="form-input" id="productImage" name="productImage" />
+                    <input type="url" className="form-input" id="productImage" name="productImage" />
                 </div>
                 <button className='form-btn' type='submit'>Enviar</button>
             </form>

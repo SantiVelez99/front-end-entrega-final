@@ -1,9 +1,13 @@
+import Carousel from "../../components/carousel/Carousel";
+import ProductsGallery from "../../components/productsGallery/ProductsGallery";
+
 export default function Home(){
 
     
     return(
-        <div className="home">
-            <h1>Home</h1>
-        </div>
+        <>
+        <Carousel/>
+        <ProductsGallery/>
+        </>
     )
 }

@@ -4,14 +4,13 @@ const ProductContext = createContext();
 export const useProduct = () => useContext(ProductContext)
 
 export const ProductProvider = ( { children } ) => {
-    const [product, setProduct] = useState([
-        {id: 121, productName:"xbox", image:"https://nayemdevs.com/wp-content/uploads/2020/03/default-product-image.png", productPrice:800, quantity:1}
-    ]);
+    const [product, setProduct] = useState([]);
     const [user, setUser] = useState([
         {id: 1234, userName:"santi"}
     ])
     function addProduct(prodObj){
         setProduct([...product, prodObj])
+        console.log(product)
     }
     function addUser(userObj){
         setUser([ ...user, userObj])

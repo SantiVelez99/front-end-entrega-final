@@ -1,0 +1,167 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    height: 350px;
+    width: 300px;
+    background-color: var(--cardBackground);
+    border-radius: 10px;
+    border: 1px solid var(--buttonColor);
+    color: var(--fontColor);
+}
+
+.game-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-img-container {
+    text-align: center;
+    border-radius: 9px 9px 0 0;
+    overflow: hidden;
+    height: 300px;
+    width: 300px;
+    position: relative;
+    border-bottom: 1px solid var(--buttonColor);
+    .game-img {
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.fav-icon {
+    display: none;
+    position: absolute;
+    opacity: .7;
+    font-size: 1.5rem;
+    color: gold;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    text-shadow: 1px 1px 0px black;
+}
+
+.description {
+    display: none;
+    position: absolute;
+    font-weight: bold;
+    text-align: center;
+    width: 290px;
+    height: 300px;
+    top: 0px;
+    padding: 8px;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0px 0px 8px;
+    text-wrap: nowrap;
+}
+
+.game-title {
+    font-size: 1rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.6);
+    text-transform: uppercase;
+}
+
+.release-date {
+    color: aliceblue;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.buy-container {
+    display: flex;
+    margin-right: .25rem;
+    border-radius: 10px;
+    align-items: center;
+    gap: 2px;
+}
+
+.price {
+    display: flex;
+    background-color: var(--priceBackground);
+    color: var(--priceFontColor);
+    text-shadow: 1px 1px 0px black;
+    font-weight: 600;
+    height: 40px;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.buy-button {
+    background-color: var(--buttonColor);
+    border-style: none;
+    border-radius: 5px;
+    height: 40px;
+    width: 50px;
+
+    span {
+        display: none;
+        color: var(--fontColor);
+        font-size: 12px;
+        font-weight: bold;
+        text-shadow: 1px 1px 0px black;
+    }
+}
+
+.buy-icon {
+    font-size: 1.2rem;
+    color: var(--footerColor);
+    text-shadow: 1px 1px 0px black;
+}
+
+.card-img-container:hover {
+    .game-img {
+        opacity: .6;
+    }
+
+    .description {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .fav-icon {
+        display: block;
+    }
+
+    .fav-icon:hover {
+        font-size: 2rem;
+        color: var(--priceFontColor);
+        cursor: pointer;
+        transition: .3s;
+    }
+}
+
+.game-title:hover {
+    color: #BEEE11;
+    font-size: 1.1rem;
+    transition: .2s;
+    margin-bottom: 6px;
+}
+
+.buy-button:hover {
+    width: 70px;
+    border: 2px solid white;
+    background-color: var(--cardBackground);
+    cursor: pointer;
+
+    .buy-icon {
+        display: none;
+    }
+
+    span {
+        display: block;
+    }
+}
