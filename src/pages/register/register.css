@@ -55,3 +55,6 @@
         font-weight: bold;
     }
 }
+.main-container:has(#mandatoryField){
+    text-align: end !important;
+}

@@ -3,16 +3,14 @@ import './admin-product-form.css'
 import { useProduct } from '../../context/ProductContext'
 export default function AdminProductForm() {
 
-    const { product, setProduct } = useProduct()
-    console.log(product)
-
+    const { addProduct } = useProduct();
 
     return (
         <div className="form-product-container">
             <div className="table-title mb-16">
                     <h1>Formulario de alta de productos</h1>
                 </div>
-            <form className="admin-product-form" onSubmit={(e) => setProduct([ ...product, HandleSubmit(e) ])}>
+            <form className="admin-product-form" onSubmit={(e) => addProduct(HandleSubmit(e))}>
                 <div className="input-container">
                     <label htmlFor="productName" className="input-title">Nombre del producto:</label>
                     <input type="text" className="form-input" id="productName" name="productName" minLength={3} maxLength={60} autoFocus />
