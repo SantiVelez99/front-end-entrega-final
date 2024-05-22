@@ -19,45 +19,6 @@
     max-width: 540px;
     margin: auto;
 }
-.contact-form-container{
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    .contact-form-label{
-        margin-bottom: 8px;
-        color: var(--fontColor);
-        font-size: 18px;
-        text-decoration-line: underline;
-    }
-    
-}
-.contact-form-input{
-    height: 2rem;
-    padding: 8px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    &[type="file"]{
-        color: var(--fontColor);
-    }
-}
-.contact-form-textarea{
-    padding: 8px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-}
-.contact-form-button{
-    margin: auto;
-    font-size: 16px;
-    width: 100px;
-    height: 40px;
-    &:hover{
-        cursor: pointer;
-    }
-}
-
 .contact-map{
     width: 100%;
     height: 300px;
@@ -83,9 +44,6 @@
         width: 90%;
         max-width: 1020px;
         gap: 8px;
-    }
-    .contact-form-button{
-        margin: 0;
     }
     .contact-map-container{
         margin-top: 10px;

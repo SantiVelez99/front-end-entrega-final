@@ -4,6 +4,7 @@ import handleDelete from '../../utilities/handleDelete/HandleDelete'
 import { useProduct } from '../../context/ProductContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './admin-users.css'
+import DateFormat from '../../utilities/dateFormat/DateFormat'
 
 export default function AdminUsers(){
 
@@ -36,9 +37,9 @@ export default function AdminUsers(){
                                             <td className="table-td"><img className='user-avatar' src={us.userAvatar}
                                                 alt="user portrait" /></td>
                                             <td className="table-td">{us.userName} {us.userSurname}</td>
-                                            <td className="table-td">{us.email}</td>
-                                            <td className="table-td">{us.bornDate}</td>
-                                            <td className="table-td">{us.country}</td>
+                                            <td className="table-td">{us.userEmail}</td>
+                                            <td className="table-td">{DateFormat(us.userBorndate)}</td>
+                                            <td className="table-td">{us.userCountry}</td>
                                             <td className="table-td">{us.userRole}</td>
                                             <td className="table-td actions">
                                                 <button type="button" className="edit-button" onClick={() => handleEdit(us.id)} >

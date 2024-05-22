@@ -5,9 +5,7 @@ export const useProduct = () => useContext(ProductContext)
 
 export const ProductProvider = ( { children } ) => {
     const [product, setProduct] = useState([]);
-    const [user, setUser] = useState([
-        {id: 1234, userName:"santi"}
-    ])
+    const [user, setUser] = useState([])
     function addProduct(prodObj){
         setProduct([...product, prodObj])
         console.log(product)

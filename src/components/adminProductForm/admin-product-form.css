@@ -24,13 +24,15 @@
         padding: .25rem;
         border: none;
         border-radius: 10px;
-
         &:focus{
             background-color: rgb(163, 163, 163);
         }
         &[type="file"]:hover{
             cursor: pointer;
         }
+    }
+    .form-textarea{
+        height: 200px;
     }
 }
 .form-btn{

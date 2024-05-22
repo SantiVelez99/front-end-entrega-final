@@ -5,6 +5,7 @@ import { useProduct } from '../../context/ProductContext'
 import handleEdit from '../../utilities/handleEdit/HandleEdit'
 import handleDelete from '../../utilities/handleDelete/HandleDelete'
 import './admin-product.css'
+import DateFormat from '../../utilities/dateFormat/DateFormat'
 
 export default function AdminProducts() {
     const { product } = useProduct()
@@ -38,7 +39,7 @@ export default function AdminProducts() {
                                             <td className="product-description">
                                                 <p>{prod.productDesc}</p>
                                             </td>
-                                            <td className="product-entry-date">{prod.productDate}</td>
+                                            <td className="product-entry-date">{DateFormat(prod.productDate)}</td>
                                             <td className="product-price">${prod.productPrice}</td>
                                             <td className="actions">
                                                 <button type="button" className="edit-button" onClick={() => handleEdit(prod.id)} >

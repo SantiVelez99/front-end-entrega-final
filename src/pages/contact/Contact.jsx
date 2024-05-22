@@ -1,31 +1,46 @@
+import { useForm } from 'react-hook-form'
 import './contact.css'
 
 export default function Contact() {
+
+    const { register, handleSubmit, formState:{errors} } = useForm()
+
+    const onSubmit = data => {
+        data.id = crypto.randomUUID()
+        data.contactDate = new Date().getTime()
+        console.log(data)
+    } 
+
     return (
         <main className="main-container" id='contactContainer'>
             <div className="contact-form-title">
                 <h1>Envianos tu consulta</h1>
             </div>
             <div className="contact-container">
-                <form className="contact-form">
-                    <div className="contact-form-container">
-                        <label className="contact-form-label" htmlFor="fullName">Nombre Completo:</label>
-                        <input className="contact-form-input" type="text" name="fullName" id="fullName" minLength="10" maxLength="60" autoFocus required/>
+                <form className="contact-form" onSubmit={handleSubmit(onSubmit)}>
+                    <div className="input-container">
+                        <label className="form-label">Nombre Completo:</label>
+                        <input type="text" className="form-input" {...register("fullName", {required:true, minLength:6, maxLength:60})} autoFocus/>
+                        {errors.fullName?.type==="required" && (<span className='input-error'>Campo obligatorio</span>)}
+                        {(errors.fullName?.type ==="minLength" || errors.fullName?.type ==="maxLength") && (<span className='input-error'>Cantidad de caracteres invalida</span>)}
                     </div>
-                    <div className="contact-form-container">
-                        <label className="contact-form-label" htmlFor="email">Email:</label>
-                        <input className="contact-form-input" type="email" name="email" id="email" maxLength="60" placeholder="example@mail.com"
-                            pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$" required/>
+                    <div className="input-container">
+                        <label className="form-label">Email:</label>
+                        <input type="email" className="form-input" {...register("email", {required:true, maxLength:60})}/>
+                        {errors.email?.type==="required" && (<span className='input-error'>Campo obligatorio</span>)}
+                        {errors.email?.type ==="maxLength" && (<span className='input-error'>Cantidad de caracteres invalida</span>)}
                     </div>
-                    <div className="contact-form-container">
-                        <label className="contact-form-label" htmlFor="message">Su Mensaje:</label>
-                        <textarea className="contact-form-textarea" name="message" id="message" cols="30" rows="10" maxLength="500" required></textarea>
+                    <div className="input-container">
+                        <label className="form-label">Su Mensaje:</label>
+                        <textarea className="form-textarea" {...register("message", {required:true, cols:30, rows:10, maxLength:500})}></textarea>
+                        {errors.message?.type==="required" && (<span className='input-error'>Campo obligatorio</span>)}
+                        {errors.message?.type ==="maxLength" && (<span className='input-error'>Cantidad de caracteres invalida</span>)}
                     </div>
-                    <div className="contact-form-container">
-                        <label className="contact-form-label" htmlFor="picture">Adjutar imagen(opcional)</label>
-                        <input className="contact-form-input" type="file" accept="image/*" name="picture" id="picture"/>
+                    <div className="input-container">
+                        <label className="form-label">Adjutar imagen(opcional):</label>
+                        <input type="file" className="form-input" accept="image/*" {...register("picture")}/>
                     </div>
-                    <div className="contact-form-container"><button className="contact-form-button" type="submit">Enviar</button></div>
+                    <div className="input-container"><button className="form-button" type="submit">Enviar</button></div>
                 </form>
                 <div className="contact-map-container">
                     <div className="contact-map-title">
