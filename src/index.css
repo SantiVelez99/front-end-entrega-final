@@ -21,7 +21,7 @@
   display: flex;
   flex-direction: column;
   background-color: var(--backGroundColor);
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   .main-header{
     width: 100%;
@@ -34,6 +34,7 @@
     margin: auto;
     background-color: var(--galleryBgColor);
     color: var(--fontColor);
+    overflow: hidden;
   }
   .footer-container{
     width: 100%;

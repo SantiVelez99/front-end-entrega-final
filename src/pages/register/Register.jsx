@@ -5,16 +5,14 @@ import './register.css'
 export default function Register() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const { addUser } = useProduct();
+    const { postUser } = useProduct();
 
     const onSubmit = data => {
         data.id = crypto.randomUUID()
         data.userBorndate = new Date(data.userBorndate).getTime()
-        addUser(data)
-        console.log(data)
+        postUser(data)
     }
     return (
-        <main className="main-container">
             <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
                 <h1 className="section-title">Registro de usuario</h1>
                 <div className="inputs-container">
@@ -72,6 +70,5 @@ export default function Register() {
                     <span id='mandatoryField'>* campo obligatorio</span>
                 </div>
             </form>
-        </main>
     )
 }

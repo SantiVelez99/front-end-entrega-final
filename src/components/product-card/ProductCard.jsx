@@ -26,7 +26,7 @@ export default function ProductCard( {producto} ){
                         <div className="price">${producto.productPrice}</div>
                         <a href="/" className="game-link">
                             <button type="submit" className="buy-button"><FontAwesomeIcon className='buy-icon' icon={faCartShopping}/>
-                                <span>COMPRAR</span>
+                                <span>AGREGAR</span>
                             </button>
                         </a>
                     </div>

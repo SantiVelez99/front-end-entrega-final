@@ -1,15 +1,17 @@
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import handleEdit from '../../utilities/handleEdit/HandleEdit'
-import handleDelete from '../../utilities/handleDelete/HandleDelete'
 import { useProduct } from '../../context/ProductContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './admin-users.css'
 import DateFormat from '../../utilities/dateFormat/DateFormat'
+import { useEffect } from 'react'
 
 export default function AdminUsers(){
 
-    const { user } = useProduct()
-
+    const { user, getUsers, deleteConfirm } = useProduct()
+    useEffect(() =>{
+        getUsers()
+    }, [])
     return(
         <main className="main-container">
             <div className="table-container">
@@ -45,7 +47,7 @@ export default function AdminUsers(){
                                                 <button type="button" className="edit-button" onClick={() => handleEdit(us.id)} >
                                                     <FontAwesomeIcon className="product-button-icon" icon={faPenToSquare}/>
                                                 </button>
-                                                <button type="button" className="delete-button" onClick={() => handleDelete(us.id)}>
+                                                <button type="button" className="delete-button" onClick={() => deleteConfirm("usuario",us.id)}>
                                                     <FontAwesomeIcon className="product-button-icon" icon={faTrashCan} />
                                                 </button>
                                             </td>

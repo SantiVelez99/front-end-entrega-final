@@ -4,13 +4,14 @@ import { useForm } from 'react-hook-form';
 export default function AdminProductForm() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { postProduct } = useProduct()
     const onSubmit = data => {
         data.id = crypto.randomUUID()
         data.productPrice = +data.productPrice
         data.productDate = new Date(data.productDate).getTime()
-        addProduct(data)
+        postProduct(data)
     }
-    const { addProduct } = useProduct();
+
     return (
         <div className="form-product-container">
             <div className="table-title mb-16">
@@ -45,8 +46,6 @@ export default function AdminProductForm() {
                     {errors.productImage?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                     {(errors.productImage?.type === "minLength" || errors.productImage?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                 </div>
-
-
                 <button className='form-btn' type='submit'>Enviar</button>
             </form>
         </div>

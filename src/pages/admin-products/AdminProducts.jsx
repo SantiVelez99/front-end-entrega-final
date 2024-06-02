@@ -3,15 +3,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AdminProductForm from '../../components/adminProductForm/AdminProductForm'
 import { useProduct } from '../../context/ProductContext'
 import handleEdit from '../../utilities/handleEdit/HandleEdit'
-import handleDelete from '../../utilities/handleDelete/HandleDelete'
-import './admin-product.css'
 import DateFormat from '../../utilities/dateFormat/DateFormat'
 
+import './admin-product.css'
+import Modal from '../../layout/modal/Modal'
+import { useEffect } from 'react'
+
+
 export default function AdminProducts() {
-    const { product } = useProduct()
+    const { product, handleModalOpen, getProducts, deleteConfirm } = useProduct()
+    useEffect(() =>{
+        getProducts()
+    }, [])
     return (
         <main className='main-container' id='productsTableContainer'>
-            <AdminProductForm />
             <div className="table-container">
                 <div className="table-title">
                     <h1>Administrador de Productos</h1>
@@ -33,7 +38,7 @@ export default function AdminProducts() {
                                 product.map(prod => {
                                     return (
                                         <tr key={prod.id}>
-                                            <td className="product-img"><img src={prod.image}
+                                            <td className="product-img"><img src={prod.productImage}
                                                 alt="elden ring portrait" /></td>
                                             <td className="product-name">{prod.productName}</td>
                                             <td className="product-description">
@@ -43,9 +48,9 @@ export default function AdminProducts() {
                                             <td className="product-price">${prod.productPrice}</td>
                                             <td className="actions">
                                                 <button type="button" className="edit-button" onClick={() => handleEdit(prod.id)} >
-                                                    <FontAwesomeIcon className="product-button-icon" icon={faPenToSquare}/>
+                                                    <FontAwesomeIcon className="product-button-icon" icon={faPenToSquare} />
                                                 </button>
-                                                <button type="button" className="delete-button" onClick={() => handleDelete(prod.id)}>
+                                                <button type="button" className="delete-button" onClick={() => deleteConfirm("producto", prod.id)}>
                                                     <FontAwesomeIcon className="product-button-icon" icon={faTrashCan} />
                                                 </button>
                                             </td>
@@ -56,6 +61,12 @@ export default function AdminProducts() {
                         </tbody>
                     </table>
                 </div>
+                <button className='add-product-btn' onClick={handleModalOpen}>Crear producto</button>
+            <Modal>
+                <>
+                <AdminProductForm />
+                </>
+            </Modal>
             </div>
         </main>
     )

@@ -209,7 +209,7 @@ body:has(.check-menu:checked) {
     }
 }
 
-@media screen and (width > 768px) {
+@media screen and (width > 1280px) {
     .main-gallery {
         max-width: 90%;
     }
