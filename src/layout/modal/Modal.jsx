@@ -1,12 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useProduct } from '../../context/ProductContext';
 import './modal.css'
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-export default function Modal( {title, children} ){
-
-    const { isOpen, handleModalClose } = useProduct()
-
+export default function Modal( {title,handleModalClose, isOpen, children} ){
     if(!isOpen) return;
     return(
             <div className="modal-overlay" onClick={handleModalClose}>
@@ -15,8 +11,6 @@ export default function Modal( {title, children} ){
                     <div className={title? "modal-header" : "display-off"}><h2>{title}</h2></div>
                     <div className="modal-body">
                         {children}
-                    </div>
-                    <div className="modal-footer">
                     </div>
                 </div>
             </div>

@@ -1,22 +1,44 @@
 import { useForm } from 'react-hook-form';
 import { useProduct } from '../../context/ProductContext'
 import './register.css'
+import { useEffect } from 'react';
+import { formatTimeStampToInputDate } from '../../utilities/formatTStampToInput/formatTStampToInput';
 
-export default function Register() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+export default function Register( { editObj, isOpen } ) {
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
-    const { postUser } = useProduct();
+    const { postUser, setEditObj } = useProduct();
 
     const onSubmit = data => {
-        data.id = crypto.randomUUID()
         data.userBorndate = new Date(data.userBorndate).getTime()
         postUser(data)
     }
+    useEffect(()=>{
+        setFormValues(editObj)
+    }, [editObj])
+    useEffect(()=>{
+        reset()
+        setEditObj([])
+    },[isOpen])
+    function setFormValues(editObj) {
+        if (editObj) {
+            setValue("id", editObj.id)
+            setValue("userName", editObj.userName)
+            setValue("userSurname", editObj.userSurname)
+            setValue("userEmail", editObj.userEmail)
+            setValue("userBorndate", formatTimeStampToInputDate(editObj.userBorndate))
+            setValue("userPassword", editObj.userPassword)
+            setValue("userPasswordConfirm", editObj.userPasswordConfirm)
+            setValue("userAvatar", editObj.userAvatar)
+            setValue("userCountry", editObj.userCountry)
+        }
+    }
     return (
-            <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
-                <h1 className="section-title">Registro de usuario</h1>
+            <form className={editObj?.id? "register-form edit-background" : "register-form"} onSubmit={handleSubmit(onSubmit)}>
+                <h1 className="section-title underline">{editObj?.id? "Editar Usuario" : "Registro de usuario"}</h1>
                 <div className="inputs-container">
                     <div className="input-group">
+                        <input type="text" className='display-off' {...register("id")}/>
                         <label className="input-title">Nombre: *</label>
                         <input type="text" className="form-input" autoFocus={true} {...register("userName", { required: true, minLength: 3, maxLength: 30 })} />
                         {errors.userName?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
@@ -66,7 +88,7 @@ export default function Register() {
                             <option value="PRU">Peru</option>
                         </select>
                     </div>
-                    <button type="submit" className="form-button">Registrarse</button>
+                    <button type="submit" className="form-button">{editObj?.id? "Editar" : "Registrarse"}</button>
                     <span id='mandatoryField'>* campo obligatorio</span>
                 </div>
             </form>

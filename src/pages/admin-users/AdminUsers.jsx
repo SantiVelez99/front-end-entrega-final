@@ -1,18 +1,26 @@
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons'
-import handleEdit from '../../utilities/handleEdit/HandleEdit'
 import { useProduct } from '../../context/ProductContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './admin-users.css'
 import DateFormat from '../../utilities/dateFormat/DateFormat'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import Modal from '../../layout/modal/Modal'
+import Register from '../register/Register'
 
-export default function AdminUsers(){
+export default function AdminUsers() {
 
-    const { user, getUsers, deleteConfirm } = useProduct()
-    useEffect(() =>{
+    const { user, getUsers, deleteConfirm, editMockData, editObj } = useProduct()
+    const [isOpen, setIsOpen] = useState(false)
+    function handleModalOpen() {
+        setIsOpen(true)
+    }
+    function handleModalClose() {
+        setIsOpen(false)
+    }
+    useEffect(() => {
         getUsers()
     }, [])
-    return(
+    return (
         <main className="main-container">
             <div className="table-container">
                 <div className="table-title">
@@ -44,10 +52,10 @@ export default function AdminUsers(){
                                             <td className="table-td">{us.userCountry}</td>
                                             <td className="table-td">{us.userRole}</td>
                                             <td className="table-td actions">
-                                                <button type="button" className="edit-button" onClick={() => handleEdit(us.id)} >
-                                                    <FontAwesomeIcon className="product-button-icon" icon={faPenToSquare}/>
+                                                <button type="button" className="edit-button" onClick={() => handleModalOpen(editMockData("usuario", us.id))} >
+                                                    <FontAwesomeIcon className="product-button-icon" icon={faPenToSquare} />
                                                 </button>
-                                                <button type="button" className="delete-button" onClick={() => deleteConfirm("usuario",us.id)}>
+                                                <button type="button" className="delete-button" onClick={() => deleteConfirm("usuario", us.id)}>
                                                     <FontAwesomeIcon className="product-button-icon" icon={faTrashCan} />
                                                 </button>
                                             </td>
@@ -58,6 +66,9 @@ export default function AdminUsers(){
                         </tbody>
                     </table>
                 </div>
+                <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
+                    <Register handleModalClose={handleModalClose} editObj={editObj} isOpen={isOpen} />
+                </Modal>
             </div>
         </main>
     )

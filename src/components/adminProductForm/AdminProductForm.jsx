@@ -1,24 +1,49 @@
+import { useEffect } from 'react';
 import { useProduct } from '../../context/ProductContext';
 import './admin-product-form.css'
 import { useForm } from 'react-hook-form';
-export default function AdminProductForm() {
+import { formatTimeStampToInputDate } from '../../utilities/formatTStampToInput/formatTStampToInput';
+export default function AdminProductForm({ handleModalClose, editObj, isOpen }) {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const { postProduct } = useProduct()
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+    const { postProduct, setEditObj } = useProduct()
     const onSubmit = data => {
-        data.id = crypto.randomUUID()
         data.productPrice = +data.productPrice
         data.productDate = new Date(data.productDate).getTime()
-        postProduct(data)
+        try {
+            postProduct(data)
+            reset();
+            handleModalClose();
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
-
+    useEffect(()=>{
+        setFormValues(editObj)
+    }, [editObj])
+    useEffect(()=>{
+        reset()
+        setEditObj([])
+    },[isOpen])
+    function setFormValues(editObj) {
+        if (editObj) {
+            setValue("id", editObj.id)
+            setValue("productName", editObj.productName)
+            setValue("productDate", formatTimeStampToInputDate(editObj.productDate))
+            setValue("productPrice", editObj.productPrice)
+            setValue("productDesc", editObj.productDesc)
+            setValue("productImage", editObj.productImage)
+        }
+    }
     return (
-        <div className="form-product-container">
+        <div className={editObj.id? "form-product-container edit-background" : "form-product-container"}>
             <div className="table-title mb-16">
-                <h1>Formulario de alta de productos</h1>
+                <h1>{editObj? "Editar Producto" : "Formulario de alta de productos"}</h1>
             </div>
             <form className="admin-product-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="input-container">
+                    <input type="text" className='display-off' {...register("id")} />
                     <label className="input-title">Nombre del producto:</label>
                     <input type="text" className="form-input" autoFocus={true} {...register("productName", { required: true, minLength: 3, maxLength: 60 })} />
                     {errors.productName?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
@@ -46,7 +71,7 @@ export default function AdminProductForm() {
                     {errors.productImage?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                     {(errors.productImage?.type === "minLength" || errors.productImage?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                 </div>
-                <button className='form-btn' type='submit'>Enviar</button>
+                <button className='form-btn' type='submit'>{editObj.id? "Editar" : "Crear"}</button>
             </form>
         </div>
     )

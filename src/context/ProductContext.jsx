@@ -10,7 +10,7 @@ export const useProduct = () => useContext(ProductContext)
 export const ProductProvider = ({ children }) => {
     const [product, setProduct] = useState([]);
     const [user, setUser] = useState([])
-    const [isOpen, setIsOpen] = useState(false)
+    const [editObj, setEditObj] = useState([])
     const mockURL = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
 
 
@@ -25,16 +25,26 @@ export const ProductProvider = ({ children }) => {
     }
 
     async function postProduct(obj) {
-        try {
-            await axios.post(`${mockURL}/product`, obj)
-            getProducts()
-            postCorrect()
-        } catch (error) {
-            console.log(error)
+        if (obj.id) {
+            try {
+                await axios.put(`${mockURL}/product/${obj.id}`, obj)
+                updateCorrectly("producto")
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            try {
+                await axios.post(`${mockURL}/product`, obj)
+                getProducts()
+                postCorrect()
+            } catch (error) {
+                console.log(error)
+            }
         }
+        getProducts()
     }
     async function deleteMockData(string, id) {
-        if(string === "producto"){
+        if (string === "producto") {
             try {
                 await axios.delete(`${mockURL}/product/${id}`)
                 deleteSuccess(string)
@@ -43,11 +53,31 @@ export const ProductProvider = ({ children }) => {
                 console.log(error)
             }
         }
-        if(string === "usuario"){
+        if (string === "usuario") {
             try {
                 await axios.delete(`${mockURL}/user/${id}`)
                 deleteSuccess(string)
                 getUsers()
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+    async function editMockData(string, id) {
+        if (string === "producto") {
+            try {
+                const response = await axios.get(`${mockURL}/product/${id}`)
+                setEditObj(response.data)
+                console.log(editObj)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        if (string === "usuario") {
+            try {
+                const response = await axios.get(`${mockURL}/user/${id}`)
+                setEditObj(response.data)
+                console.log(editObj)
             } catch (error) {
                 console.log(error)
             }
@@ -61,13 +91,23 @@ export const ProductProvider = ({ children }) => {
             console.log(error)
         }
     }
-    async function postUser(obj){
-        try {
-            await axios.post(`${mockURL}/user`, obj)
-            console.log(obj)
-            getUsers()
-        } catch (error) {
-            console.log(error)
+    async function postUser(obj) {
+        if(obj.id){
+            try {
+                await axios.put(`${mockURL}/user/${obj.id}`, obj)
+                updateCorrectly("usuario")
+                getUsers()
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            try {
+                await axios.post(`${mockURL}/user`, obj)
+                console.log(obj)
+                getUsers()
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
@@ -81,10 +121,6 @@ export const ProductProvider = ({ children }) => {
             background: "#0E1014",
             color: "#DCDEDF",
             confirmButtonText: "Confirmar"
-        }).then((res) => {
-            if (res.isConfirmed) {
-                handleModalClose()
-            }
         })
     }
     function deleteConfirm(string, id) {
@@ -109,7 +145,17 @@ export const ProductProvider = ({ children }) => {
     function deleteSuccess(string) {
         Swal.fire({
             icon: "success",
-            title: `El ${string} borrado correctamente`,
+            title: `El ${string} se ha borrado correctamente`,
+            background: "#0E1014",
+            color: "#DCDEDF",
+            confirmButtonText: "Confirmar"
+        })
+    }
+
+    function updateCorrectly(string){
+        Swal.fire({
+            icon:"success",
+            title:`El ${string} se ha actualizado correctamente`,
             background: "#0E1014",
             color: "#DCDEDF",
             confirmButtonText: "Confirmar"
@@ -117,16 +163,8 @@ export const ProductProvider = ({ children }) => {
     }
     // !FIN SWAL
 
-    function handleModalClose() {
-        setIsOpen(false)
-    }
-
-    function handleModalOpen() {
-        setIsOpen(true)
-    }
-
     return (
-        <ProductContext.Provider value={{ product, user, isOpen, getProducts, postProduct, getUsers, postUser, handleModalClose, handleModalOpen, deleteConfirm }}>
+        <ProductContext.Provider value={{ product, user, editObj, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData }}>
             {children}
         </ProductContext.Provider>
     )

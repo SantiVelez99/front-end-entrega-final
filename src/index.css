@@ -53,3 +53,11 @@
 textarea{
   resize: none;
 }
+.display-off{
+  display: none !important;
+}
+.edit-background{
+  background-color: rgb(26, 69, 23) !important;
+  border: 1px solid white;
+  border-radius: 5px;
+}

@@ -2,17 +2,22 @@ import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AdminProductForm from '../../components/adminProductForm/AdminProductForm'
 import { useProduct } from '../../context/ProductContext'
-import handleEdit from '../../utilities/handleEdit/HandleEdit'
 import DateFormat from '../../utilities/dateFormat/DateFormat'
-
 import './admin-product.css'
 import Modal from '../../layout/modal/Modal'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 
 export default function AdminProducts() {
-    const { product, handleModalOpen, getProducts, deleteConfirm } = useProduct()
-    useEffect(() =>{
+    const { product, getProducts, deleteConfirm, editMockData, editObj } = useProduct()
+    const [isOpen, setIsOpen] = useState(false)
+    function handleModalOpen() {
+        setIsOpen(true)
+    }
+    function handleModalClose() {
+        setIsOpen(false)
+    }
+    useEffect(() => {
         getProducts()
     }, [])
     return (
@@ -47,7 +52,10 @@ export default function AdminProducts() {
                                             <td className="product-entry-date">{DateFormat(prod.productDate)}</td>
                                             <td className="product-price">${prod.productPrice}</td>
                                             <td className="actions">
-                                                <button type="button" className="edit-button" onClick={() => handleEdit(prod.id)} >
+                                                <button type="button" className="edit-button" onClick={() => {
+                                                    handleModalOpen(editMockData("producto", prod.id))
+
+                                                }} >
                                                     <FontAwesomeIcon className="product-button-icon" icon={faPenToSquare} />
                                                 </button>
                                                 <button type="button" className="delete-button" onClick={() => deleteConfirm("producto", prod.id)}>
@@ -62,11 +70,9 @@ export default function AdminProducts() {
                     </table>
                 </div>
                 <button className='add-product-btn' onClick={handleModalOpen}>Crear producto</button>
-            <Modal>
-                <>
-                <AdminProductForm />
-                </>
-            </Modal>
+                <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
+                    <AdminProductForm handleModalClose={handleModalClose} editObj={editObj} isOpen={isOpen} />
+                </Modal>
             </div>
         </main>
     )

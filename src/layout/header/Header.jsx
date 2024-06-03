@@ -4,11 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDiceD20, faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import Modal from '../modal/Modal'
 import Register from '../../pages/register/Register'
-import { useProduct } from '../../context/ProductContext'
+import { useState } from 'react'
 
 export default function Header() {
-    const { handleModalOpen } = useProduct()
+
     const isAdmin = true
+    const [isOpen, setIsOpen] = useState(false)
+    function handleModalOpen() {
+        setIsOpen(true)
+    }
+    function handleModalClose() {
+        setIsOpen(false)
+    }
     return (
         <>
 
@@ -57,7 +64,7 @@ export default function Header() {
                     </div>
                 </div>
             </header>
-                <Modal>
+                <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
                     <Register />
                 </Modal>
         </>
