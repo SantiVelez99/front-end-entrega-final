@@ -5,10 +5,13 @@ import { faDiceD20, faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import Modal from '../modal/Modal'
 import Register from '../../pages/register/Register'
 import { useState } from 'react'
+import Cart from '../cart/Cart'
+import { useProduct } from '../../context/ProductContext'
 
 export default function Header() {
 
     const isAdmin = true
+    const { isClosed, handleCartClose } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     function handleModalOpen() {
         setIsOpen(true)
@@ -53,7 +56,7 @@ export default function Header() {
                 </div>
                 <div className="user-info-container">
                     <div className="user-cart">
-                        <a href="#" className="title-link"><FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} /></a>
+                        <a href="#" className="title-link"><FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} onClick={()=>handleCartClose(isClosed)}/></a>
                     </div>
                     <div className="user-info">
                         <img className="user-icon" src="src/assets/user/user-profile-default.png" alt="user profile default" />
@@ -67,6 +70,7 @@ export default function Header() {
                 <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
                     <Register />
                 </Modal>
+                <Cart/>
         </>
     )
 }

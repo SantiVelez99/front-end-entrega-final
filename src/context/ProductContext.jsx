@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const ProductContext = createContext();
@@ -12,6 +12,76 @@ export const ProductProvider = ({ children }) => {
     const [user, setUser] = useState([])
     const [editObj, setEditObj] = useState([])
     const mockURL = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
+    const [isClosed, setCart] = useState(false)
+    const [cartOrder, setCartOrder] = useState(JSON.parse(localStorage.getItem("cartOrder")) || [])
+    const [ cartTotal, setTotal] = useState(0)
+    const [ cartCount, setCount ] = useState(0)
+
+    // ?CART
+    function handleCartClose(isClosed) {
+        if (isClosed) setCart(false);
+        if (!isClosed) setCart(true)
+    }
+    function addToCart(product) {
+        const producto = cartOrder.find(prod => prod.id === product.id)
+        if (producto) {
+            handleChangeQuantity(producto.id, producto.quantity + 1)
+            setCart(true)
+        } else {
+            product.quantity = 1;
+            setCartOrder([...cartOrder, product])
+            setCart(true)
+        }
+    }
+    function handleChangeQuantity(id, quantity) {
+        const newOrders = cartOrder.map(prod => {
+            if (prod.id === id) {
+                prod.quantity = +quantity;
+            }
+            return prod
+        })
+        setCartOrder(newOrders)
+    }
+    function removeListItem(id){
+        Swal.fire({
+            title: "Remover Producto",
+            titleText: "Desea remover este producto del carrito?",
+            icon: "warning",
+            iconColor:"#911",
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Remover",
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "#900",
+            background: "#0E1014",
+            color: "#DCDEDF"
+        }).then(resultado =>{
+            if(resultado.isConfirmed){
+                const newOrder = cartOrder.filter(prod => prod.id != id)
+                setCartOrder(newOrder)
+            }
+        })
+    }
+    function calculateTotal(){
+        let totalCount = 0;
+        cartOrder.forEach(prod=>{
+            totalCount+= prod.productPrice * prod.quantity
+        });
+        setTotal(totalCount)
+    }
+    function calculateCount(){
+        let count = 0;
+        cartOrder.forEach((prod) => {
+            count += prod.quantity
+            setCount(count)
+        })
+    }
+    useEffect(() =>{
+        localStorage.setItem("cartOrder", JSON.stringify(cartOrder))
+        calculateTotal();
+        calculateCount();
+    }, [ cartOrder ])
+    // ?CART
 
 
     // *AXIOS
@@ -92,7 +162,7 @@ export const ProductProvider = ({ children }) => {
         }
     }
     async function postUser(obj) {
-        if(obj.id){
+        if (obj.id) {
             try {
                 await axios.put(`${mockURL}/user/${obj.id}`, obj)
                 updateCorrectly("usuario")
@@ -152,10 +222,10 @@ export const ProductProvider = ({ children }) => {
         })
     }
 
-    function updateCorrectly(string){
+    function updateCorrectly(string) {
         Swal.fire({
-            icon:"success",
-            title:`El ${string} se ha actualizado correctamente`,
+            icon: "success",
+            title: `El ${string} se ha actualizado correctamente`,
             background: "#0E1014",
             color: "#DCDEDF",
             confirmButtonText: "Confirmar"
@@ -164,7 +234,10 @@ export const ProductProvider = ({ children }) => {
     // !FIN SWAL
 
     return (
-        <ProductContext.Provider value={{ product, user, editObj, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData }}>
+        <ProductContext.Provider value={{
+            product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, addToCart, handleChangeQuantity, removeListItem,
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData
+        }}>
             {children}
         </ProductContext.Provider>
     )

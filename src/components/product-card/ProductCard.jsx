@@ -2,10 +2,12 @@ import { faStar } from '@fortawesome/free-regular-svg-icons'
 import './product-card.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import DateFormat from '../../utilities/dateFormat/DateFormat'
+import { useProduct } from '../../context/ProductContext'
 
 
 export default function ProductCard( {producto} ){
-
+    const { addToCart } = useProduct()
     return(
             <article className="card-container">
                 <div className="card-img-container">
@@ -20,15 +22,13 @@ export default function ProductCard( {producto} ){
                         <a className="game-link" href="/">
                             <h1 className="game-title">{producto.productName}</h1>
                         </a>
-                        <div className="release-date">{producto.productDate}</div>
+                        <div className="release-date">{DateFormat(producto.productDate)}</div>
                     </div>
                     <div className="buy-container">
                         <div className="price">${producto.productPrice}</div>
-                        <a href="/" className="game-link">
-                            <button type="submit" className="buy-button"><FontAwesomeIcon className='buy-icon' icon={faCartShopping}/>
+                            <button type="submit" className="buy-button" onClick={() => addToCart(producto)}><FontAwesomeIcon className='buy-icon' icon={faCartShopping} />
                                 <span>AGREGAR</span>
                             </button>
-                        </a>
                     </div>
                 </div>
             </article>

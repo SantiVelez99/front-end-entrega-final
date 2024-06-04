@@ -4,7 +4,7 @@ import './register.css'
 import { useEffect } from 'react';
 import { formatTimeStampToInputDate } from '../../utilities/formatTStampToInput/formatTStampToInput';
 
-export default function Register( { editObj, isOpen } ) {
+export default function Register( { handleModalClose, editObj, isOpen } ) {
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
     const { postUser, setEditObj } = useProduct();
@@ -12,6 +12,8 @@ export default function Register( { editObj, isOpen } ) {
     const onSubmit = data => {
         data.userBorndate = new Date(data.userBorndate).getTime()
         postUser(data)
+        reset();
+        handleModalClose();
     }
     useEffect(()=>{
         setFormValues(editObj)

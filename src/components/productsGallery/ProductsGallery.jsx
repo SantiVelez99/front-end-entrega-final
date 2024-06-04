@@ -1,10 +1,14 @@
+import { useEffect } from "react";
 import { useProduct } from "../../context/ProductContext";
 import ProductCard from "../product-card/ProductCard";
 import './products-gallery.css'
 
 export default function ProductsGallery() {
 
-    const { product } = useProduct();
+    const { product, getProducts } = useProduct();
+    useEffect(() =>{
+        getProducts()
+    },[])
 
     return (
             <div className="main-gallery">
