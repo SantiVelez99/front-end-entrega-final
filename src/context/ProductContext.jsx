@@ -1,6 +1,8 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import toastr from "toastr";
+import 'toastr/build/toastr.min.css'
 
 const ProductContext = createContext();
 export const useProduct = () => useContext(ProductContext)
@@ -31,12 +33,31 @@ export const ProductProvider = ({ children }) => {
             product.quantity = 1;
             setCartOrder([...cartOrder, product])
             setCart(true)
+            toastSuccessAlert("add")
         }
     }
-    function handleChangeQuantity(id, quantity) {
+    function handleChangeQuantity(id, quantity, operator) {
         const newOrders = cartOrder.map(prod => {
-            if (prod.id === id) {
-                prod.quantity = +quantity;
+            if(operator === "-" && prod.id === id){
+                prod.quantity += -1
+                if(prod.quantity < 1){
+                    removeListItem(prod.id)
+                    prod.quantity = 1
+                }
+                console.log("menos")
+            }
+            if(operator === "+" && prod.id === id){
+                prod.quantity += 1
+                console.log("mas")
+            }
+            if (prod.id === id && !operator) {
+                if(quantity>0){
+                    prod.quantity = +quantity;
+                } 
+                if(quantity < 1){
+                    removeListItem(prod.id)
+                    prod.quantity = 1
+                }
             }
             return prod
         })
@@ -58,6 +79,7 @@ export const ProductProvider = ({ children }) => {
         }).then(resultado =>{
             if(resultado.isConfirmed){
                 const newOrder = cartOrder.filter(prod => prod.id != id)
+                toastSuccessAlert("remove")
                 setCartOrder(newOrder)
             }
         })
@@ -232,6 +254,26 @@ export const ProductProvider = ({ children }) => {
         })
     }
     // !FIN SWAL
+
+    // ?TOASTR
+    function toastSuccessAlert(value){
+        toastr.options = {
+            progressBar: true,
+            positionClass: "toast-bottom-center",
+            timeOut: "2000"
+        }
+        switch(value){
+            case "add":
+            toastr.success('Producto agregado al carrito');
+            break;
+            case "remove":
+            toastr.warning('Producto eliminado del carrito');
+            break;
+        }
+    }
+
+    // ?FIN TOASTR
+
 
     return (
         <ProductContext.Provider value={{
