@@ -49,8 +49,8 @@ export default function Header() {
                     </nav>
                 </div>
                 <div className="header-container">
-                    <NavLink href="/" className="title-link"><FontAwesomeIcon className="header-icon" icon={faDiceD20} /></NavLink>
-                    <NavLink href="/" className="title-link">
+                    <NavLink to={"/"} className="title-link"><FontAwesomeIcon className="header-icon" icon={faDiceD20} /></NavLink>
+                    <NavLink to={"/"} className="title-link">
                         <h1 className="header-title">G4G</h1>
                     </NavLink>
                 </div>
@@ -59,7 +59,7 @@ export default function Header() {
                         <NavLink href="#" className="title-link"><FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} onClick={()=>handleCartClose(isClosed)}/></NavLink>
                     </div>
                     <div className="user-info">
-                        <img className="user-icon" src="src/assets/user/user-profile-default.png" alt="user profile default" />
+                        <img className="user-icon" srcSet="src/assets/user/user-profile-default.png" alt="user profile default" />
                         <div className="user-name-container">
                             <span className="user-name">User</span>
                             <span className="user-surname">Name</span>

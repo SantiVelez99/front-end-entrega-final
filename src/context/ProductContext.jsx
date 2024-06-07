@@ -113,7 +113,6 @@ export const ProductProvider = ({ children }) => {
             console.log(error)
         }
     }
-
     async function postProduct(obj) {
         if (obj.id) {
             try {
@@ -158,6 +157,7 @@ export const ProductProvider = ({ children }) => {
             try {
                 const response = await axios.get(`${mockURL}/product/${id}`)
                 setEditObj(response.data)
+                console.log(editObj)
             } catch (error) {
                 console.log(error)
             }

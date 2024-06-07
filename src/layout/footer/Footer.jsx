@@ -2,6 +2,7 @@ import { faDiceD20  } from '@fortawesome/free-solid-svg-icons'
 import './footer.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquareFacebook, faSquareInstagram, faSquareXTwitter } from '@fortawesome/free-brands-svg-icons'
+import { NavLink } from 'react-router-dom'
 
 
 export default function Footer(){
@@ -9,18 +10,18 @@ export default function Footer(){
         <footer className="main-footer">
         <div className="footer-container">
             <section className="social-media">
-                <a href="https://twitter.com" className="footer-link" target="_blank">
-                <FontAwesomeIcon className="footer-sm-icon" icon={faSquareXTwitter} /> Twitter</a>
-                <a href="https://www.instagram.com" className="footer-link" target="_blank">
-                <FontAwesomeIcon className="footer-sm-icon" icon={faSquareInstagram} /> Instagram</a>
-                <a href="https://www.facebook.com" className="footer-link" target="_blank">
-                <FontAwesomeIcon className="footer-sm-icon" icon={faSquareFacebook} /> Facebook</a>
+                <NavLink to="https://twitter.com" className="footer-link" target="_blank">
+                <FontAwesomeIcon className="footer-sm-icon" icon={faSquareXTwitter} /> Twitter</NavLink>
+                <NavLink to="https://www.instagram.com" className="footer-link" target="_blank">
+                <FontAwesomeIcon className="footer-sm-icon" icon={faSquareInstagram} /> Instagram</NavLink>
+                <NavLink to="https://www.facebook.com" className="footer-link" target="_blank">
+                <FontAwesomeIcon className="footer-sm-icon" icon={faSquareFacebook} /> Facebook</NavLink>
             </section>
             <section className="brand-footer-section">
                 <div className="brand-container">
-                    <a href="/" className="footer-link">
-                    <FontAwesomeIcon className="footer-brand-icon" icon={faDiceD20} /></a>
-                    <a href="/" className="footer-link footer-brand-name">G4G</a>
+                    <NavLink to="/" className="footer-link">
+                    <FontAwesomeIcon className="footer-brand-icon" icon={faDiceD20} /></NavLink>
+                    <NavLink to="/" className="footer-link footer-brand-name">G4G</NavLink>
                 </div>
             </section>
             <section className="copyright">
@@ -31,16 +32,16 @@ export default function Footer(){
                 </p>
                 <ul className="footer-list">
                     <li className="footer-list-item">
-                        <a href="#" className="footer-link">Politica de Privacidad</a>
+                        <NavLink to="#" className="footer-link">Politica de Privacidad</NavLink>
                     </li>
                     <li className="footer-list-item">
-                        <a href="#" className="footer-link"> Informacion legal</a>
+                        <NavLink to="#" className="footer-link"> Informacion legal</NavLink>
                     </li>
                     <li className="footer-list-item">
-                        <a href="#" className="footer-link">Reembolsos</a>
+                        <NavLink to="#" className="footer-link">Reembolsos</NavLink>
                     </li>
                     <li className="footer-list-item">
-                        <a href="#" className="footer-link">Cookies</a>
+                        <NavLink to="#" className="footer-link">Cookies</NavLink>
                     </li>
                 </ul>
             </section>

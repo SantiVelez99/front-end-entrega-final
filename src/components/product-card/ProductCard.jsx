@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import DateFormat from '../../utilities/dateFormat/DateFormat'
 import { useProduct } from '../../context/ProductContext'
+import { NavLink } from 'react-router-dom'
 
 
 export default function ProductCard( {producto} ){
@@ -12,16 +13,16 @@ export default function ProductCard( {producto} ){
             <article className="card-container">
                 <div className="card-img-container">
                     <FontAwesomeIcon className='fav-icon' icon={faStar}/>
-                    <a href="/" className="game-link">
+                    <NavLink to={`/product-detail/${producto.id}`} className="game-link">
                         <img className="game-img" src={producto.productImage} alt={producto.productName}/>
                         <p className="description">{producto.productDesc}</p>
-                    </a>
+                    </NavLink>
                 </div>
                 <div className="game-info">
                     <div className="info-container">
-                        <a className="game-link" href="/">
+                        <NavLink className="game-link" to={`/product-detail/${producto.id}`}>
                             <h1 className="game-title">{producto.productName}</h1>
-                        </a>
+                        </NavLink>
                         <div className="release-date">{DateFormat(producto.productDate)}</div>
                     </div>
                     <div className="buy-container">

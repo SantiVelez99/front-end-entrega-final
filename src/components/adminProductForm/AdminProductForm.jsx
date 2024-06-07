@@ -12,13 +12,13 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
     const onSubmit = data => {
         data.productPrice = +data.productPrice
         data.productDate = new Date(data.productDate).getTime()
-        data.productDescPictures = (data.productDescPictures).split(",");
-        data.productTags = (data.productTags).split(",");
+        data.productDescPictures = (data.productDescPictures).split("\n");
+        data.productTags = (data.productTags).split(", ");
+        data.productDesc = (data.productDesc).split("\n");
         try {
             postProduct(data)
             reset();
             handleModalClose();
-            console.log(data)
         } catch (error) {
             console.log(error)
         }
@@ -35,10 +35,10 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
             const keys = await Object.keys(editObj);
             const values = await Object.values(editObj);
             let i = 0
-            console.log(keys, values)
             values[0] = formatTimeStampToInputDate(values[0])
-            values[8] = values[8].join()
-            values[7] = values[7].join()
+            values[8] = values[8].join(", ")
+            values[7] = values[7].join("\n")
+            values[1] = values[1].join("\n")
             keys.forEach(key => {
 
                 setValue(key, values[i])
@@ -90,7 +90,7 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
                     </div>
                     <div className="input-container">
                         <label className="input-title">Descripcion:</label>
-                        <textarea className='form-textarea' {...register("productDesc", { required: true, cols: 30, rows: 5, minLength: 3, maxLength: 600 })}></textarea>
+                        <textarea className='form-textarea' {...register("productDesc", { required: true, cols: 30, rows: 5, minLength: 3, maxLength: 2000 })}></textarea>
                         {errors.productDesc?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productDesc?.type === "minLength" || errors.productDesc?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
