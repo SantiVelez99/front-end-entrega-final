@@ -6,7 +6,45 @@
     margin: 1rem auto;
     overflow: auto;
 }
-.input-container{
+
+.section {
+    display: none;
+    .section-title{
+        margin-bottom: .5rem;
+        text-decoration-line: underline;
+    }
+    .switch-button {
+        background-color: transparent;
+        outline: none;
+        border: 1px solid var(--fontColor);
+        padding: 6px;
+        color: var(--fontColor);
+        border-radius: 5px;
+        font-size: 1.5rem;
+        .btn-icon{
+            pointer-events: none;
+        }
+        &.right{
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+        &.left{
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+.section.visible {
+    display: block;
+}
+
+.input-container {
+
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -15,27 +53,34 @@
     margin: auto;
     gap: .25rem;
     margin-bottom: .725rem;
-    .input-title{
+
+    .input-title {
         font-size: 1.2rem;
     }
-    .form-input, .form-textarea{
+
+    .form-input,
+    .form-textarea {
         min-width: 100%;
         font-size: 1.2rem;
         padding: .25rem;
         border: none;
         border-radius: 10px;
-        &:focus{
+
+        &:focus {
             background-color: rgb(163, 163, 163);
         }
-        &[type="file"]:hover{
+
+        &[type="file"]:hover {
             cursor: pointer;
         }
     }
-    .form-textarea{
+
+    .form-textarea {
         height: 200px;
     }
 }
-.form-btn{
+
+.form-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,7 +92,8 @@
     font-size: 1.25rem;
     border: none;
     border-radius: 10px;
-    &:hover{
+
+    &:hover {
         cursor: pointer;
         background-color: var(--galleryColor);
         border: 2px solid var(--fontColor);

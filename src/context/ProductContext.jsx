@@ -44,11 +44,9 @@ export const ProductProvider = ({ children }) => {
                     removeListItem(prod.id)
                     prod.quantity = 1
                 }
-                console.log("menos")
             }
             if(operator === "+" && prod.id === id){
                 prod.quantity += 1
-                console.log("mas")
             }
             if (prod.id === id && !operator) {
                 if(quantity>0){
@@ -160,7 +158,6 @@ export const ProductProvider = ({ children }) => {
             try {
                 const response = await axios.get(`${mockURL}/product/${id}`)
                 setEditObj(response.data)
-                console.log(editObj)
             } catch (error) {
                 console.log(error)
             }
@@ -169,7 +166,6 @@ export const ProductProvider = ({ children }) => {
             try {
                 const response = await axios.get(`${mockURL}/user/${id}`)
                 setEditObj(response.data)
-                console.log(editObj)
             } catch (error) {
                 console.log(error)
             }
@@ -195,7 +191,6 @@ export const ProductProvider = ({ children }) => {
         } else {
             try {
                 await axios.post(`${mockURL}/user`, obj)
-                console.log(obj)
                 getUsers()
             } catch (error) {
                 console.log(error)

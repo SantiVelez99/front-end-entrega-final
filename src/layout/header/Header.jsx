@@ -49,14 +49,14 @@ export default function Header() {
                     </nav>
                 </div>
                 <div className="header-container">
-                    <a href="/" className="title-link"><FontAwesomeIcon className="header-icon" icon={faDiceD20} /></a>
-                    <a href="/" className="title-link">
+                    <NavLink href="/" className="title-link"><FontAwesomeIcon className="header-icon" icon={faDiceD20} /></NavLink>
+                    <NavLink href="/" className="title-link">
                         <h1 className="header-title">G4G</h1>
-                    </a>
+                    </NavLink>
                 </div>
                 <div className="user-info-container">
                     <div className="user-cart">
-                        <a href="#" className="title-link"><FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} onClick={()=>handleCartClose(isClosed)}/></a>
+                        <NavLink href="#" className="title-link"><FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} onClick={()=>handleCartClose(isClosed)}/></NavLink>
                     </div>
                     <div className="user-info">
                         <img className="user-icon" src="src/assets/user/user-profile-default.png" alt="user profile default" />
