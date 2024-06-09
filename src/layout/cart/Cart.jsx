@@ -37,7 +37,7 @@ export default function Cart() {
                                                 <div className='underline'>
                                                     Precio ${product.productPrice}
                                                 </div>
-                                                <div>Subtotal ${product.productPrice * product.quantity}</div>
+                                                <div>Subtotal ${(product.productPrice * product.quantity).toFixed(2)}</div>
                                             </div>
                                             <div className="cart-actions"><FontAwesomeIcon icon={faTrashCan} onClick={() => removeListItem(product.id)} title="Eliminar Producto" />
                                             </div>
@@ -49,7 +49,7 @@ export default function Cart() {
                     </div>
                     <div className="cart-footer underline">
                         <span>Items: {cartCount}</span>
-                        <span>Total: ${cartTotal}</span>
+                        <span>Total: ${cartTotal.toFixed(2)}</span>
                     </div>
                     <button className='cart-checkout-btn'>COMPRAR</button>
                 </div>

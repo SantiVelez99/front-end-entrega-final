@@ -24,7 +24,6 @@ export default function ProductDetail() {
     }
     useEffect(() => {
         getProdByID(id);
-        console.log(product)
     }, [])
 
     if (loading) {

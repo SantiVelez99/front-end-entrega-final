@@ -31,6 +31,13 @@
 
     th,
     td {
+        .table-link{
+            color: var(--fontColor);
+            text-decoration-line: none;
+            &:hover{
+                font-weight: bolder;
+            }
+        }
         width: min(50px, 200px);
         padding: 4px;
         text-align: center;

@@ -1,0 +1,38 @@
+.politics-section,
+.politics-container {
+    width: min(100%, 1280px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    background-color: var(--cardBackground);
+}
+
+.politics-container {
+    padding: 1rem;
+    width: 50%;
+    border-top: 1px solid var(--fontColor);
+    color: var(--buttonColor);
+    text-align: center;
+
+    .politics-icon {
+        font-size: 2rem;
+        margin-bottom: 8px;
+    }
+}
+
+@media screen and (width > 768px) {
+    .politics-section {
+        flex-direction: row;
+        border-bottom: 1px solid var(--fontColor);
+
+        .politics-container {
+            height: 150px;
+        }
+
+        .politics-container:not(:last-of-type) {
+            border-right: 1px solid var(--fontColor);
+        }
+    }
+}

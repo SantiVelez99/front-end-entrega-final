@@ -1,4 +1,5 @@
-import Carousel from "../../components/carousel/Carousel";
+import CarouselComponent from "../../components/carousel/CarouselComponent";
+import PoliticsSection from "../../components/politicsSection/PoliticsSection";
 import ProductsGallery from "../../components/productsGallery/ProductsGallery";
 
 export default function Home(){
@@ -6,8 +7,9 @@ export default function Home(){
     
     return(
         <>
-        <Carousel/>
+        <CarouselComponent/>
         <ProductsGallery/>
+        <PoliticsSection/>
         </>
     )
 }

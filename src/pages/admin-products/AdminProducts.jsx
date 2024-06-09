@@ -6,6 +6,7 @@ import DateFormat from '../../utilities/dateFormat/DateFormat'
 import './admin-product.css'
 import Modal from '../../layout/modal/Modal'
 import { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 
 export default function AdminProducts() {
@@ -45,7 +46,7 @@ export default function AdminProducts() {
                                         <tr key={prod.id}>
                                             <td className="product-img"><img src={prod.productImage}
                                                 alt="elden ring portrait" /></td>
-                                            <td className="product-name">{prod.productName}</td>
+                                            <td className="product-name"><NavLink className="table-link" title='Al product-detail' to={`/product-detail/${prod.id}`}>{prod.productName}</NavLink></td>
                                             <td className="product-description">
                                                 <p>{prod.productDesc}</p>
                                             </td>

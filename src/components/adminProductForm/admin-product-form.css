@@ -21,6 +21,7 @@
         color: var(--fontColor);
         border-radius: 5px;
         font-size: 1.5rem;
+        cursor: pointer;
         .btn-icon{
             pointer-events: none;
         }
@@ -36,6 +37,7 @@
             left: 10px;
             transform: translateY(-50%);
         }
+        
     }
 }
 

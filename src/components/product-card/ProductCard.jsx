@@ -21,7 +21,7 @@ export default function ProductCard( {producto} ){
                 <div className="game-info">
                     <div className="info-container">
                         <NavLink className="game-link" to={`/product-detail/${producto.id}`}>
-                            <h1 className="game-title">{producto.productName}</h1>
+                            <h1 className="game-title"title={producto.productName}>{producto.productName}</h1>
                         </NavLink>
                         <div className="release-date">{DateFormat(producto.productDate)}</div>
                     </div>

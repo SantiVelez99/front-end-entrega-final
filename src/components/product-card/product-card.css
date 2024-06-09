@@ -59,6 +59,7 @@
     justify-content: space-between;
     align-items: center;
     height: 50px;
+    
 }
 
 .info-container {
@@ -69,13 +70,15 @@
 }
 
 .game-title {
+    display: -webkit-box;
     font-size: 1rem;
     font-weight: bold;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.6);
     text-transform: uppercase;
-    display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    text-wrap: wrap;
     overflow: hidden;
     cursor: pointer;
 

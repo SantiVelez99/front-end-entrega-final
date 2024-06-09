@@ -79,6 +79,7 @@ export const ProductProvider = ({ children }) => {
                 const newOrder = cartOrder.filter(prod => prod.id != id)
                 toastSuccessAlert("remove")
                 setCartOrder(newOrder)
+            if(cartOrder.length <= 1) setCount(0)
             }
         })
     }
@@ -91,10 +92,10 @@ export const ProductProvider = ({ children }) => {
     }
     function calculateCount(){
         let count = 0;
-        cartOrder.forEach((prod) => {
-            count += prod.quantity
-            setCount(count)
-        })
+            cartOrder.forEach((prod) => {
+                count += prod.quantity
+                setCount(count)
+            })
     }
     useEffect(() =>{
         localStorage.setItem("cartOrder", JSON.stringify(cartOrder))
@@ -157,7 +158,6 @@ export const ProductProvider = ({ children }) => {
             try {
                 const response = await axios.get(`${mockURL}/product/${id}`)
                 setEditObj(response.data)
-                console.log(editObj)
             } catch (error) {
                 console.log(error)
             }

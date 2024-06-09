@@ -11,7 +11,7 @@ import { useProduct } from '../../context/ProductContext'
 export default function Header() {
 
     const isAdmin = true
-    const { isClosed, handleCartClose } = useProduct()
+    const { isClosed, handleCartClose, cartCount } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     function handleModalOpen() {
         setIsOpen(true)
@@ -33,8 +33,8 @@ export default function Header() {
                             <li className='nav-item'><NavLink to="/">Principal</NavLink></li>
                             <li className='nav-item'>
                                 <NavLink onClick={handleModalOpen}>
-                                Registrarse
-                            </NavLink>
+                                    Registrarse
+                                </NavLink>
                             </li>
                             <li className='nav-item'><NavLink to="/login">LogIn</NavLink></li>
                             <li className='nav-item'><NavLink to="/contact">Contacto</NavLink></li>
@@ -55,8 +55,8 @@ export default function Header() {
                     </NavLink>
                 </div>
                 <div className="user-info-container">
-                    <div className="user-cart">
-                        <NavLink href="#" className="title-link"><FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} onClick={()=>handleCartClose(isClosed)}/></NavLink>
+                    <div className={`user-cart ${cartCount >= 1 ? 'show-circle' : ''}`} data-count={cartCount}>
+                            <FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} onClick={() => handleCartClose(isClosed)} />
                     </div>
                     <div className="user-info">
                         <img className="user-icon" srcSet="src/assets/user/user-profile-default.png" alt="user profile default" />
@@ -67,10 +67,10 @@ export default function Header() {
                     </div>
                 </div>
             </header>
-                <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
-                    <Register />
-                </Modal>
-                <Cart/>
+            <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
+                <Register />
+            </Modal>
+            <Cart />
         </>
     )
 }

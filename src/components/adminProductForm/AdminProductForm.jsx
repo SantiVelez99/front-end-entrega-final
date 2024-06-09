@@ -70,7 +70,7 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
             </div>
             <form className="admin-product-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="section visible" id="section1">
-                    <button type='button' className='switch-button left' onClick={(e) => switchSection(e, "section4")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
+                    <button type='button' className='switch-button left' title='A 4/4' onClick={(e) => switchSection(e, "section4")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
                     <div className="input-container">
                         <input type="text" className='display-off' {...register("id")} />
                         <label className="input-title">Nombre del producto:</label>
@@ -90,7 +90,7 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
                     </div>
                     <div className="input-container">
                         <label className="input-title">Descripcion:</label>
-                        <textarea className='form-textarea' {...register("productDesc", { required: true, cols: 30, rows: 5, minLength: 3, maxLength: 2000 })}></textarea>
+                        <textarea className='form-textarea' title='Separar cada parrafo con un ENTER' {...register("productDesc", { required: true, cols: 30, rows: 5, minLength: 3, maxLength: 2000 })}></textarea>
                         {errors.productDesc?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productDesc?.type === "minLength" || errors.productDesc?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
@@ -100,11 +100,11 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
                         {errors.productImage?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productImage?.type === "minLength" || errors.productImage?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
-                    <button type='button' className='switch-button right' onClick={(e) => switchSection(e, "section2")}><FontAwesomeIcon className='btn-icon' icon={faCaretRight} /></button>
+                    <button type='button' className='switch-button right' title='A 2/4' onClick={(e) => switchSection(e, "section2")}><FontAwesomeIcon className='btn-icon' icon={faCaretRight} /></button>
                 </div>
 
                 <div id="section2" className="section">
-                    <button type='button' className='switch-button left' onClick={(e) => switchSection(e, "section1")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
+                    <button type='button' className='switch-button left' title='A 1/4' onClick={(e) => switchSection(e, "section1")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
                     <div className="input-container">
                         <label className='input-title'>Video:</label>
                         <input type="url" className='form-input' {...register("productVideo", { required: true, minLength: 3, maxLength: 200 })} />
@@ -119,7 +119,7 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
                     </div>
                     <div className="input-container">
                         <label className="input-title">Imagenes extras(URLs):</label>
-                        <textarea type="text" className="form-textarea" placeholder='Separar los links con ,' {...register("productDescPictures", { required: true, cols: 30, rows: 5, minLength: 3, maxLength: 600 })} />
+                        <textarea type="text" className="form-textarea" placeholder='Separar los links con un ENTER' {...register("productDescPictures", { required: true, cols: 30, rows: 5, minLength: 3, maxLength: 600 })} />
                         {errors.productDescPictures?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productDescPictures?.type === "minLength" || errors.productDescPictures?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
@@ -135,10 +135,10 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
                         {errors.productDeveloper?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productDeveloper?.type === "minLength" || errors.productDeveloper?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
-                    <button type='button' className='switch-button right' onClick={(e) => switchSection(e, "section3")}><FontAwesomeIcon className='btn-icon' icon={faCaretRight} /></button>
+                    <button type='button' className='switch-button right' title='A 3/4' onClick={(e) => switchSection(e, "section3")}><FontAwesomeIcon className='btn-icon' icon={faCaretRight} /></button>
                 </div>
                 <div id="section3" className="section">
-                    <button type='button' className='switch-button left' onClick={(e) => switchSection(e, "section2")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
+                    <button type='button' className='switch-button left' title='A 2/4' onClick={(e) => switchSection(e, "section2")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
                     <h2 className='section-title'>Requisitos Minimos:</h2>
                     <div className="input-container">
                         <label className="input-title">Sistema Operativo:</label>
@@ -176,10 +176,10 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
                         {errors.productSpaceMin?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productSpaceMin?.type === "minLength" || errors.productSpaceMin?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
-                    <button type='button' className='switch-button right' onClick={(e) => switchSection(e, "section4")}><FontAwesomeIcon className='btn-icon' icon={faCaretRight} /></button>
+                    <button type='button' className='switch-button right' title='A 4/4' onClick={(e) => switchSection(e, "section4")}><FontAwesomeIcon className='btn-icon' icon={faCaretRight} /></button>
                 </div>
                 <div id="section4" className="section">
-                    <button type='button' className='switch-button left' onClick={(e) => switchSection(e, "section3")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
+                    <button type='button' className='switch-button left' title='A 3/4' onClick={(e) => switchSection(e, "section3")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
                     <h2 className='section-title'>Requisitos Recomendados:</h2>
                     <div className="input-container">
                         <label className="input-title">Sistema Operativo:</label>
@@ -217,7 +217,7 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
                         {errors.productSpaceRec?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productSpaceRec?.type === "minLength" || errors.productSpaceRec?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
-                    <button type='button' className='switch-button right' onClick={(e) => switchSection(e, "section1")}><FontAwesomeIcon className='btn-icon' icon={faCaretRight} /></button>
+                    <button type='button' className='switch-button right' title='A 1/4' onClick={(e) => switchSection(e, "section1")}><FontAwesomeIcon className='btn-icon' icon={faCaretRight} /></button>
                 </div>
                 <button className='form-btn' type='submit'>{editObj.id ? "Editar" : "Crear"}</button>
             </form>
