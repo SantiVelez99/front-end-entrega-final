@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { formatTimeStampToInputDate } from '../../utilities/formatTStampToInput/formatTStampToInput';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-export default function AdminProductForm({ handleModalClose, editObj, isOpen }) {
+export default function AdminProductForm({ handleModalClose, editObj }) {
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
     const { postProduct } = useProduct()
     const onSubmit = data => {
