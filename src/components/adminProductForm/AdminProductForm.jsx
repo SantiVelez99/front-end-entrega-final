@@ -6,9 +6,8 @@ import { formatTimeStampToInputDate } from '../../utilities/formatTStampToInput/
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function AdminProductForm({ handleModalClose, editObj, isOpen }) {
-
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
-    const { postProduct, setEditObj } = useProduct()
+    const { postProduct } = useProduct()
     const onSubmit = data => {
         data.productPrice = +data.productPrice
         data.productDate = new Date(data.productDate).getTime()
@@ -26,14 +25,10 @@ export default function AdminProductForm({ handleModalClose, editObj, isOpen }) 
     useEffect(() => {
         setFormValues(editObj)
     }, [editObj])
-    useEffect(() => {
-        reset()
-        setEditObj([])
-    }, [isOpen])
     async function setFormValues(editObj) {
         if (editObj) {
-            const keys = await Object.keys(editObj);
-            const values = await Object.values(editObj);
+            const keys = Object.keys(editObj);
+            const values = Object.values(editObj);
             let i = 0
             values[0] = formatTimeStampToInputDate(values[0])
             values[8] = values[8].join(", ")

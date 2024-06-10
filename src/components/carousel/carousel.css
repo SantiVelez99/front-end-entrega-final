@@ -1,1 +1,120 @@
+.carousel-container {
+    width: 100%;
+    background-color: var(--galleryBgColor);
 
+    .carousel-item {
+        display: none;
+        position: relative;
+        width: 100%;
+        height: 720px;
+        overflow: hidden;
+        text-align: center;
+        animation: fadeOut 1s ease-in-out;
+
+        .item-image {
+            text-align: center;
+            object-fit: fill;
+            cursor: pointer;
+            picture {
+                display: block;
+
+                img {
+                    width: 100%;
+                    object-fit: fill;
+                }
+            }
+        }
+
+        .item-text {
+            position: absolute;
+            color: var(--fontColor);
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: .5rem;
+            text-shadow: 1px 1px 0px black;
+
+            .item-title {
+                margin-bottom: .5rem;
+                padding: .25rem;
+                cursor: pointer;
+            }
+
+            .item-desc {
+                padding: .25rem;
+                font-size: 1.125rem;
+            }
+        }
+
+        .carousel-btn {
+            position: absolute;
+            height: 100%;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            color: var(--fontColor);
+            cursor: pointer;
+            font-size: 2.5rem;
+            width: 70px;
+            text-align: center;
+            &:hover {
+                font-size: 3rem;
+                transition: .25s ease-in-out;
+            }
+
+            &.left {
+                top: 0;
+                left: 0;
+            }
+
+            &.right {
+                top: 0;
+                right: 0;
+            }
+
+            .btn-icon {
+                pointer-events: none;
+            }
+        }
+
+        &.active {
+            display: block;
+        }
+    }
+}
+
+@media screen and (width <=1024px) {
+    .carousel-container {
+        .carousel-item {
+            height: 480px;
+        }
+    }
+}
+@media screen and (width <=768px) {
+    .carousel-container {
+        .carousel-item {
+            height: 360px;
+        }
+    }
+}
+
+@media screen and (width <=425px) {
+    .item-text {
+        .item-title {
+            font-size: 1.5rem;
+        }
+
+        .item-desc {
+            font-size: .8rem !important;
+        }
+    }
+
+}
+@keyframes fadeOut {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

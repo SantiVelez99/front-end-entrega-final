@@ -10,13 +10,14 @@ import { NavLink } from 'react-router-dom'
 
 
 export default function AdminProducts() {
-    const { product, getProducts, deleteConfirm, editMockData, editObj } = useProduct()
+    const { product, getProducts, deleteConfirm, editMockData, editObj, setEditObj } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     function handleModalOpen() {
         setIsOpen(true)
     }
     function handleModalClose() {
         setIsOpen(false)
+        setEditObj([""])
     }
     useEffect(() => {
         getProducts()

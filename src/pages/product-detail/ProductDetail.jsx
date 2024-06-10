@@ -75,7 +75,7 @@ export default function ProductDetail() {
                 </div>
                 <div className="video-container">
                     <iframe className="product-video" width="560" height="315"
-                        src={`${product.productVideo}&amp;controls=1&amp;start=8&mute=1&autoplay=1&rel=0`}
+                        src={`${product.productVideo}&amp;controls=1&amp;start=0&mute=1&autoplay=1&rel=0`}
                         title="YouTube video player"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen></iframe>

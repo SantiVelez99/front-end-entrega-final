@@ -5,8 +5,7 @@
     justify-content: center;
     background-color: var(--galleryBgColor);
     margin: 0 auto;
-    max-width: 100%;
-    min-width: min(100%, 1280px);
+    width: min(100%, 1280px);
 }
 
 .gallery-title {
