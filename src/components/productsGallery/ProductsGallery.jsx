@@ -2,10 +2,12 @@ import { useEffect } from "react";
 import { useProduct } from "../../context/ProductContext";
 import ProductCard from "../product-card/ProductCard";
 import './products-gallery.css'
+import Modal from "../../layout/modal/Modal";
+import FavouriteModal from "../favouriteModal/FavouriteModal";
 
 export default function ProductsGallery() {
 
-    const { product, getProducts } = useProduct();
+    const { product, getProducts, isOpen, handleFavList } = useProduct();
     useEffect(() =>{
         getProducts()
     },[])
@@ -21,6 +23,9 @@ export default function ProductsGallery() {
                         )
                     })
                 }
+                <Modal isOpen={isOpen} handleModalClose={handleFavList}>
+                <FavouriteModal />
+            </Modal>
             </div>
     )
 }

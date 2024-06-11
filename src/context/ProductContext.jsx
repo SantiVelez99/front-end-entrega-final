@@ -16,8 +16,32 @@ export const ProductProvider = ({ children }) => {
     const mockURL = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
     const [isClosed, setCart] = useState(false)
     const [cartOrder, setCartOrder] = useState(JSON.parse(localStorage.getItem("cartOrder")) || [])
-    const [ cartTotal, setTotal] = useState(0)
-    const [ cartCount, setCount ] = useState(0)
+    const [cartTotal, setTotal] = useState(0)
+    const [cartCount, setCount] = useState(0)
+    const [favList, setFavList] = useState([])
+    const [isOpen, setFavListOpen] = useState(false)
+
+
+    // *FAVLIST
+
+    function addToFavList(producto) {
+        const product = favList.find(prod => prod.id === producto.id)
+        if (!product) {
+            setFavList([...favList, producto])
+        }
+        if (product) {
+            const newOrder = favList.filter(prod => prod.id != producto.id)
+            setFavList(newOrder)
+        }
+        handleFavList()
+    }
+    function handleFavList() {
+        if (isOpen) setFavListOpen(false)
+        if (!isOpen) setFavListOpen(true)
+    }
+    // *FIN FAVLIST
+
+
 
     // ?CART
     function handleCartClose(isClosed) {
@@ -38,21 +62,21 @@ export const ProductProvider = ({ children }) => {
     }
     function handleChangeQuantity(id, quantity, operator) {
         const newOrders = cartOrder.map(prod => {
-            if(operator === "-" && prod.id === id){
+            if (operator === "-" && prod.id === id) {
                 prod.quantity += -1
-                if(prod.quantity < 1){
+                if (prod.quantity < 1) {
                     removeListItem(prod.id)
                     prod.quantity = 1
                 }
             }
-            if(operator === "+" && prod.id === id){
+            if (operator === "+" && prod.id === id) {
                 prod.quantity += 1
             }
             if (prod.id === id && !operator) {
-                if(quantity>0){
+                if (quantity > 0) {
                     prod.quantity = +quantity;
-                } 
-                if(quantity < 1){
+                }
+                if (quantity < 1) {
                     removeListItem(prod.id)
                     prod.quantity = 1
                 }
@@ -61,12 +85,12 @@ export const ProductProvider = ({ children }) => {
         })
         setCartOrder(newOrders)
     }
-    function removeListItem(id){
+    function removeListItem(id) {
         Swal.fire({
             title: "Remover Producto",
             titleText: "Desea remover este producto del carrito?",
             icon: "warning",
-            iconColor:"#911",
+            iconColor: "#911",
             showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: "Remover",
@@ -74,34 +98,34 @@ export const ProductProvider = ({ children }) => {
             confirmButtonColor: "#900",
             background: "#0E1014",
             color: "#DCDEDF"
-        }).then(resultado =>{
-            if(resultado.isConfirmed){
+        }).then(resultado => {
+            if (resultado.isConfirmed) {
                 const newOrder = cartOrder.filter(prod => prod.id != id)
                 toastSuccessAlert("remove")
                 setCartOrder(newOrder)
-            if(cartOrder.length <= 1) setCount(0)
+                if (cartOrder.length <= 1) setCount(0)
             }
         })
     }
-    function calculateTotal(){
+    function calculateTotal() {
         let totalCount = 0;
-        cartOrder.forEach(prod=>{
-            totalCount+= prod.productPrice * prod.quantity
+        cartOrder.forEach(prod => {
+            totalCount += prod.productPrice * prod.quantity
         });
         setTotal(totalCount)
     }
-    function calculateCount(){
+    function calculateCount() {
         let count = 0;
-            cartOrder.forEach((prod) => {
-                count += prod.quantity
-                setCount(count)
-            })
+        cartOrder.forEach((prod) => {
+            count += prod.quantity
+            setCount(count)
+        })
     }
-    useEffect(() =>{
+    useEffect(() => {
         localStorage.setItem("cartOrder", JSON.stringify(cartOrder))
         calculateTotal();
         calculateCount();
-    }, [ cartOrder ])
+    }, [cartOrder])
     // ?CART
 
 
@@ -251,19 +275,19 @@ export const ProductProvider = ({ children }) => {
     // !FIN SWAL
 
     // ?TOASTR
-    function toastSuccessAlert(value){
+    function toastSuccessAlert(value) {
         toastr.options = {
             progressBar: true,
             positionClass: "toast-bottom-center",
             timeOut: "2000"
         }
-        switch(value){
+        switch (value) {
             case "add":
-            toastr.success('Producto agregado al carrito');
-            break;
+                toastr.success('Producto agregado al carrito');
+                break;
             case "remove":
-            toastr.warning('Producto eliminado del carrito');
-            break;
+                toastr.warning('Producto eliminado del carrito');
+                break;
         }
     }
 
@@ -272,7 +296,7 @@ export const ProductProvider = ({ children }) => {
 
     return (
         <ProductContext.Provider value={{
-            product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, addToCart, handleChangeQuantity, removeListItem,
+            product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
             handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData
         }}>
             {children}

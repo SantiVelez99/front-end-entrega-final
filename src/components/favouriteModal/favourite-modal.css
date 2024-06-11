@@ -1,0 +1,19 @@
+.fav-list-container{
+    background-color: var(--navColor);
+    padding: .5rem;
+    border-radius: 10px;
+    .fav-list-title{
+        color: var(--fontColor);
+        text-decoration: underline;
+        margin-bottom: 1rem;
+    }
+    ul{
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+    .fav-list-empty{
+        color: var(--fontColor);
+    }
+}

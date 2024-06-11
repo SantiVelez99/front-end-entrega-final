@@ -1,0 +1,107 @@
+.favcard-container {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: var(--fontColor);
+    border-radius: 10px;
+    overflow: hidden;
+    gap: .5rem;
+    background-color: var(--galleryBgColor);
+
+    .image {
+        text-align: center;
+
+        img {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+        .fav-card-list {
+            list-style-type: none;
+            display: flex;
+            flex-direction: row;
+            gap: .25rem;
+        }
+
+        .fav-card-link {
+            color: inherit;
+            text-decoration: none;
+            .fav-card-item{
+                background-color: var(--navColor);
+                border-radius: 5px;
+                padding: .1rem;
+            }
+        }
+    }
+
+    .fav-buy-section {
+        display: flex;
+        text-align: center;
+
+        .fav-price {
+            writing-mode: vertical-rl;
+            text-orientation: sideways;
+            height: 100%;
+            background-color: var(--priceBackground);
+            color: var(--priceFontColor);
+            padding: .4rem;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .fav-add-to-cart {
+            height: 100%;
+            width: 50px;
+            border: none;
+            outline: none;
+            background-color: var(--navColor);
+            border: 1px solid var(--fontColor);
+            border-radius: 0px 10px 10px 0px;
+            cursor: pointer;
+
+            .fav-cart-icon {
+                padding: .5rem;
+                font-size: 1.5rem;
+                color: var(--fontColor);
+                pointer-events: none;
+            }
+        }
+    }
+
+}
+
+@media screen and (width < 768px) {
+    .favcard-container {
+        justify-content: space-between;
+
+        .info {
+            .fav-card-title {
+                font-size: .9rem;
+            }
+
+            .fav-card-list {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}
+@media screen and (width < 425px) {
+    .favcard-container{
+        .info{
+            display: none;
+        }
+    }
+}
