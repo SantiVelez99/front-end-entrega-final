@@ -3,6 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import toastr from "toastr";
 import 'toastr/build/toastr.min.css'
+import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 const ProductContext = createContext();
 export const useProduct = () => useContext(ProductContext)
@@ -18,7 +20,7 @@ export const ProductProvider = ({ children }) => {
     const [cartOrder, setCartOrder] = useState(JSON.parse(localStorage.getItem("cartOrder")) || [])
     const [cartTotal, setTotal] = useState(0)
     const [cartCount, setCount] = useState(0)
-    const [favList, setFavList] = useState([])
+    const [favList, setFavList] = useState(JSON.parse(localStorage.getItem("favList")) || [])
     const [isOpen, setFavListOpen] = useState(false)
 
 
@@ -28,17 +30,30 @@ export const ProductProvider = ({ children }) => {
         const product = favList.find(prod => prod.id === producto.id)
         if (!product) {
             setFavList([...favList, producto])
+            toastSuccessAlert("add", "favList")
+            handleFavList()
         }
         if (product) {
             const newOrder = favList.filter(prod => prod.id != producto.id)
             setFavList(newOrder)
+            toastSuccessAlert("remove", "favList")
         }
-        handleFavList()
     }
     function handleFavList() {
         if (isOpen) setFavListOpen(false)
         if (!isOpen) setFavListOpen(true)
     }
+    function favStar(product) {
+        let isIn = false
+        favList.forEach(prod =>{
+            if(prod.id == product.id) isIn = true
+        })
+        if(isIn) return faStar
+        if(!isIn) return faStarEmpty
+    }
+    useEffect(() =>{
+        localStorage.setItem("favList", JSON.stringify(favList))
+    }, [favList])
     // *FIN FAVLIST
 
 
@@ -57,7 +72,7 @@ export const ProductProvider = ({ children }) => {
             product.quantity = 1;
             setCartOrder([...cartOrder, product])
             setCart(true)
-            toastSuccessAlert("add")
+            toastSuccessAlert("add", "cart")
         }
     }
     function handleChangeQuantity(id, quantity, operator) {
@@ -101,7 +116,7 @@ export const ProductProvider = ({ children }) => {
         }).then(resultado => {
             if (resultado.isConfirmed) {
                 const newOrder = cartOrder.filter(prod => prod.id != id)
-                toastSuccessAlert("remove")
+                toastSuccessAlert("remove", "cart")
                 setCartOrder(newOrder)
                 if (cartOrder.length <= 1) setCount(0)
             }
@@ -275,19 +290,31 @@ export const ProductProvider = ({ children }) => {
     // !FIN SWAL
 
     // ?TOASTR
-    function toastSuccessAlert(value) {
+    function toastSuccessAlert(value, list) {
         toastr.options = {
             progressBar: true,
             positionClass: "toast-bottom-center",
             timeOut: "2000"
         }
-        switch (value) {
-            case "add":
-                toastr.success('Producto agregado al carrito');
-                break;
-            case "remove":
-                toastr.warning('Producto eliminado del carrito');
-                break;
+        if(list === "cart"){
+            switch (value) {
+                case "add":
+                    toastr.success('Producto agregado al carrito');
+                    break;
+                case "remove":
+                    toastr.warning('Producto eliminado del carrito');
+                    break;
+            }
+        }
+        if(list === "favList"){
+            switch (value) {
+                case "add":
+                    toastr.success('Producto agregado a la lista');
+                    break;
+                case "remove":
+                    toastr.warning('Producto eliminado de la lista');
+                    break;
+            }
         }
     }
 
@@ -296,7 +323,7 @@ export const ProductProvider = ({ children }) => {
 
     return (
         <ProductContext.Provider value={{
-            product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
+            product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
             handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData
         }}>
             {children}

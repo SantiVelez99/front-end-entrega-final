@@ -6,15 +6,15 @@ export default function PoliticsSection() {
     return (
         <div className="politics-section">
             <div className="politics-container">
-                <FontAwesomeIcon icon={faBoxOpen} />
+                <FontAwesomeIcon className="politics-icon" icon={faBoxOpen} />
                 <p className="politics-text">Entrega inmediata!</p>
             </div>
             <div className="politics-container">
-                <FontAwesomeIcon icon={faGift} />
+                <FontAwesomeIcon className="politics-icon" icon={faGift} />
                 <p className="politics-text">Regalos para tus amigos!</p>
             </div>
             <div className="politics-container">
-                <FontAwesomeIcon icon={faRotateLeft} />
+                <FontAwesomeIcon className="politics-icon" icon={faRotateLeft} />
                 <p className="politics-text">Reembolsos (Ver condiciones)</p>
             </div>
         </div>

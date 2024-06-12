@@ -7,17 +7,22 @@ import Register from '../../pages/register/Register'
 import { useState } from 'react'
 import Cart from '../cart/Cart'
 import { useProduct } from '../../context/ProductContext'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
+import FavouriteModal from '../../components/favouriteModal/FavouriteModal'
 
 export default function Header() {
 
     const isAdmin = true
     const { isClosed, handleCartClose, cartCount } = useProduct()
-    const [isOpen, setIsOpen] = useState(false)
-    function handleModalOpen() {
-        setIsOpen(true)
+    const [isOpenR, setIsOpenR] = useState(false)
+    const [isOpenFav, setIsOpenFav] = useState(false)
+    function handleModalOpen(modal) {
+        if (modal === "R") setIsOpenR(true)
+        if (modal === "Fav") setIsOpenFav(true)
     }
     function handleModalClose() {
-        setIsOpen(false)
+        setIsOpenR(false)
+        setIsOpenFav(false)
     }
     return (
         <>
@@ -32,7 +37,7 @@ export default function Header() {
                         <ul className='nav-list'>
                             <li className='nav-item'><NavLink to="/">Principal</NavLink></li>
                             <li className='nav-item'>
-                                <NavLink onClick={handleModalOpen}>
+                                <NavLink onClick={() => handleModalOpen("R")}>
                                     Registrarse
                                 </NavLink>
                             </li>
@@ -45,6 +50,7 @@ export default function Header() {
                                     <li className='nav-item'><NavLink to="/admin-users">Admin Users</NavLink></li>
                                 </>
                             )}
+                            <li className='nav-item'><NavLink onClick={() => handleModalOpen("Fav")}><FontAwesomeIcon icon={faStar} /></NavLink></li>
                         </ul>
                     </nav>
                 </div>
@@ -56,19 +62,22 @@ export default function Header() {
                 </div>
                 <div className="user-info-container">
                     <div className={`user-cart ${cartCount >= 1 ? 'show-circle' : ''}`} data-count={cartCount}>
-                            <FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} onClick={() => handleCartClose(isClosed)} />
+                        <FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} onClick={() => handleCartClose(isClosed)} />
                     </div>
                     <div className="user-info">
                         <img className="user-icon" srcSet="src/assets/user/user-profile-default.png" alt="user profile default" />
                         <div className="user-name-container">
                             <span className="user-name">User</span>
-                            <span className="user-surname">Name</span>
                         </div>
                     </div>
                 </div>
             </header>
-            <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
+
+            <Modal isOpen={isOpenR} handleModalClose={handleModalClose}>
                 <Register />
+            </Modal>
+            <Modal isOpen={isOpenFav} handleModalClose={handleModalClose}>
+                <FavouriteModal />
             </Modal>
             <Cart />
         </>

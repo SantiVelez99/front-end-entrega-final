@@ -47,12 +47,6 @@ export default function Register( { handleModalClose, editObj, isOpen } ) {
                         {(errors.userName?.type === "minLength" || errors.userName?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
                     <div className="input-group">
-                        <label className="input-title" htmlFor="userSurname">Apellido:</label>
-                        <input type="text" className="form-input" {...register("userSurname", { minLength: 3, maxLength: 30 })} />
-                        {errors.userSurname?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
-                        {(errors.userSurname?.type === "minLength" || errors.userSurname?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
-                    </div>
-                    <div className="input-group">
                         <label className="input-title">Email: *</label>
                         <input type="email" className="form-input" placeholder="example@mail.com" {...register("userEmail", { required: true, maxLength: 60 })} />
                         {errors.userEmail?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}

@@ -8,7 +8,7 @@
     overflow: hidden;
     gap: .5rem;
     background-color: var(--galleryBgColor);
-
+    border: 1px solid var(--fontColor);
     .image {
         text-align: center;
 
@@ -39,7 +39,13 @@
                 background-color: var(--navColor);
                 border-radius: 5px;
                 padding: .1rem;
+                margin-bottom: .1rem;
             }
+        }
+        .remove-link{
+            text-decoration-line: none;
+            color: var(--linkColor);
+
         }
     }
 
@@ -64,7 +70,7 @@
             border: none;
             outline: none;
             background-color: var(--navColor);
-            border: 1px solid var(--fontColor);
+            border-left: 1px solid var(--fontColor);
             border-radius: 0px 10px 10px 0px;
             cursor: pointer;
 
@@ -98,10 +104,14 @@
         }
     }
 }
-@media screen and (width < 425px) {
+@media screen and (width <= 425px) {
     .favcard-container{
-        .info{
-            display: none;
+        .fav-card-list{
+            height: 0;
+            overflow: hidden;
+        }
+        .remove-link{
+            font-size: .75rem;
         }
     }
 }

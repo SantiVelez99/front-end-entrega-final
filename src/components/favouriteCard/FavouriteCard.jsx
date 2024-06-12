@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 export default function FavouriteCard({ producto }) {
-    const { addToCart } = useProduct()
+    const { addToFavList, addToCart } = useProduct()
     return (
         <>
             <div className="favcard-container">
@@ -25,6 +25,7 @@ export default function FavouriteCard({ producto }) {
                             })
                         }
                     </ul>
+                    <NavLink className="remove-link" onClick={() => addToFavList(producto)}>Eliminar de la lista</NavLink>
                 </div>
                 <div className="fav-buy-section">
                         <div className="fav-price">${producto.productPrice}</div>

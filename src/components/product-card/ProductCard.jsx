@@ -1,20 +1,18 @@
 import './product-card.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import  {faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons'
-import { faCartShopping, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import DateFormat from '../../utilities/dateFormat/DateFormat'
 import { useProduct } from '../../context/ProductContext'
 import { NavLink } from 'react-router-dom'
 
 
-export default function ProductCard({ producto }) {
-    const { favList, addToCart, addToFavList } = useProduct()
-    
+export default function ProductCard({ producto, favIcon }) {
+    const { addToCart, addToFavList } = useProduct()
     return (
         <>
             <article className="card-container">
                 <div className="card-img-container">
-                    <FontAwesomeIcon className='fav-icon' icon={favList.includes(producto)? faStar : faStarEmpty} title='Agregar a favoritos' onClick={() => addToFavList(producto)} />
+                    <FontAwesomeIcon className='fav-icon' icon={favIcon} title='Agregar a favoritos' onClick={() => addToFavList(producto)} />
                     <NavLink to={`/product-detail/${producto.id}`} className="game-link">
                         <img className="game-img" src={producto.productImage} alt={producto.productName} />
                         <p className="description">{producto.productDesc}</p>

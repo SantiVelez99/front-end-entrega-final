@@ -4,28 +4,33 @@ import ProductCard from "../product-card/ProductCard";
 import './products-gallery.css'
 import Modal from "../../layout/modal/Modal";
 import FavouriteModal from "../favouriteModal/FavouriteModal";
+import CategoriesGallery from "../categoriesGallery/CategoriesGallery";
+
 
 export default function ProductsGallery() {
 
-    const { product, getProducts, isOpen, handleFavList } = useProduct();
-    useEffect(() =>{
+    const { favStar, product, getProducts, isOpen, handleFavList } = useProduct();
+    useEffect(() => {
         getProducts()
-    },[])
+    }, [])
 
     return (
-            <div className="main-gallery">
+        <>
+        <div className="main-gallery">
 
-                <h1 className="gallery-title">Lista de productos:</h1>
-                {
-                    product.map(producto => {
-                        return (
-                            <ProductCard producto={producto} key={producto.id} />
-                        )
-                    })
-                }
-                <Modal isOpen={isOpen} handleModalClose={handleFavList}>
+            <h1 className="gallery-title">Lista de productos:</h1>
+            {
+                product.map(producto => {
+                    return (
+                        <ProductCard producto={producto} favIcon={favStar(producto)} key={producto.id} />
+                    )
+                })
+            }
+            <Modal isOpen={isOpen} handleModalClose={handleFavList}>
                 <FavouriteModal />
             </Modal>
-            </div>
+        </div>
+            <CategoriesGallery/>
+        </>
     )
 }

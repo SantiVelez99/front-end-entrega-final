@@ -113,7 +113,7 @@ export default function ProductDetail() {
                             <li className="requirement-list-item">RAM: {product.productRAMMin}</li>
                             <li className="requirement-list-item">GPU: {product.productGPUMin}</li>
                             <li className="requirement-list-item">DirectX: {product.productDXMin}</li>
-                            <li className="requirement-list-item">Espacio {product.productSpaceMin}</li>
+                            <li className="requirement-list-item">Espacio: {product.productSpaceMin}</li>
                         </ul>
                         <ul className="recommended">
                             <div className="underline">Requisitos recomendados</div>
@@ -122,7 +122,7 @@ export default function ProductDetail() {
                             <li className="requirement-list-item">RAM: {product.productRAMRec}</li>
                             <li className="requirement-list-item">GPU: {product.productGPURec}</li>
                             <li className="requirement-list-item">DirectX: {product.productDXRec}</li>
-                            <li className="requirement-list-item">Espacio {product.productSpaceRec}</li>
+                            <li className="requirement-list-item">Espacio: {product.productSpaceRec}</li>
                         </ul>
                     </div>
                     <div className="extra-images">
