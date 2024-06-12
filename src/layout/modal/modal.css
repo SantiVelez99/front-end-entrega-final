@@ -20,7 +20,7 @@
         width: 100%;
         transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         animation: fadeIn 0.3s ease-in-out forwards;
-        
+        color: var(--fontColor);
         .modal-header{
             font-size: 1,5rem;
             padding-bottom: .25rem;

@@ -1,0 +1,8 @@
+.tags-gallery{
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    .tags-gallery-title{
+        margin-bottom: .5rem;
+    }
+}

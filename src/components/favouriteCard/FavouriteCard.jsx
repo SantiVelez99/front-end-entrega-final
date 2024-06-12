@@ -3,9 +3,24 @@ import { useProduct } from '../../context/ProductContext'
 import './favourite-card.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import Modal from '../../layout/modal/Modal'
+import TagsModal from '../tagsModal/TagsModal'
+import { useState } from 'react'
 
 export default function FavouriteCard({ producto }) {
     const { addToFavList, addToCart } = useProduct()
+    const [ isOpen, setIsOpen ] = useState(false)
+    const [tag, setTag] = useState()
+    function handleModalOpen(){
+        if(!isOpen) {
+            setIsOpen(true)
+        }
+        if(isOpen) setIsOpen(false)
+    }
+    function getTag(prod){
+        setTag(prod)
+        handleModalOpen()
+    }
     return (
         <>
             <div className="favcard-container">
@@ -18,8 +33,8 @@ export default function FavouriteCard({ producto }) {
                         {
                             producto.productTags.map((prod) => {
                                 return (
-                                    <NavLink className="fav-card-link" key={crypto.randomUUID()}>
-                                        <li className='fav-card-item'>{prod}</li>
+                                    <NavLink className="fav-card-link" key={crypto.randomUUID()} onClick={() => getTag(prod)} >
+                                        <li className='fav-card-item' >{prod}</li>
                                     </NavLink>
                                 )
                             })
@@ -32,6 +47,9 @@ export default function FavouriteCard({ producto }) {
                         <button className="fav-add-to-cart" onClick={() => addToCart(producto)}><FontAwesomeIcon className='fav-cart-icon' icon={faCartShopping} /></button>
                 </div>
             </div>
+            <Modal handleModalClose={handleModalOpen} isOpen={isOpen}>
+                <TagsModal tag={tag} producto={producto}/>
+            </Modal>
         </>
     )
 }

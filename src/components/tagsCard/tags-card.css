@@ -1,0 +1,97 @@
+.tag-card-container {
+    height: 75px;
+    width: min(100% 500px);
+    display: flex;
+    justify-content: space-between;
+    gap: .25rem;
+    border-radius: 10px;
+    border: 1px solid var(--fontColor);
+    background-color: var(--galleryBgColor);
+    overflow: hidden;
+
+    .tag-card-image {
+        height: 75px;
+        width: 75px;
+        overflow: hidden;
+        position: relative;
+
+        img {
+            height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .tag-card-info {
+        margin-left: .25rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        flex: 1;
+
+        .tag-card-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            text-wrap: wrap;
+            overflow: hidden;
+        }
+
+        .tag-card-description {
+            display: none;
+        }
+
+        &:hover {
+            align-items: start;
+            justify-content: unset;
+
+            .tag-card-description {
+                display: -webkit-box;
+                text-align: start;
+                font-size: .85rem;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                text-overflow: ellipsis;
+                text-wrap: wrap;
+                overflow: hidden;
+            }
+        }
+    }
+
+    .tag-card-buy-section {
+        display: flex;
+
+        .tag-card-price {
+            background-color: var(--priceBackground);
+            color: var(--priceFontColor);
+            font-weight: bold;
+            writing-mode: vertical-rl;
+            text-orientation: sideways;
+            padding: 4px;
+        }
+
+        .tag-card-addToCart {
+            border: none;
+            outline: none;
+            background-color: var(--navColor);
+            width: 50px;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--fontColor);
+
+            &:hover {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
+@media screen and (width <= 425px ) {
+    .tag-card-title{
+        font-size: 1rem;
+    }
+}

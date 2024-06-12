@@ -4,15 +4,25 @@ import { NavLink, useParams } from "react-router-dom"
 import './product-detail.css'
 import DateFormat from "../../utilities/dateFormat/DateFormat";
 import { useProduct } from "../../context/ProductContext";
+import Modal from "../../layout/modal/Modal";
+import TagsModal from "../../components/tagsModal/TagsModal";
 
 export default function ProductDetail() {
     const { id } = useParams();
-    const { addToCart } = useProduct()
+    const { addToCart, getProducts } = useProduct()
     const url = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
 
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState([true]);
-
+    const [ isOpen, setIsOpen ] = useState(false)
+    const [ tag, setTag ] = useState()
+    function handleModalOpen(e){
+        if(!isOpen) {
+            setTag(e.target.innerText)
+            setIsOpen(true)
+        }
+        if(isOpen) setIsOpen(false)
+    }
     async function getProdByID(id) {
         try {
             const response = await axios.get(`${url}/product/${id}`)
@@ -24,6 +34,7 @@ export default function ProductDetail() {
     }
     useEffect(() => {
         getProdByID(id);
+        getProducts()
     }, [])
 
     if (loading) {
@@ -63,7 +74,7 @@ export default function ProductDetail() {
                                     {
                                     product.productTags.map(tag => {
                                         return(
-                                    <NavLink className="title-link" key={crypto.randomUUID()}>
+                                    <NavLink className="title-link" key={crypto.randomUUID()} onClick={(e) => handleModalOpen(e)}>
                                         <li className="categories-list-item">{tag}</li>
                                     </NavLink>
                                         )
@@ -143,6 +154,9 @@ export default function ProductDetail() {
                     </div>
                 </section>
             </div>
+            <Modal handleModalClose={handleModalOpen} isOpen={isOpen}>
+                <TagsModal tag={tag} producto={product}/>
+            </Modal>
         </main>
     )
 }
