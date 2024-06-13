@@ -18,12 +18,12 @@ export default function ProductsGallery() {
         <>
         <div className="main-gallery">
 
-            <h1 className="gallery-title">Lista de productos:</h1>
+            <h1 className="gallery-title">Nuestros productos:</h1>
             {
-                product.map(producto => {
-                    return (
-                        <ProductCard producto={producto} favIcon={favStar(producto)} key={producto.id} />
-                    )
+                product.map(producto => {  
+                        return (
+                            <ProductCard producto={producto} favIcon={favStar(producto)} key={producto.id} />
+                        )
                 })
             }
             <Modal isOpen={isOpen} handleModalClose={handleFavList}>

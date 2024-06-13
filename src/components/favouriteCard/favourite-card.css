@@ -31,15 +31,18 @@
             flex-direction: row;
             gap: .25rem;
         }
-
+        .fav-card-title {
+            font-size: 1.25rem;
+        }
         .fav-card-link {
             color: inherit;
             text-decoration: none;
             .fav-card-item{
                 background-color: var(--navColor);
                 border-radius: 5px;
-                padding: .1rem;
+                padding: .2rem;
                 margin-bottom: .1rem;
+                font-size: .8rem;
             }
         }
         .remove-link{
