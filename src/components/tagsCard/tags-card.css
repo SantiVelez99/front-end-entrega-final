@@ -32,7 +32,10 @@
         justify-content: center;
         gap: .5rem;
         flex: 1;
-
+        .tag-card-link{
+            text-decoration-line: none;
+            color: inherit;
+        }
         .tag-card-title {
             display: -webkit-box;
             -webkit-line-clamp: 1;

@@ -24,6 +24,11 @@ export default function Header() {
         setIsOpenR(false)
         setIsOpenFav(false)
     }
+    function burguerMenu() {
+        const bgMenu = document.getElementById("check-menu")
+        console.dir(bgMenu.checked)
+        bgMenu.checked(false)
+    }
     return (
         <>
 
@@ -35,19 +40,19 @@ export default function Header() {
                     </label>
                     <nav className='nav-menu'>
                         <ul className='nav-list'>
-                            <li className='nav-item'><NavLink to="/">Principal</NavLink></li>
+                            <li className='nav-item'><NavLink to="/" onClick={() => burguerMenu()}>Principal</NavLink></li>
                             <li className='nav-item'>
                                 <NavLink onClick={() => handleModalOpen("R")}>
                                     Registrarse
                                 </NavLink>
                             </li>
-                            <li className='nav-item'><NavLink to="/login">LogIn</NavLink></li>
-                            <li className='nav-item'><NavLink to="/contact">Contacto</NavLink></li>
-                            <li className='nav-item'><NavLink to="/about-us">Acerca de</NavLink></li>
+                            <li className='nav-item'><NavLink to="/login" onClick={() => burguerMenu()}>LogIn</NavLink></li>
+                            <li className='nav-item'><NavLink to="/contact" onClick={() => burguerMenu()}>Contacto</NavLink></li>
+                            <li className='nav-item'><NavLink to="/about-us" onClick={() => burguerMenu()}>Acerca de</NavLink></li>
                             {isAdmin && (
                                 <>
-                                    <li className='nav-item'><NavLink to="/admin-product">Admin Product</NavLink></li>
-                                    <li className='nav-item'><NavLink to="/admin-users">Admin Users</NavLink></li>
+                                    <li className='nav-item'><NavLink to="/admin-product" onClick={() => burguerMenu()}>Admin Product</NavLink></li>
+                                    <li className='nav-item'><NavLink to="/admin-users" onClick={() => burguerMenu()}>Admin Users</NavLink></li>
                                 </>
                             )}
                             <li className='nav-item'><NavLink onClick={() => handleModalOpen("Fav")}><FontAwesomeIcon icon={faStar} /></NavLink></li>

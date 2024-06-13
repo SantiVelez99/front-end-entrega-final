@@ -8,16 +8,16 @@ import TagsModal from '../tagsModal/TagsModal'
 import { useState } from 'react'
 
 export default function FavouriteCard({ producto }) {
-    const { addToFavList, addToCart } = useProduct()
-    const [ isOpen, setIsOpen ] = useState(false)
+    const { addToFavList, addToCart, handleReload } = useProduct()
+    const [isOpen, setIsOpen] = useState(false)
     const [tag, setTag] = useState()
-    function handleModalOpen(){
-        if(!isOpen) {
+    function handleModalOpen() {
+        if (!isOpen) {
             setIsOpen(true)
         }
-        if(isOpen) setIsOpen(false)
+        if (isOpen) setIsOpen(false)
     }
-    function getTag(prod){
+    function getTag(prod) {
         setTag(prod)
         handleModalOpen()
     }
@@ -28,7 +28,7 @@ export default function FavouriteCard({ producto }) {
                     <img src={producto.productImage} alt="" />
                 </div>
                 <div className='info'>
-                    <h1 className='fav-card-title'><NavLink to={`/product-detail/${producto.id}`} className="fav-card-link">{producto.productName}</NavLink></h1>
+                    <h1 className='fav-card-title'><NavLink to={`/product-detail/${producto.id}`} onClick={(e) => handleReload(e)} className="fav-card-link">{producto.productName}</NavLink></h1>
                     <ul className='fav-card-list'>
                         {
                             producto.productTags.map((prod) => {
@@ -43,12 +43,12 @@ export default function FavouriteCard({ producto }) {
                     <NavLink className="remove-link" onClick={() => addToFavList(producto)}>Eliminar de la lista</NavLink>
                 </div>
                 <div className="fav-buy-section">
-                        <div className="fav-price">${producto.productPrice}</div>
-                        <button className="fav-add-to-cart" onClick={() => addToCart(producto)}><FontAwesomeIcon className='fav-cart-icon' icon={faCartShopping} /></button>
+                    <div className="fav-price">${producto.productPrice}</div>
+                    <button className="fav-add-to-cart" onClick={() => addToCart(producto)}><FontAwesomeIcon className='fav-cart-icon' icon={faCartShopping} /></button>
                 </div>
             </div>
             <Modal handleModalClose={handleModalOpen} isOpen={isOpen}>
-                <TagsModal tag={tag} producto={producto}/>
+                <TagsModal tag={tag} producto={producto} />
             </Modal>
         </>
     )

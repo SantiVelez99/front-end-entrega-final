@@ -320,10 +320,13 @@ export const ProductProvider = ({ children }) => {
 
     // ?FIN TOASTR
 
-
+    function handleReload(e){
+        e.preventDefault();
+        window.location.href = e.currentTarget.href;
+    }
     return (
         <ProductContext.Provider value={{
-            product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
+            product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
             handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData
         }}>
             {children}

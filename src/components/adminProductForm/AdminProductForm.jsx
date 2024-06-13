@@ -80,7 +80,7 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                     </div>
                     <div className="input-container">
                         <label className="input-title">Precio:</label>
-                        <input type="number" className="form-input" step={.01} {...register("productPrice", { required: true, min: 0 })} />
+                        <input type="number" className="form-input" step={.01} {...register("productPrice", { required: true, min: 0, max: 100000, })} />
                         {errors.productPrice?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                     </div>
                     <div className="input-container">
@@ -114,13 +114,13 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                     </div>
                     <div className="input-container">
                         <label className="input-title">Imagenes extras(URLs):</label>
-                        <textarea type="text" className="form-textarea" placeholder='Separar los links con un ENTER' {...register("productDescPictures", { required: true, cols: 30, rows: 5, minLength: 3, maxLength: 600 })} />
+                        <textarea type="text" className="form-textarea" placeholder='Separar los links con un ENTER' {...register("productDescPictures", { required: true, cols: 30, rows: 5, minLength: 3, maxLength: 800})} />
                         {errors.productDescPictures?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productDescPictures?.type === "minLength" || errors.productDescPictures?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
                     <div className="input-container">
                         <label className="input-title">Tags:</label>
-                        <input type="text" className="form-input" placeholder='Separar los tags con ,'{...register("productTags", { required: true, minLength: 3, maxLength: 200 })} />
+                        <input type="text" className="form-input" placeholder='Separar los tags con ,'{...register("productTags", { required: true, minLength: 3, maxLength: 200})} />
                         {errors.productTags?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productTags?.type === "minLength" || errors.productTags?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>

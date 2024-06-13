@@ -47,8 +47,8 @@
   margin-bottom: 1rem;
 }
 .input-error{
-  color: red;
-  text-shadow: 1px 1px 6px var(--cardBackground);
+  color: rgb(101, 5, 5);
+  font-weight: bold;
 }
 textarea{
   resize: none;
