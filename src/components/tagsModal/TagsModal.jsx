@@ -16,7 +16,7 @@ export default function TagsModal({tag, producto}){
     }
     return(
             <div className="tags-gallery">
-            <h1 className='tags-gallery-title'>Mas Juegos {tag}:</h1>
+            <h1 className='tags-gallery-title'>Mas Juegos de {tag}:</h1>
             {
                 array.map((prod) =>{
                     return(
