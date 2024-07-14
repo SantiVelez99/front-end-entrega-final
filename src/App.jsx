@@ -4,7 +4,6 @@ import Footer from './layout/footer/Footer'
 import Header from './layout/header/Header'
 import Login from './pages/login/Login'
 import Contact from './pages/contact/Contact'
-import Register from './pages/register/Register'
 import AboutUs from './pages/about-us/AboutUs'
 import ProductDetail from './pages/product-detail/ProductDetail'
 import NotFound from './pages/not-found/NotFound'
@@ -15,6 +14,7 @@ import AdminUsers from './pages/admin-users/AdminUsers'
 function App() {
   const isAdmin = true;
 
+
   return (
     <>
         <Header />
@@ -23,7 +23,6 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/contact' element={<Contact/>}/>
-          <Route path='/register' element={ <Register/>}/>
           <Route path='/about-us' element={ <AboutUs/>}/>
           <Route path='/product-detail/:id' element={<ProductDetail/>}/>
           <Route path='*' element={<NotFound/>}/>

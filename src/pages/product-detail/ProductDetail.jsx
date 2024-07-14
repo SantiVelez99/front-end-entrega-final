@@ -9,9 +9,8 @@ import TagsModal from "../../components/tagsModal/TagsModal";
 
 export default function ProductDetail() {
     const { id } = useParams();
-    const { addToCart, getProducts } = useProduct()
-    const url = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
-
+    const { addToCart, getProducts, url, baseURL } = useProduct()
+    
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState([true]);
     const [ isOpen, setIsOpen ] = useState(false)
@@ -22,11 +21,12 @@ export default function ProductDetail() {
             setIsOpen(true)
         }
         if(isOpen) setIsOpen(false)
-    }
+        }
     async function getProdByID(id) {
         try {
-            const response = await axios.get(`${url}/product/${id}`)
-            setProduct(response.data)
+            console.log(id)
+            const response = await axios.get(`${url}/products/${id}`)
+            setProduct(response.data.product)
             setLoading(false)
         } catch (error) {
             console.log(error)
@@ -36,7 +36,6 @@ export default function ProductDetail() {
         getProdByID(id);
         getProducts()
     }, [])
-
     if (loading) {
         return (
             <h4>CARGANDO...</h4>
@@ -101,7 +100,7 @@ export default function ProductDetail() {
                 </div>
 
                 <section className="extra-info-section">
-                    <div className="extra-description">
+                    {/* <div className="extra-description">
                         <div className="underline">
                             <h2 className="game-title">Acerca de {product.productName}</h2>
                         </div>
@@ -115,7 +114,7 @@ export default function ProductDetail() {
                                     )
                                 })
                             }
-                    </div>
+                    </div> */}
                     <div className="system-requirements">
                         <ul className="minimun">
                             <div className="underline">Requisitos mínimos</div>
@@ -138,13 +137,13 @@ export default function ProductDetail() {
                     </div>
                     <div className="extra-images">
                         <div className="main-extra-img-container">
-                            <img loading="lazy" src={product.productDescPictures[1]} alt=""
+                            <img loading="lazy" src={`${baseURL}/images/products/extra-images/${product.productDescPictures[1].id}`} alt=""
                                 className="extra-img" />
                         </div>
                         <div className="small-extra-images">
                             <div className="extra-img-container">
                                 <img loading="lazy"
-                                    src={product.productDescPictures[2]} alt="" className="extra-img" />
+                                    src={`${baseURL}/images/products/extra-images/${product.productDescPictures[2].id}`} alt="" className="extra-img" />
                             </div>
                             <div className="extra-img-container">
                                 <img loading="lazy"

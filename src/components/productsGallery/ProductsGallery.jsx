@@ -18,7 +18,7 @@ export default function ProductsGallery() {
     const pageCount = Math.ceil(product.length / prodsPerPage);
     const displayedProds = product.slice(pagesVisited, pagesVisited + prodsPerPage).map(producto => {
         return (
-            <ProductCard producto={producto} favIcon={favStar(producto)} key={producto.id} />
+            <ProductCard producto={producto} favIcon={favStar(producto)} key={producto._id} />
         )
     })
     const changePage = ({ selected }) => {

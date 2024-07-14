@@ -9,7 +9,7 @@ import Register from '../register/Register'
 
 export default function AdminUsers() {
 
-    const { user, getUsers, deleteConfirm, editMockData, editObj } = useProduct()
+    const { user, getUsers, deleteConfirm, editMockData, editObj, baseURL } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     function handleModalOpen() {
         setIsOpen(true)
@@ -42,18 +42,18 @@ export default function AdminUsers() {
                             {
                                 user.map(us => {
                                     return (
-                                        <tr key={us.id}>
-                                            <td className="table-td"><img className='user-avatar' src={us.userAvatar? us.userAvatar : "https://i.ibb.co/n1MfMnZ/user-profile-default.png"}
+                                        <tr key={us._id}>
+                                            <td className="table-td"><img className='user-avatar' src={`${baseURL}/images/users/user-avatar/${us.userAvatar.id}`}
                                                 alt="user portrait" /></td>
                                             <td className="table-td">{us.userName}</td>
                                             <td className="table-td">{us.userEmail}</td>
                                             <td className="table-td">{DateFormat(us.userBorndate)}</td>
                                             <td className="table-td">{us.userCountry}</td>
                                             <td className="table-td actions">
-                                                <button type="button" className="edit-button" onClick={() => handleModalOpen(editMockData("usuario", us.id))} >
+                                                <button type="button" className="edit-button" onClick={() => handleModalOpen(editMockData("usuario", us._id))} >
                                                     <FontAwesomeIcon className="product-button-icon" icon={faPenToSquare} />
                                                 </button>
-                                                <button type="button" className="delete-button" onClick={() => deleteConfirm("usuario", us.id)}>
+                                                <button type="button" className="delete-button" onClick={() => deleteConfirm("usuario", us._id)}>
                                                     <FontAwesomeIcon className="product-button-icon" icon={faTrashCan} />
                                                 </button>
                                             </td>

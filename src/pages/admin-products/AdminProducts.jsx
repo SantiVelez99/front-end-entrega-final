@@ -12,6 +12,7 @@ import { NavLink } from 'react-router-dom'
 export default function AdminProducts() {
     const { product, getProducts, deleteConfirm, editMockData, editObj, setEditObj } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
+    const { baseURL } = useProduct()
     function handleModalOpen() {
         setIsOpen(true)
     }
@@ -44,9 +45,9 @@ export default function AdminProducts() {
                             {
                                 product.map(prod => {
                                     return (
-                                        <tr key={prod.id}>
-                                            <td className="product-img"><img src={prod.productImage}
-                                                alt="elden ring portrait" /></td>
+                                        <tr key={prod._id}>
+                                            <td className="product-img"><img src={`${baseURL}/images/products/card-images/${prod.productImage.id}`}
+                                                alt={prod.productImage.name} /></td>
                                             <td className="product-name"><NavLink className="table-link" title='Al product-detail' to={`/product-detail/${prod.id}`}>{prod.productName}</NavLink></td>
                                             <td className="product-description">
                                                 <p>{prod.productDesc}</p>
@@ -55,12 +56,12 @@ export default function AdminProducts() {
                                             <td className="product-price">${prod.productPrice}</td>
                                             <td className="actions">
                                                 <button type="button" className="edit-button" onClick={() => {
-                                                    handleModalOpen(editMockData("producto", prod.id))
+                                                    handleModalOpen(editMockData("producto", prod._id))
 
                                                 }} >
                                                     <FontAwesomeIcon className="product-button-icon" icon={faPenToSquare} />
                                                 </button>
-                                                <button type="button" className="delete-button" onClick={() => deleteConfirm("producto", prod.id)}>
+                                                <button type="button" className="delete-button" onClick={() => deleteConfirm("producto", prod._id)}>
                                                     <FontAwesomeIcon className="product-button-icon" icon={faTrashCan} />
                                                 </button>
                                             </td>

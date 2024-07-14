@@ -12,10 +12,12 @@ export const useProduct = () => useContext(ProductContext)
 
 
 export const ProductProvider = ({ children }) => {
+    const url = import.meta.env.VITE_URL
+    const baseURL = import.meta.env.VITE_BASE_URL
     const [product, setProduct] = useState([]);
     const [user, setUser] = useState([])
     const [editObj, setEditObj] = useState([])
-    const mockURL = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
+    // const mockURL = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
     const [isClosed, setCart] = useState(false)
     const [cartOrder, setCartOrder] = useState(JSON.parse(localStorage.getItem("cartOrder")) || [])
     const [cartTotal, setTotal] = useState(0)
@@ -147,8 +149,9 @@ export const ProductProvider = ({ children }) => {
     // *AXIOS
     async function getProducts() {
         try {
-            const response = await axios.get(`${mockURL}/product`)
-            setProduct(response.data)
+            const response = await axios.get(`${url}/products`)
+            setProduct(response.data.products)
+            console.log(response.data.products)
         } catch (error) {
             console.log(error)
         }
@@ -156,14 +159,14 @@ export const ProductProvider = ({ children }) => {
     async function postProduct(obj) {
         if (obj.id) {
             try {
-                await axios.put(`${mockURL}/product/${obj.id}`, obj)
+                await axios.put(`${url}/products/${obj.id}`, obj)
                 updateCorrectly("producto")
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await axios.post(`${mockURL}/product`, obj)
+                await axios.post(`${url}/products`, obj)
                 getProducts()
                 postCorrect()
             } catch (error) {
@@ -175,7 +178,7 @@ export const ProductProvider = ({ children }) => {
     async function deleteMockData(string, id) {
         if (string === "producto") {
             try {
-                await axios.delete(`${mockURL}/product/${id}`)
+                await axios.delete(`${url}/products/${id}`)
                 deleteSuccess(string)
                 getProducts()
             } catch (error) {
@@ -184,7 +187,7 @@ export const ProductProvider = ({ children }) => {
         }
         if (string === "usuario") {
             try {
-                await axios.delete(`${mockURL}/user/${id}`)
+                await axios.delete(`${url}/users/${id}`)
                 deleteSuccess(string)
                 getUsers()
             } catch (error) {
@@ -195,16 +198,16 @@ export const ProductProvider = ({ children }) => {
     async function editMockData(string, id) {
         if (string === "producto") {
             try {
-                const response = await axios.get(`${mockURL}/product/${id}`)
-                setEditObj(response.data)
+                const response = await axios.get(`${url}/products/${id}`)
+                setEditObj(response.data.updatedProduct)
             } catch (error) {
                 console.log(error)
             }
         }
         if (string === "usuario") {
             try {
-                const response = await axios.get(`${mockURL}/user/${id}`)
-                setEditObj(response.data)
+                const response = await axios.get(`${url}/users/${id}`)
+                setEditObj(response.data.updatedUser)
             } catch (error) {
                 console.log(error)
             }
@@ -212,16 +215,16 @@ export const ProductProvider = ({ children }) => {
     }
     async function getUsers() {
         try {
-            const response = await axios.get(`${mockURL}/user`)
-            setUser(response.data)
+            const response = await axios.get(`${url}/users`)
+            setUser(response.data.users)
         } catch (error) {
             console.log(error)
         }
     }
     async function postUser(obj) {
-        if (obj.id) {
+        if (obj._id) {
             try {
-                await axios.put(`${mockURL}/user/${obj.id}`, obj)
+                await axios.put(`${url}/users/${obj._id}`, obj)
                 updateCorrectly("usuario")
                 getUsers()
             } catch (error) {
@@ -229,7 +232,7 @@ export const ProductProvider = ({ children }) => {
             }
         } else {
             try {
-                await axios.post(`${mockURL}/user`, obj)
+                await axios.post(`${url}/users`, obj)
                 getUsers()
             } catch (error) {
                 console.log(error)
@@ -327,7 +330,7 @@ export const ProductProvider = ({ children }) => {
     return (
         <ProductContext.Provider value={{
             product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
-            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url
         }}>
             {children}
         </ProductContext.Provider>
