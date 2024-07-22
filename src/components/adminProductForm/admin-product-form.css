@@ -102,3 +102,32 @@
         color: var(--fontColor);
     }
 }
+
+.input-select{
+    font-size: 1.125rem;
+}
+.tag-list{
+    list-style-type: none;
+    display: flex;
+    gap: .5rem;
+    .tag-container{
+        background-color: var(--cardBackground);
+        color: var(--fontColor);
+        padding: .5rem;
+        position: relative;
+        border-radius: 6px;
+        .tag-item{
+            font-size: 1.125rem;
+        }
+        .tag-button{
+            position: absolute;
+            top: 0px;
+            right: 2px;
+            cursor: pointer;
+            color: white;
+            background-color: transparent;
+            outline: none;
+            border: none;
+        }
+    }
+}

@@ -43,7 +43,7 @@ export default function AdminProducts() {
                             </tr>
                         </thead>
                         <tbody>
-                            {
+                            {/* {
                                 product.map(prod => {
                                     return (
                                         <tr key={prod._id}>
@@ -69,7 +69,7 @@ export default function AdminProducts() {
                                         </tr>
                                     )
                                 })
-                            }
+                            } */}
                         </tbody>
                     </table>
                 </div>

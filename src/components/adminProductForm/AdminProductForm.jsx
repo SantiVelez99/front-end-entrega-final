@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useProduct } from '../../context/ProductContext';
 import './admin-product-form.css'
 import { useForm } from 'react-hook-form';
@@ -7,13 +7,12 @@ import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function AdminProductForm({ handleModalClose, editObj }) {
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
-    const { postProduct } = useProduct()
+    const { postProduct, tags, getTags } = useProduct()
+    const [ tagList, setTagList ] = useState([])
+    
     const onSubmit = data => {
         data.productPrice = +data.productPrice
         data.productDate = new Date(data.productDate).getTime()
-        data.productDescPictures = (data.productDescPictures).split("\n");
-        data.productTags = (data.productTags).split(", ");
-        data.productDesc = (data.productDesc).split("\n");
         console.log(data)
         // try {
         //     postProduct(data)
@@ -26,6 +25,10 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
     useEffect(() => {
         setFormValues(editObj)
     }, [editObj])
+    useEffect(() => {
+        getTags()
+        console.log(tags)
+    }, [])
     async function setFormValues(editObj) {
         console.log(editObj)
         // if (editObj) {
@@ -59,6 +62,67 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
         })
 
     }
+    const reqLow = {
+        productSoMin: "Windows 10",
+        productCPUMin: "Intel i3 8100 / AMD Ryzen 3 3100",
+        productRAMMin: "4 GB",
+        productGPUMin: "nvidia GTX 1060 3GB / AMD RX 590"
+    }
+    const reqMedium = {
+        productSoMin: "Windows 10",
+        productCPUMin: "Intel i5 9400 / AMD Ryzen 5 5500",
+        productRAMMin: "8 GB",
+        productGPUMin: "nvidia RTX 2060 / AMD RX 5700-XT"
+    }
+    const reqHigh = {
+        productSoMin: "Windows 10",
+        productCPUMin: "Intel i5 10600k / AMD Ryzen 5 5600",
+        productRAMMin: "16 GB",
+        productGPUMin: "nvidia RTX 3060 / AMD RX 6600-XT"
+    }
+    const reqLowRec = {
+        productSoRec: "Windows 10",
+        productCPURec: "Intel i3 8100 / AMD Ryzen 3 3100",
+        productRAMRec: "4 GB",
+        productGPURec: "nvidia GTX 1060 3GB / AMD RX 590"
+    }
+    const reqMediumRec = {
+        productSoRec: "Windows 10",
+        productCPURec: "Intel i5 9400 / AMD Ryzen 5 5500",
+        productRAMRec: "8 GB",
+        productGPURec: "nvidia RTX 2060 / AMD RX 5700-XT"
+    }
+    const reqHighRec = {
+        productSoRec: "Windows 10",
+        productCPURec: "Intel i5 10600k / AMD Ryzen 5 5600",
+        productRAMRec: "16 GB",
+        productGPURec: "nvidia RTX 3060 / AMD RX 6600-XT"
+    }
+    function setRequirements(obj) {
+        const requirements = JSON.parse(obj)
+        const keys = Object.keys(requirements)
+        const values = Object.values(requirements)
+        for (let i = 0; i < keys.length; i++) {
+            setValue(keys[i], values[i])
+        }
+    }
+    function addTag(value){
+        if(!tagList.includes(value)){
+            setTagList([...tagList, value])
+        }
+    }
+    function tagListRender(id){
+        let name;
+        tags.forEach(tag => {
+            if(tag._id === id) name = tag.viewValue
+        })
+        return name
+    } 
+    function tagListRemove(id){
+        const newTagList = tagList.filter(tag => tag !== id)
+        console.log(newTagList)
+        setTagList(newTagList)
+    } 
     return (
         <div className={editObj._id ? "form-product-container edit-background" : "form-product-container"}>
             <div className="table-title mb-16">
@@ -113,14 +177,32 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                     </div>
                     <div className="input-container">
                         <label className="input-title">Imagenes extras (4):</label>
-                        <input type="file" accept='image/*' className="form-input" multiple {...register("productDescPictures", { required: editObj._id ? false : true})} />
+                        <input type="file" accept='image/*' className="form-input" multiple {...register("productDescPictures", { required: editObj._id ? false : true })} />
                         {errors.productDescPictures?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                     </div>
                     <div className="input-container">
                         <label className="input-title">Tags:</label>
-                        <input type="text" className="form-input" placeholder='Separar los tags con ,'{...register("productTags", { required: editObj._id ? false : true, minLength: 3, maxLength: 200})} />
-                        {errors.productTags?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
-                        {(errors.productTags?.type === "minLength" || errors.productTags?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
+                        <select className='input-select' name="tagSelect" id="tagSelect" onChange={(e) => addTag(e.target.value)}>
+                            {
+                                tags.map(tag => {
+                                    return(
+                                        <option key={tag._id} value={tag._id}>{tag.viewValue}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                        <ul className='tag-list'>
+                            {
+                                tagList.map(tag => {
+                                    return(
+                                        <div className='tag-container' key={tag}>
+                                            <li className='tag-item'>{tagListRender(tag)}</li>
+                                            <button className='tag-button' type='button' onClick={() => tagListRemove(tag)}>x</button>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </ul>
                     </div>
                     <div className="input-container">
                         <label className="input-title">Desarrollador:</label>
@@ -133,6 +215,13 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                 <div id="section3" className="section">
                     <button type='button' className='switch-button left' title='A 2/4' onClick={(e) => switchSection(e, "section2")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
                     <h2 className='section-title'>Requisitos Minimos:</h2>
+                    <div className="input-container">
+                        <select className='input-select' name="requirements" id="requirements" onChange={(e) => setRequirements(e.target.value)}>
+                            <option value={JSON.stringify(reqLow)}>Requisitos bajos</option>
+                            <option value={JSON.stringify(reqMedium)}>Requisitos medios</option>
+                            <option value={JSON.stringify(reqHigh)}>Requisitos altos</option>
+                        </select>
+                    </div>
                     <div className="input-container">
                         <label className="input-title">Sistema Operativo:</label>
                         <input type="text" className="form-input" {...register("productSoMin", { required: editObj._id ? false : true, minLength: 3, maxLength: 60 })} />
@@ -158,12 +247,6 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                         {(errors.productGPUMin?.type === "minLength" || errors.productGPUMin?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
                     <div className="input-container">
-                        <label className="input-title">DirectX:</label>
-                        <input type="text" className="form-input" {...register("productDXMin", { required: editObj._id ? false : true, minLength: 3, maxLength: 60 })} />
-                        {errors.productDXMIN?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
-                        {(errors.productDXMin?.type === "minLength" || errors.productDXMin?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
-                    </div>
-                    <div className="input-container">
                         <label className="input-title">Espacio en disco:</label>
                         <input type="text" className="form-input" {...register("productSpaceMin", { required: editObj._id ? false : true, minLength: 3, maxLength: 60 })} />
                         {errors.productSpaceMin?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
@@ -174,6 +257,13 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                 <div id="section4" className="section">
                     <button type='button' className='switch-button left' title='A 3/4' onClick={(e) => switchSection(e, "section3")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
                     <h2 className='section-title'>Requisitos Recomendados:</h2>
+                    <div className="input-container">
+                        <select name="requirements" id="requirements" onChange={(e) => setRequirements(e.target.value)}>
+                            <option value={JSON.stringify(reqLowRec)}>Requisitos bajos</option>
+                            <option value={JSON.stringify(reqMediumRec)}>Requisitos medios</option>
+                            <option value={JSON.stringify(reqHighRec)}>Requisitos altos</option>
+                        </select>
+                    </div>
                     <div className="input-container">
                         <label className="input-title">Sistema Operativo:</label>
                         <input type="" className="form-input" {...register("productSoRec", { required: editObj._id ? false : true, minLength: 3, maxLength: 60 })} />
@@ -197,12 +287,6 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                         <input type="text" className="form-input" {...register("productGPURec", { required: editObj._id ? false : true, minLength: 3, maxLength: 60 })} />
                         {errors.productGPURec?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {(errors.productGPURec?.type === "minLength" || errors.productGPURec?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
-                    </div>
-                    <div className="input-container">
-                        <label className="input-title">DirectX:</label>
-                        <input type="text" className="form-input" {...register("productDXRec", { required: editObj._id ? false : true, minLength: 3, maxLength: 60 })} />
-                        {errors.productDXRec?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
-                        {(errors.productDXRec?.type === "minLength" || errors.productDXRec?.type === "maxLength") && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
                     <div className="input-container">
                         <label className="input-title">Espacio en disco:</label>
