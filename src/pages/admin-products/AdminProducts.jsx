@@ -7,6 +7,7 @@ import './admin-product.css'
 import Modal from '../../layout/modal/Modal'
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import AdminTags from '../../components/adminTags/AdminTags'
 
 
 export default function AdminProducts() {
@@ -77,6 +78,7 @@ export default function AdminProducts() {
                     <AdminProductForm handleModalClose={handleModalClose} editObj={editObj} isOpen={isOpen} />
                 </Modal>
             </div>
+            <AdminTags/>
         </main>
     )
 }

@@ -105,8 +105,7 @@ export default function ProductDetail() {
                             <h2 className="game-title">Acerca de {product.productName}</h2>
                         </div>
                         <img className="extra-description-img"
-                            src={product.productDescPictures[0]}
-                            alt=""/>
+                            src={`${baseURL}/images/products/extra-images/${product.productDescPictures[0].id}`} alt={`${product.producName} ${product.productDescPictures[0].name}`} />
                             {
                                 product.productDesc.map(paragraph =>{
                                     return(
@@ -137,17 +136,17 @@ export default function ProductDetail() {
                     </div>
                     <div className="extra-images">
                         <div className="main-extra-img-container">
-                            <img loading="lazy" src={`${baseURL}/images/products/extra-images/${product.productDescPictures[1].id}`} alt=""
+                            <img loading="lazy" src={`${baseURL}/images/products/extra-images/${product.productDescPictures[1].id}`} alt={`${product.producName} ${product.productDescPictures[1].name}`}
                                 className="extra-img" />
                         </div>
                         <div className="small-extra-images">
                             <div className="extra-img-container">
                                 <img loading="lazy"
-                                    src={`${baseURL}/images/products/extra-images/${product.productDescPictures[2].id}`} alt="" className="extra-img" />
+                                    src={`${baseURL}/images/products/extra-images/${product.productDescPictures[2].id}`} alt={`${product.producName} ${product.productDescPictures[2].name}`} className="extra-img" />
                             </div>
                             <div className="extra-img-container">
                                 <img loading="lazy"
-                                    src={product.productDescPictures[3]?  product.productDescPictures[3] : ""} alt="" className="extra-img" />
+                                    src={`${baseURL}/images/products/extra-images/${product.productDescPictures[3].id}`} alt={`${product.producName} ${product.productDescPictures[3].name}`} className="extra-img" />
                             </div>
                         </div>
                     </div>

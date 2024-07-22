@@ -21,7 +21,7 @@ export default function CarouselComponent() {
     function toProdDetails(e) {
         const name = e.target.alt
         const prod = product.find(prod => prod.productName === name)
-        setID(prod._id)
+        // setID(prod._id)
     }
     return (
         <div className="carousel-container">

@@ -24,6 +24,7 @@ export const ProductProvider = ({ children }) => {
     const [cartCount, setCount] = useState(0)
     const [favList, setFavList] = useState(JSON.parse(localStorage.getItem("favList")) || [])
     const [isOpen, setFavListOpen] = useState(false)
+    const [ tags, setTags ] = useState()
 
 
     // *FAVLIST
@@ -157,9 +158,9 @@ export const ProductProvider = ({ children }) => {
         }
     }
     async function postProduct(obj) {
-        if (obj.id) {
+        if (obj._id) {
             try {
-                await axios.put(`${url}/products/${obj.id}`, obj)
+                await axios.put(`${url}/products/${obj._id}`, obj)
                 updateCorrectly("producto")
             } catch (error) {
                 console.log(error)
@@ -168,7 +169,7 @@ export const ProductProvider = ({ children }) => {
             try {
                 await axios.post(`${url}/products`, obj)
                 getProducts()
-                postCorrect()
+                postCorrect("producto")
             } catch (error) {
                 console.log(error)
             }
@@ -194,12 +195,21 @@ export const ProductProvider = ({ children }) => {
                 console.log(error)
             }
         }
+        if (string === "tag") {
+            try {
+                await axios.delete(`${url}/tags/${id}`)
+                deleteSuccess(string)
+                getTags()
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
     async function editMockData(string, id) {
         if (string === "producto") {
             try {
                 const response = await axios.get(`${url}/products/${id}`)
-                setEditObj(response.data.updatedProduct)
+                setEditObj(response.data.product)
             } catch (error) {
                 console.log(error)
             }
@@ -207,7 +217,15 @@ export const ProductProvider = ({ children }) => {
         if (string === "usuario") {
             try {
                 const response = await axios.get(`${url}/users/${id}`)
-                setEditObj(response.data.updatedUser)
+                setEditObj(response.data.user)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        if(string === "tag"){
+            try {
+                const response = await axios.get(`${url}/tags/${id}`)
+                setEditObj(response.data.tag)
             } catch (error) {
                 console.log(error)
             }
@@ -222,9 +240,11 @@ export const ProductProvider = ({ children }) => {
         }
     }
     async function postUser(obj) {
-        if (obj._id) {
+        const id = obj.get("id")
+        if(obj.get("userAvatar") === "false") obj.delete("userAvatar")
+        if (id !== "undefined") {
             try {
-                await axios.put(`${url}/users/${obj._id}`, obj)
+                await axios.put(`${url}/users/${id}`, obj)
                 updateCorrectly("usuario")
                 getUsers()
             } catch (error) {
@@ -234,22 +254,52 @@ export const ProductProvider = ({ children }) => {
             try {
                 await axios.post(`${url}/users`, obj)
                 getUsers()
+                postCorrect("usuario")
             } catch (error) {
                 console.log(error)
             }
         }
     }
-
+    async function getTags(){
+        try {
+            const response = await axios.get(`${url}/tags`)
+            setTags(response.data.tags)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async function postTag(obj){
+        console.log(obj)
+        // const id = obj.get("id")
+        if(obj._id !== undefined) {
+            try {
+                await axios.put(`${url}/tags/${obj._id}`, obj)
+                getTags()
+                updateCorrectly("tag")
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            try {
+                await axios.post(`${url}/tags`, obj)
+                getTags()
+                postCorrect("tag")
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
     // *FIN AXIOS
 
     // !SWAL
-    function postCorrect() {
+    function postCorrect(string) {
         Swal.fire({
             icon: "success",
-            title: "Producto Agregado Correctamente",
+            title: `El ${string} se ha creado correctamente`,
             background: "#0E1014",
             color: "#DCDEDF",
-            confirmButtonText: "Confirmar"
+            confirmButtonText: "Confirmar",
+            timer:2000
         })
     }
     function deleteConfirm(string, id) {
@@ -277,7 +327,8 @@ export const ProductProvider = ({ children }) => {
             title: `El ${string} se ha borrado correctamente`,
             background: "#0E1014",
             color: "#DCDEDF",
-            confirmButtonText: "Confirmar"
+            confirmButtonText: "Confirmar",
+            timer:2000
         })
     }
 
@@ -287,7 +338,8 @@ export const ProductProvider = ({ children }) => {
             title: `El ${string} se ha actualizado correctamente`,
             background: "#0E1014",
             color: "#DCDEDF",
-            confirmButtonText: "Confirmar"
+            confirmButtonText: "Confirmar",
+            timer:2000
         })
     }
     // !FIN SWAL
@@ -330,7 +382,7 @@ export const ProductProvider = ({ children }) => {
     return (
         <ProductContext.Provider value={{
             product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
-            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag
         }}>
             {children}
         </ProductContext.Provider>

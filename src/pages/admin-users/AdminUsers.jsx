@@ -47,7 +47,7 @@ export default function AdminUsers() {
                                                 alt="user portrait" /></td>
                                             <td className="table-td">{us.userName}</td>
                                             <td className="table-td">{us.userEmail}</td>
-                                            <td className="table-td">{DateFormat(us.userBorndate)}</td>
+                                            <td className="table-td">{us.userBorndate? DateFormat(us.userBorndate) : undefined}</td>
                                             <td className="table-td">{us.userCountry}</td>
                                             <td className="table-td actions">
                                                 <button type="button" className="edit-button" onClick={() => handleModalOpen(editMockData("usuario", us._id))} >
