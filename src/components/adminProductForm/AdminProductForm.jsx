@@ -8,42 +8,69 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function AdminProductForm({ handleModalClose, editObj }) {
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
     const { postProduct, tags, getTags } = useProduct()
-    const [ tagList, setTagList ] = useState([])
-    
+    const [tagList, setTagList] = useState([])
+
     const onSubmit = data => {
         data.productPrice = +data.productPrice
         data.productDate = new Date(data.productDate).getTime()
-        console.log(data)
-        // try {
-        //     postProduct(data)
-        //     reset();
-        //     handleModalClose();
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        console.log(data.productDescPictures)
+        const productMinReq = {
+            productSoMin: data.productSoMin,
+            productCPUMin: data.productCPUMin,
+            productRAMMin: data.productRAMMin,
+            productGPUMin: data.productGPUMin,
+            productSpaceMin: data.productSpaceMin
+        }
+        const productMaxReq = {
+            productSoRec: data.productSoRec,
+            productCPURec: data.productCPURec,
+            productRAMRec: data.productRAMRec,
+            productGPURec: data.productGPURec,
+            productSpaceRec: data.productSpaceRec
+        }
+        const formData = new FormData()
+        for(let i = 0 ;i < data.productDescPictures.length; i++) {
+            formData.append(`productDescPictures`, data.productDescPictures[i])
+        }
+        tagList.forEach(tag => formData.append("productTags", tag))
+        
+        formData.append("id", data._id)
+        formData.append("productName", data.productName)
+        formData.append("productPrice", data.productPrice)
+        formData.append("productDesc", data.productDesc)
+        formData.append("productDate", data.productDate)
+        formData.append("productDeveloper", data.productDeveloper)
+        formData.append("productVideo", data.productVideo)
+        formData.append("productMinReq", JSON.stringify(productMinReq))
+        formData.append("productMaxReq", JSON.stringify(productMaxReq))
+        formData.append("productImage", data.productImage.length? data.productImage[0] : false)
+        formData.append("productPortrait", data.productPortrait.length? data.productPortrait[0] : false)
+        try {
+            postProduct(formData)
+            // reset();
+            // handleModalClose();
+        } catch (error) {
+            console.log(error)
+        }
     }
     useEffect(() => {
         setFormValues(editObj)
     }, [editObj])
     useEffect(() => {
         getTags()
-        console.log(tags)
     }, [])
     async function setFormValues(editObj) {
-        console.log(editObj)
-        // if (editObj) {
-        //     const keys = Object.keys(editObj);
-        //     const values = Object.values(editObj);
-        //     let i = 0
-        //     values[0] = formatTimeStampToInputDate(values[0])
-        //     values[8] = values[8].join(", ")
-        //     values[7] = values[7].join("\n")
-        //     values[1] = values[1].join("\n")
-        //     keys.forEach(key => {
-        //         setValue(key, values[i])
-        //         i++
-        //     })
-        // }
+        if (editObj) {
+            const keys = Object.keys(editObj);
+            const values = Object.values(editObj);
+            let i = 0
+            // values[1] = formatTimeStampToInputDate(values[1])
+            keys.forEach(key => {
+                setValue(key, values[i])
+                i++
+            })
+            setTagList(editObj.productTags)
+        }
     }
     function switchSection(e, id) {
         const array = Array.from(e.target.parentElement.parentElement.children)
@@ -106,23 +133,23 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
             setValue(keys[i], values[i])
         }
     }
-    function addTag(value){
-        if(!tagList.includes(value)){
+    function addTag(value) {
+        if (!tagList.includes(value)) {
             setTagList([...tagList, value])
         }
     }
-    function tagListRender(id){
+    function tagListRender(id) {
         let name;
         tags.forEach(tag => {
-            if(tag._id === id) name = tag.viewValue
+            if (tag._id === id) name = tag.viewValue
         })
         return name
-    } 
-    function tagListRemove(id){
+    }
+    function tagListRemove(id) {
         const newTagList = tagList.filter(tag => tag !== id)
         console.log(newTagList)
         setTagList(newTagList)
-    } 
+    }
     return (
         <div className={editObj._id ? "form-product-container edit-background" : "form-product-container"}>
             <div className="table-title mb-16">
@@ -185,7 +212,7 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                         <select className='input-select' name="tagSelect" id="tagSelect" onChange={(e) => addTag(e.target.value)}>
                             {
                                 tags.map(tag => {
-                                    return(
+                                    return (
                                         <option key={tag._id} value={tag._id}>{tag.viewValue}</option>
                                     )
                                 })
@@ -194,7 +221,7 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                         <ul className='tag-list'>
                             {
                                 tagList.map(tag => {
-                                    return(
+                                    return (
                                         <div className='tag-container' key={tag}>
                                             <li className='tag-item'>{tagListRender(tag)}</li>
                                             <button className='tag-button' type='button' onClick={() => tagListRemove(tag)}>x</button>
@@ -258,7 +285,7 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                     <button type='button' className='switch-button left' title='A 3/4' onClick={(e) => switchSection(e, "section3")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
                     <h2 className='section-title'>Requisitos Recomendados:</h2>
                     <div className="input-container">
-                        <select name="requirements" id="requirements" onChange={(e) => setRequirements(e.target.value)}>
+                        <select className='input-select' name="requirements" id="requirements" onChange={(e) => setRequirements(e.target.value)}>
                             <option value={JSON.stringify(reqLowRec)}>Requisitos bajos</option>
                             <option value={JSON.stringify(reqMediumRec)}>Requisitos medios</option>
                             <option value={JSON.stringify(reqHighRec)}>Requisitos altos</option>

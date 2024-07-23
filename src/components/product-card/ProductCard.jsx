@@ -14,7 +14,7 @@ export default function ProductCard({ producto, favIcon }) {
                 <div className="card-img-container">
                     <FontAwesomeIcon className='fav-icon' icon={favIcon} title='Agregar a favoritos' onClick={() => addToFavList(producto)} />
                     <NavLink to={`/product-detail/${producto._id}`} className="game-link">
-                        <img className="game-img" src={`${baseURL}/images/products/card-images/${producto.productImage.id}`} alt={producto.productName} />
+                        <img className="game-img" src={`${baseURL}/images/products/card-images/${producto.productImage?.id}`} alt={producto.productName} />
                         <p className="description">{producto.productDesc}</p>
                     </NavLink>
                 </div>

@@ -24,7 +24,7 @@ export const ProductProvider = ({ children }) => {
     const [cartCount, setCount] = useState(0)
     const [favList, setFavList] = useState(JSON.parse(localStorage.getItem("favList")) || [])
     const [isOpen, setFavListOpen] = useState(false)
-    const [ tags, setTags ] = useState()
+    const [tags, setTags] = useState()
 
 
     // *FAVLIST
@@ -48,13 +48,13 @@ export const ProductProvider = ({ children }) => {
     }
     function favStar(product) {
         let isIn = false
-        favList.forEach(prod =>{
-            if(prod.id == product.id) isIn = true
+        favList.forEach(prod => {
+            if (prod.id == product.id) isIn = true
         })
-        if(isIn) return faStar
-        if(!isIn) return faStarEmpty
+        if (isIn) return faStar
+        if (!isIn) return faStarEmpty
     }
-    useEffect(() =>{
+    useEffect(() => {
         localStorage.setItem("favList", JSON.stringify(favList))
     }, [favList])
     // *FIN FAVLIST
@@ -152,22 +152,25 @@ export const ProductProvider = ({ children }) => {
         try {
             const response = await axios.get(`${url}/products`)
             setProduct(response.data.products)
-            console.log(response.data.products)
         } catch (error) {
             console.log(error)
         }
     }
-    async function postProduct(obj) {
-        if (obj._id) {
+    async function postProduct(formData) {
+        const id = formData.get("id")
+        formData.get("productImage") === "false" ? formData.delete("productImage") : null
+        formData.get("productPortrait") === "false" ? formData.delete("productPortrait") : null
+        formData.get("productDescPictures") === "false" ? formData.delete("productDescPictures") : null
+        if (id !== "undefined") {
             try {
-                await axios.put(`${url}/products/${obj._id}`, obj)
+                await axios.put(`${url}/products/${id}`, formData)
                 updateCorrectly("producto")
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await axios.post(`${url}/products`, obj)
+                await axios.post(`${url}/products`, formData)
                 getProducts()
                 postCorrect("producto")
             } catch (error) {
@@ -222,7 +225,7 @@ export const ProductProvider = ({ children }) => {
                 console.log(error)
             }
         }
-        if(string === "tag"){
+        if (string === "tag") {
             try {
                 const response = await axios.get(`${url}/tags/${id}`)
                 setEditObj(response.data.tag)
@@ -241,7 +244,7 @@ export const ProductProvider = ({ children }) => {
     }
     async function postUser(obj) {
         const id = obj.get("id")
-        if(obj.get("userAvatar") === "false") obj.delete("userAvatar")
+        if (obj.get("userAvatar") === "false") obj.delete("userAvatar")
         if (id !== "undefined") {
             try {
                 await axios.put(`${url}/users/${id}`, obj)
@@ -260,7 +263,7 @@ export const ProductProvider = ({ children }) => {
             }
         }
     }
-    async function getTags(){
+    async function getTags() {
         try {
             const response = await axios.get(`${url}/tags`)
             setTags(response.data.tags)
@@ -268,10 +271,10 @@ export const ProductProvider = ({ children }) => {
             console.log(error)
         }
     }
-    async function postTag(obj){
+    async function postTag(obj) {
         console.log(obj)
         // const id = obj.get("id")
-        if(obj._id !== undefined) {
+        if (obj._id !== undefined) {
             try {
                 await axios.put(`${url}/tags/${obj._id}`, obj)
                 getTags()
@@ -299,7 +302,7 @@ export const ProductProvider = ({ children }) => {
             background: "#0E1014",
             color: "#DCDEDF",
             confirmButtonText: "Confirmar",
-            timer:2000
+            timer: 2000
         })
     }
     function deleteConfirm(string, id) {
@@ -328,7 +331,7 @@ export const ProductProvider = ({ children }) => {
             background: "#0E1014",
             color: "#DCDEDF",
             confirmButtonText: "Confirmar",
-            timer:2000
+            timer: 2000
         })
     }
 
@@ -339,7 +342,7 @@ export const ProductProvider = ({ children }) => {
             background: "#0E1014",
             color: "#DCDEDF",
             confirmButtonText: "Confirmar",
-            timer:2000
+            timer: 2000
         })
     }
     // !FIN SWAL
@@ -351,7 +354,7 @@ export const ProductProvider = ({ children }) => {
             positionClass: "toast-bottom-center",
             timeOut: "2000"
         }
-        if(list === "cart"){
+        if (list === "cart") {
             switch (value) {
                 case "add":
                     toastr.success('Producto agregado al carrito');
@@ -361,7 +364,7 @@ export const ProductProvider = ({ children }) => {
                     break;
             }
         }
-        if(list === "favList"){
+        if (list === "favList") {
             switch (value) {
                 case "add":
                     toastr.success('Producto agregado a la lista');
@@ -375,7 +378,7 @@ export const ProductProvider = ({ children }) => {
 
     // ?FIN TOASTR
 
-    function handleReload(e){
+    function handleReload(e) {
         e.preventDefault();
         window.location.href = e.currentTarget.href;
     }
