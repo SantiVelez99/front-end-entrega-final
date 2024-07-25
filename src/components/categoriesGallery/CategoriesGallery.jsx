@@ -10,17 +10,17 @@ export default function CategoriesGallery() {
     const { product, favStar } = useProduct()
     const [tagsArray, setTag] = useState([])
     const [filteredProducts, setFilter] = useState([])
-    product.forEach((prod) => {
-        prod.productTags.forEach(tag => {
-            if (!tagsArray.includes(tag)) {
-                setTag([...tagsArray, tag])
-            }
-        })
-    })
-    function categoriesFilter(tag) {
-        const array = product.filter(prod => prod.productTags.includes(tag))
-        setFilter(array)
-    }
+    // product.forEach((prod) => {
+    //     prod.productTags.forEach(tag => {
+    //         if (!tagsArray.includes(tag)) {
+    //             setTag([...tagsArray, tag])
+    //         }
+    //     })
+    // })
+    // function categoriesFilter(tag) {
+    //     const array = product.filter(prod => prod.productTags.includes(tag))
+    //     setFilter(array)
+    // }
     const [currentPage, setCurrentPage] = useState(0)
     const prodsPerPage = 3
     const pagesVisited = currentPage * prodsPerPage

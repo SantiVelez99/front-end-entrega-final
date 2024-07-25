@@ -10,11 +10,15 @@ import TagsModal from "../../components/tagsModal/TagsModal";
 export default function ProductDetail() {
     const { id } = useParams();
     const { addToCart, getProducts, url, baseURL } = useProduct()
-    
+
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState([true]);
     const [ isOpen, setIsOpen ] = useState(false)
     const [ tag, setTag ] = useState()
+
+    console.log(product.productDesc)
+    const descArray = product.productDesc.split('\n')
+    console.log(descArray)
     function handleModalOpen(e){
         if(!isOpen) {
             setTag(e.target.innerText)
@@ -45,7 +49,7 @@ export default function ProductDetail() {
         <main className="main-container">
             <div className="product-container">
                 <div className="product-header">
-                    <img className="product-header-img" src={product.productPortrait}
+                    <img className="product-header-img" src={`${baseURL}/images/products/portrait-images/${product.productPortrait.id}`}
                         alt="Elden Ring header"/>
                         <div className="product-info">
                             <div className="product-description">
@@ -74,7 +78,7 @@ export default function ProductDetail() {
                                     product.productTags.map(tag => {
                                         return(
                                     <NavLink className="title-link" key={crypto.randomUUID()} onClick={(e) => handleModalOpen(e)}>
-                                        <li className="categories-list-item">{tag}</li>
+                                        <li className="categories-list-item">{tag.viewValue}</li>
                                     </NavLink>
                                         )
                                     })}
@@ -100,38 +104,36 @@ export default function ProductDetail() {
                 </div>
 
                 <section className="extra-info-section">
-                    {/* <div className="extra-description">
+                    <div className="extra-description">
                         <div className="underline">
                             <h2 className="game-title">Acerca de {product.productName}</h2>
                         </div>
                         <img className="extra-description-img"
                             src={`${baseURL}/images/products/extra-images/${product.productDescPictures[0].id}`} alt={`${product.producName} ${product.productDescPictures[0].name}`} />
                             {
-                                product.productDesc.map(paragraph =>{
+                                descArray.map((paragraph, i) =>{
                                     return(
-                                        <p className="extra-description-text" key={crypto.randomUUID()}>{paragraph}</p>
+                                        <p className="extra-description-text" key={i}>{paragraph}</p>
                                     )
                                 })
                             }
-                    </div> */}
+                    </div>
                     <div className="system-requirements">
                         <ul className="minimun">
                             <div className="underline">Requisitos mínimos</div>
-                            <li className="requirement-list-item">SO: {product.productSoMin}</li>
-                            <li className="requirement-list-item">CPU: {product.productCPUMin}</li>
-                            <li className="requirement-list-item">RAM: {product.productRAMMin}</li>
-                            <li className="requirement-list-item">GPU: {product.productGPUMin}</li>
-                            <li className="requirement-list-item">DirectX: {product.productDXMin}</li>
-                            <li className="requirement-list-item">Espacio: {product.productSpaceMin}</li>
+                            <li className="requirement-list-item">SO: {product.productMinReq.productSoMin}</li>
+                            <li className="requirement-list-item">CPU: {product.productMinReq.productCPUMin}</li>
+                            <li className="requirement-list-item">RAM: {product.productMinReq.productRAMMin}</li>
+                            <li className="requirement-list-item">GPU: {product.productMinReq.productGPUMin}</li>
+                            <li className="requirement-list-item">Espacio: {product.productMinReq.productSpaceMin}</li>
                         </ul>
                         <ul className="recommended">
                             <div className="underline">Requisitos recomendados</div>
-                            <li className="requirement-list-item">SO: {product.productSoRec}</li>
-                            <li className="requirement-list-item">CPU: {product.productCPURec}</li>
-                            <li className="requirement-list-item">RAM: {product.productRAMRec}</li>
-                            <li className="requirement-list-item">GPU: {product.productGPURec}</li>
-                            <li className="requirement-list-item">DirectX: {product.productDXRec}</li>
-                            <li className="requirement-list-item">Espacio: {product.productSpaceRec}</li>
+                            <li className="requirement-list-item">SO: {product.productMaxReq.productSoRec}</li>
+                            <li className="requirement-list-item">CPU: {product.productMaxReq.productCPURec}</li>
+                            <li className="requirement-list-item">RAM: {product.productMaxReq.productRAMRec}</li>
+                            <li className="requirement-list-item">GPU: {product.productMaxReq.productGPURec}</li>
+                            <li className="requirement-list-item">Espacio: {product.productMaxReq.productSpaceRec}</li>
                         </ul>
                     </div>
                     <div className="extra-images">

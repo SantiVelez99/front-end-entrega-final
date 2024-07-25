@@ -49,7 +49,7 @@ export default function AdminProducts() {
                                         <tr key={prod._id}>
                                             <td className="product-img"><img src={`${baseURL}/images/products/card-images/${prod.productImage?.id}`}
                                                 alt={prod.productImage?.name} /></td>
-                                            <td className="product-name"><NavLink className="table-link" title='Al product-detail' to={`/product-detail/${prod.id}`}>{prod.productName}</NavLink></td>
+                                            <td className="product-name"><NavLink className="table-link" title='Al product-detail' to={`/product-detail/${prod._id}`}>{prod.productName}</NavLink></td>
                                             <td className="product-description">
                                                 <p>{prod.productDesc}</p>
                                             </td>

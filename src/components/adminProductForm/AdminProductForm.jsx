@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function AdminProductForm({ handleModalClose, editObj }) {
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
     const { postProduct, tags, getTags } = useProduct()
-    const [tagList, setTagList] = useState([])
-
+    const [ tagList, setTagList ] = useState([])
     const onSubmit = data => {
+        console.log(data)
         data.productPrice = +data.productPrice
         data.productDate = new Date(data.productDate).getTime()
         console.log(data.productDescPictures)
@@ -29,11 +29,11 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
             productSpaceRec: data.productSpaceRec
         }
         const formData = new FormData()
-        for(let i = 0 ;i < data.productDescPictures.length; i++) {
+        for (let i = 0; i < data.productDescPictures.length; i++) {
             formData.append(`productDescPictures`, data.productDescPictures[i])
         }
         tagList.forEach(tag => formData.append("productTags", tag))
-        
+
         formData.append("id", data._id)
         formData.append("productName", data.productName)
         formData.append("productPrice", data.productPrice)
@@ -43,12 +43,12 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
         formData.append("productVideo", data.productVideo)
         formData.append("productMinReq", JSON.stringify(productMinReq))
         formData.append("productMaxReq", JSON.stringify(productMaxReq))
-        formData.append("productImage", data.productImage.length? data.productImage[0] : false)
-        formData.append("productPortrait", data.productPortrait.length? data.productPortrait[0] : false)
+        formData.append("productImage", data.productImage.length ? data.productImage[0] : false)
+        formData.append("productPortrait", data.productPortrait.length ? data.productPortrait[0] : false)
         try {
             postProduct(formData)
-            // reset();
-            // handleModalClose();
+            reset();
+            handleModalClose();
         } catch (error) {
             console.log(error)
         }
@@ -60,16 +60,24 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
         getTags()
     }, [])
     async function setFormValues(editObj) {
-        if (editObj) {
+        let array = []
+
+        if (Object.keys(editObj).length > 0) {
+            console.log(editObj)
             const keys = Object.keys(editObj);
             const values = Object.values(editObj);
+            setRequirementsEdit(editObj.productMinReq)
+            setRequirementsEdit(editObj.productMaxReq)
             let i = 0
-            // values[1] = formatTimeStampToInputDate(values[1])
+            values[4] = formatTimeStampToInputDate(values[4])
             keys.forEach(key => {
                 setValue(key, values[i])
                 i++
             })
-            setTagList(editObj.productTags)
+            editObj.productTags?.forEach(tag => {
+                array.push(tag._id)
+                setTagList(array)
+            })
         }
     }
     function switchSection(e, id) {
@@ -133,10 +141,15 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
             setValue(keys[i], values[i])
         }
     }
-    function addTag(value) {
-        if (!tagList.includes(value)) {
-            setTagList([...tagList, value])
+    function setRequirementsEdit(obj){
+        const keys = Object.keys(obj)
+        const values = Object.values(obj)
+        for (let i = 0; i < keys.length; i++) {
+            setValue(keys[i], values[i])
         }
+    }
+    function addTag(value) {
+        if(!tagList.includes(value)) setTagList( [...tagList, value] )
     }
     function tagListRender(id) {
         let name;
@@ -220,7 +233,7 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                         </select>
                         <ul className='tag-list'>
                             {
-                                tagList.map(tag => {
+                                tagList?.map(tag => {
                                     return (
                                         <div className='tag-container' key={tag}>
                                             <li className='tag-item'>{tagListRender(tag)}</li>
