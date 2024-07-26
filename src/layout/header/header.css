@@ -85,18 +85,40 @@
 .user-info {
     display: flex;
     flex-direction: column;
+    gap: .5rem;
+    align-items: center;
+
+    .user-icon {
+        height: 50px;
+        width: 50px;
+    }
+    .user-name {
+        display: flex;
+        gap: .5rem;
+        color: var(--fontColor);
+        cursor: pointer;
+        position: relative;
+        #user-menu{
+            text-align: center;
+            list-style-type: none;
+            position: absolute;
+            top: 30px;
+            left: -6px;
+            background-color: var(--navColor);
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            padding: .5rem;
+            li{
+                margin-bottom: .25rem;
+                padding: .25rem;
+                &:hover{
+                    font-weight: bolder;
+                }
+            }
+        }
+    }
 }
 
-.user-icon {
-    height: 50px;
-    width: 50px;
-}
-
-.user-name-container {
-    display: flex;
-    flex-direction: column;
-    color: var(--fontColor);
-}
 
 /* *Estilos menu hamburguesa */
 .check-menu {
@@ -223,6 +245,7 @@
         border-bottom: 1px solid white;
     }
 }
+
 body:has(.check-menu:checked) {
     .main-header{
         overflow: hidden;

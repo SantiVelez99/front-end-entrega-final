@@ -5,6 +5,7 @@ import toastr from "toastr";
 import 'toastr/build/toastr.min.css'
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import useApi from "../services/interceptor/interceptor";
 
 const ProductContext = createContext();
 export const useProduct = () => useContext(ProductContext)
@@ -14,6 +15,7 @@ export const useProduct = () => useContext(ProductContext)
 export const ProductProvider = ({ children }) => {
     const url = import.meta.env.VITE_URL
     const baseURL = import.meta.env.VITE_BASE_URL
+    const api = useApi()
     const [product, setProduct] = useState([]);
     const [user, setUser] = useState([])
     const [editObj, setEditObj] = useState([])
@@ -67,9 +69,11 @@ export const ProductProvider = ({ children }) => {
         if (!isClosed) setCart(true)
     }
     function addToCart(product) {
-        const producto = cartOrder.find(prod => prod.id === product.id)
+        console.log(product)
+        const producto = cartOrder.find(prod => prod._id === product._id)
         if (producto) {
-            handleChangeQuantity(producto.id, producto.quantity + 1)
+            console.log(producto)
+            handleChangeQuantity(producto._id, producto.quantity + 1)
             setCart(true)
         } else {
             product.quantity = 1;
@@ -80,22 +84,22 @@ export const ProductProvider = ({ children }) => {
     }
     function handleChangeQuantity(id, quantity, operator) {
         const newOrders = cartOrder.map(prod => {
-            if (operator === "-" && prod.id === id) {
+            if (operator === "-" && prod._id === id) {
                 prod.quantity += -1
                 if (prod.quantity < 1) {
-                    removeListItem(prod.id)
+                    removeListItem(prod._id)
                     prod.quantity = 1
                 }
             }
-            if (operator === "+" && prod.id === id) {
+            if (operator === "+" && prod._id === id) {
                 prod.quantity += 1
             }
-            if (prod.id === id && !operator) {
+            if (prod._id === id && !operator) {
                 if (quantity > 0) {
                     prod.quantity = +quantity;
                 }
                 if (quantity < 1) {
-                    removeListItem(prod.id)
+                    removeListItem(prod._id)
                     prod.quantity = 1
                 }
             }
@@ -118,7 +122,7 @@ export const ProductProvider = ({ children }) => {
             color: "#DCDEDF"
         }).then(resultado => {
             if (resultado.isConfirmed) {
-                const newOrder = cartOrder.filter(prod => prod.id != id)
+                const newOrder = cartOrder.filter(prod => prod._id != id)
                 toastSuccessAlert("remove", "cart")
                 setCartOrder(newOrder)
                 if (cartOrder.length <= 1) setCount(0)
@@ -138,6 +142,9 @@ export const ProductProvider = ({ children }) => {
             count += prod.quantity
             setCount(count)
         })
+    }
+    function checkOut(obj){
+
     }
     useEffect(() => {
         localStorage.setItem("cartOrder", JSON.stringify(cartOrder))
@@ -163,14 +170,14 @@ export const ProductProvider = ({ children }) => {
         formData.get("productDescPictures") === "false" ? formData.delete("productDescPictures") : null
         if (id !== "undefined") {
             try {
-                await axios.put(`${url}/products/${id}`, formData)
+                await api.put(`${url}/products/${id}`, formData)
                 updateCorrectly("producto")
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await axios.post(`${url}/products`, formData)
+                await api.post(`${url}/products`, formData)
                 getProducts()
                 postCorrect("producto")
             } catch (error) {
@@ -182,7 +189,7 @@ export const ProductProvider = ({ children }) => {
     async function deleteMockData(string, id) {
         if (string === "producto") {
             try {
-                await axios.delete(`${url}/products/${id}`)
+                await api.delete(`${url}/products/${id}`)
                 deleteSuccess(string)
                 getProducts()
             } catch (error) {
@@ -191,7 +198,7 @@ export const ProductProvider = ({ children }) => {
         }
         if (string === "usuario") {
             try {
-                await axios.delete(`${url}/users/${id}`)
+                await api.delete(`${url}/users/${id}`)
                 deleteSuccess(string)
                 getUsers()
             } catch (error) {
@@ -200,7 +207,7 @@ export const ProductProvider = ({ children }) => {
         }
         if (string === "tag") {
             try {
-                await axios.delete(`${url}/tags/${id}`)
+                await api.delete(`${url}/tags/${id}`)
                 deleteSuccess(string)
                 getTags()
             } catch (error) {
@@ -245,9 +252,9 @@ export const ProductProvider = ({ children }) => {
     async function postUser(obj) {
         const id = obj.get("id")
         if (obj.get("userAvatar") === "false") obj.delete("userAvatar")
-        if (id !== "undefined") {
+        if (id) {
             try {
-                await axios.put(`${url}/users/${id}`, obj)
+                await api.put(`${url}/users/${id}`, obj)
                 updateCorrectly("usuario")
                 getUsers()
             } catch (error) {
@@ -273,10 +280,11 @@ export const ProductProvider = ({ children }) => {
     }
     async function postTag(obj) {
         console.log(obj)
+        console.log(obj._id)
         // const id = obj.get("id")
-        if (obj._id !== undefined) {
+        if (obj._id) {
             try {
-                await axios.put(`${url}/tags/${obj._id}`, obj)
+                await api.put(`${url}/tags/${obj._id}`, obj)
                 getTags()
                 updateCorrectly("tag")
             } catch (error) {
@@ -284,7 +292,7 @@ export const ProductProvider = ({ children }) => {
             }
         } else {
             try {
-                await axios.post(`${url}/tags`, obj)
+                await api.post(`${url}/tags`, obj)
                 getTags()
                 postCorrect("tag")
             } catch (error) {
@@ -385,7 +393,7 @@ export const ProductProvider = ({ children }) => {
     return (
         <ProductContext.Provider value={{
             product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
-            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut
         }}>
             {children}
         </ProductContext.Provider>

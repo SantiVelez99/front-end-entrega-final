@@ -15,20 +15,8 @@ export default function ProductDetail() {
     const [loading, setLoading] = useState([true]);
     const [ isOpen, setIsOpen ] = useState(false)
     const [ tag, setTag ] = useState()
-
-    console.log(product.productDesc)
-    const descArray = product.productDesc.split('\n')
-    console.log(descArray)
-    function handleModalOpen(e){
-        if(!isOpen) {
-            setTag(e.target.innerText)
-            setIsOpen(true)
-        }
-        if(isOpen) setIsOpen(false)
-        }
     async function getProdByID(id) {
         try {
-            console.log(id)
             const response = await axios.get(`${url}/products/${id}`)
             setProduct(response.data.product)
             setLoading(false)
@@ -40,6 +28,13 @@ export default function ProductDetail() {
         getProdByID(id);
         getProducts()
     }, [])
+    function handleModalOpen(e){
+        if(!isOpen) {
+            setTag(e.target.innerText)
+            setIsOpen(true)
+        }
+        if(isOpen) setIsOpen(false)
+        }
     if (loading) {
         return (
             <h4>CARGANDO...</h4>
@@ -111,7 +106,7 @@ export default function ProductDetail() {
                         <img className="extra-description-img"
                             src={`${baseURL}/images/products/extra-images/${product.productDescPictures[0].id}`} alt={`${product.producName} ${product.productDescPictures[0].name}`} />
                             {
-                                descArray.map((paragraph, i) =>{
+                                product.productDesc.split("\n").map((paragraph, i) =>{
                                     return(
                                         <p className="extra-description-text" key={i}>{paragraph}</p>
                                     )

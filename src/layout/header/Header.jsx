@@ -1,7 +1,7 @@
 import './header.css'
 import { NavLink } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDiceD20, faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { faDiceD20, faCartShopping, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import Modal from '../modal/Modal'
 import Register from '../../pages/register/Register'
 import { useState } from 'react'
@@ -9,11 +9,12 @@ import Cart from '../cart/Cart'
 import { useProduct } from '../../context/ProductContext'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import FavouriteModal from '../../components/favouriteModal/FavouriteModal'
+import { useUser } from '../../context/UserContext'
 
 export default function Header() {
 
-    const isAdmin = true
-    const { isClosed, handleCartClose, cartCount } = useProduct()
+    const { isClosed, handleCartClose, cartCount, baseURL } = useProduct()
+    const { user, logOut } = useUser()
     const [isOpenR, setIsOpenR] = useState(false)
     const [isOpenFav, setIsOpenFav] = useState(false)
     function handleModalOpen(modal) {
@@ -26,8 +27,11 @@ export default function Header() {
     }
     function burguerMenu() {
         const bgMenu = document.getElementById("check-menu")
-        console.dir(bgMenu.checked)
         bgMenu.checked(false)
+    }
+    function showList() {
+        const list = document.getElementById("user-menu")
+        list.className === "display-off" ? list.className = "" : list.className = "display-off"
     }
     return (
         <>
@@ -41,15 +45,16 @@ export default function Header() {
                     <nav className='nav-menu'>
                         <ul className='nav-list'>
                             <li className='nav-item'><NavLink to="/" onClick={() => burguerMenu()}>Principal</NavLink></li>
-                            <li className='nav-item'>
-                                <NavLink onClick={() => handleModalOpen("R")}>
-                                    Registrarse
-                                </NavLink>
-                            </li>
-                            <li className='nav-item'><NavLink to="/login" onClick={() => burguerMenu()}>LogIn</NavLink></li>
+                            {
+                                user?._id ? null :
+                                    <>
+                                        <li className='nav-item'><NavLink onClick={() => handleModalOpen("R")}>Registrarse</NavLink></li>
+                                        <li className='nav-item'><NavLink to="/login" onClick={() => burguerMenu()}>Ingresar</NavLink></li>
+                                    </>
+                            }
                             <li className='nav-item'><NavLink to="/contact" onClick={() => burguerMenu()}>Contacto</NavLink></li>
                             <li className='nav-item'><NavLink to="/about-us" onClick={() => burguerMenu()}>Acerca de</NavLink></li>
-                            {isAdmin && (
+                            {user?.userRole === "ADMIN_ROLE" && (
                                 <>
                                     <li className='nav-item'><NavLink to="/admin-product" onClick={() => burguerMenu()}>Admin Product</NavLink></li>
                                     <li className='nav-item'><NavLink to="/admin-users" onClick={() => burguerMenu()}>Admin Users</NavLink></li>
@@ -70,16 +75,21 @@ export default function Header() {
                         <FontAwesomeIcon className="user-cart-icon" icon={faCartShopping} onClick={() => handleCartClose(isClosed)} />
                     </div>
                     <div className="user-info">
-                        <img className="user-icon" srcSet="src/assets/user/user-profile-default.png" alt="user profile default" />
-                        <div className="user-name-container">
-                            <span className="user-name">User</span>
+                        <img className="user-icon" srcSet={user?.userAvatar?.id ? `${baseURL}/images/users/user-avatar/${user.userAvatar.id}` : `${baseURL}/images/users/user-avatar/user-profile-default.png`} alt="user profile default" />
+                            <div className="user-name" onClick={user?._id ? () => showList() : null}>
+                                {user?.userName ? user.userName : "Usuario"}
+                                <FontAwesomeIcon icon={faSortDown} />
+                                <ul id='user-menu' className='display-off'>
+                                    <li>Mis Compras</li>
+                                    <li onClick={() => logOut()}>Cerrar sesión</li>
+                                </ul>
                         </div>
                     </div>
                 </div>
             </header>
 
             <Modal isOpen={isOpenR} handleModalClose={handleModalClose}>
-                <Register />
+                <Register handleModalClose={handleModalClose} />
             </Modal>
             <Modal isOpen={isOpenFav} handleModalClose={handleModalClose}>
                 <FavouriteModal />

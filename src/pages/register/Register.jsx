@@ -37,7 +37,6 @@ export default function Register( { handleModalClose, editObj, isOpen } ) {
             setValue("userEmail", editObj.userEmail)
             setValue("userBorndate", formatTimeStampToInputDate(editObj.userBorndate))
             setValue("userPassword", editObj.userPassword)
-            setValue("userPasswordConfirm", editObj.userPasswordConfirm)
             setValue("userCountry", editObj.userCountry)
         }
     }
