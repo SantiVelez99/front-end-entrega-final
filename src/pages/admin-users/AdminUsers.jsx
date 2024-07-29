@@ -9,8 +9,9 @@ import Register from '../register/Register'
 
 export default function AdminUsers() {
 
-    const { user, getUsers, deleteConfirm, editMockData, editObj, baseURL } = useProduct()
+    const { users, getUsers, deleteConfirm, editMockData, editObj, baseURL } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
+    console.log(users)
     function handleModalOpen() {
         setIsOpen(true)
     }
@@ -40,7 +41,7 @@ export default function AdminUsers() {
                         </thead>
                         <tbody>
                             {
-                                user.map(us => {
+                                users.map(us => {
                                     return (
                                         <tr key={us._id}>
                                             <td className="table-td"><img className='user-avatar' src={`${baseURL}/images/users/user-avatar/${us.userAvatar.id}`}

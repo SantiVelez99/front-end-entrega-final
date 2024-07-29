@@ -51,7 +51,7 @@ export default function Cart() {
                         <span>Items: {cartCount}</span>
                         <span>Total: ${cartTotal.toFixed(2)}</span>
                     </div>
-                    <button className='cart-checkout-btn' onClick={() => checkOut()}>COMPRAR</button>
+                    <button className='cart-checkout-btn' onClick={() => checkOut(cartOrder)}>COMPRAR</button>
                 </div>
             </div>
         </>

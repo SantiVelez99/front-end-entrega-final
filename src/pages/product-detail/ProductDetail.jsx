@@ -28,9 +28,9 @@ export default function ProductDetail() {
         getProdByID(id);
         getProducts()
     }, [])
-    function handleModalOpen(e){
+    function handleModalOpen(value){
         if(!isOpen) {
-            setTag(e.target.innerText)
+            setTag(value)
             setIsOpen(true)
         }
         if(isOpen) setIsOpen(false)
@@ -72,7 +72,7 @@ export default function ProductDetail() {
                                     {
                                     product.productTags.map(tag => {
                                         return(
-                                    <NavLink className="title-link" key={crypto.randomUUID()} onClick={(e) => handleModalOpen(e)}>
+                                    <NavLink className="title-link" key={tag._id} onClick={() => handleModalOpen(tag.viewValue)}>
                                         <li className="categories-list-item">{tag.viewValue}</li>
                                     </NavLink>
                                         )

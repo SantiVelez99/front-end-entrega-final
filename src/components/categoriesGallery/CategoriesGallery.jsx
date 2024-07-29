@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useProduct } from "../../context/ProductContext"
 import ProductCard from "../product-card/ProductCard"
 import './categoriesGallery.css'
@@ -7,27 +7,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons"
 
 export default function CategoriesGallery() {
-    const { product, favStar } = useProduct()
-    const [tagsArray, setTag] = useState([])
+    const { product, favStar, tags, getTags } = useProduct()
     const [filteredProducts, setFilter] = useState([])
-    // product.forEach((prod) => {
-    //     prod.productTags.forEach(tag => {
-    //         if (!tagsArray.includes(tag)) {
-    //             setTag([...tagsArray, tag])
-    //         }
-    //     })
-    // })
-    // function categoriesFilter(tag) {
-    //     const array = product.filter(prod => prod.productTags.includes(tag))
-    //     setFilter(array)
-    // }
+    useEffect(() => {
+        getTags()
+    }, [])
+    function categoriesFilter(id) {
+        let array = [];
+        product.forEach(prod => {
+            prod.productTags.forEach(tag => {
+                if(tag._id === id) {
+                    array.push(prod)
+                }
+            })
+        })
+        setFilter(array)
+    }
     const [currentPage, setCurrentPage] = useState(0)
     const prodsPerPage = 3
     const pagesVisited = currentPage * prodsPerPage
     const pageCount = Math.ceil(filteredProducts.length / prodsPerPage);
     const displayedProds = filteredProducts.slice(pagesVisited, pagesVisited + prodsPerPage).map(producto => {
         return (
-            <ProductCard producto={producto} favIcon={favStar(producto)} key={producto.id} />
+            <ProductCard producto={producto} favIcon={favStar(producto)} key={producto._id} />
         )
     })
     const changePage = ({ selected }) => {
@@ -42,9 +44,9 @@ export default function CategoriesGallery() {
                         <select className="gallery-select" onChange={(e) => categoriesFilter(e.target.value)}>
                             <option className="select-option" value="">Categorias...</option>
                             {
-                                tagsArray.map((tag, i) => {
+                                tags?.map((tag) => {
                                     return (
-                                        <option className="select-option" value={tag} key={[i]}>{tag}</option>
+                                        <option className="select-option" value={tag._id} key={tag._id}>{tag.viewValue}</option>
                                     )
                                 })
                             }
@@ -65,24 +67,24 @@ export default function CategoriesGallery() {
                         <select className="gallery-select" onChange={(e) => categoriesFilter(e.target.value)}>
                             <option className="select-option" value="">Categorias...</option>
                             {
-                                tagsArray.map((tag, i) => {
+                                tags?.map((tag) => {
                                     return (
-                                        <option className="select-option" value={tag} key={[i]}>{tag}</option>
+                                        <option className="select-option" value={tag._id} key={tag._id}>{tag.viewValue}</option>
                                     )
                                 })
                             }
                         </select>
                     </div>
                     <div className="main-gallery">
-                            {displayedProds}
-                            <ReactPaginate
-                                previousLabel={<FontAwesomeIcon icon={faCaretLeft} />}
-                                nextLabel={<FontAwesomeIcon icon={faCaretRight} />}
-                                pageCount={pageCount}
-                                onPageChange={changePage}
-                                containerClassName="ul-gallery"
-                                activeClassName="active"
-                            />
+                        {displayedProds}
+                        <ReactPaginate
+                            previousLabel={<FontAwesomeIcon icon={faCaretLeft} />}
+                            nextLabel={<FontAwesomeIcon icon={faCaretRight} />}
+                            pageCount={pageCount}
+                            onPageChange={changePage}
+                            containerClassName="ul-gallery"
+                            activeClassName="active"
+                        />
                     </div>
                 </section>
             </>

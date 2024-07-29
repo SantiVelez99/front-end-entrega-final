@@ -11,9 +11,8 @@ import AdminTags from '../../components/adminTags/AdminTags'
 
 
 export default function AdminProducts() {
-    const { product, getProducts, deleteConfirm, editMockData, editObj, setEditObj } = useProduct()
+    const { product, getProducts, deleteConfirm, editMockData, editObj, setEditObj, baseURL } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
-    const { baseURL } = useProduct()
     function handleModalOpen() {
         setIsOpen(true)
     }

@@ -5,14 +5,14 @@ import './tags-card.css'
 import { NavLink } from "react-router-dom"
 
 export default function TagsCard({ producto }) {
-    const { addToCart, handleReload } = useProduct()
+    const { addToCart, handleReload, baseURL } = useProduct()
     return (
         <div className="tag-card-container">
             <div className="tag-card-image">
-                <img src={producto.productImage} alt={`${producto.productName} imagen`} />
+                <img src={`${baseURL}/images/products/card-images/${producto.productImage.id}`} alt={`${producto.productName} imagen`} />
             </div>
             <div className="tag-card-info">
-                <h3 className="tag-card-title"><NavLink className="tag-card-link" to={`/product-detail/${producto.id}`} onClick={(e) => handleReload(e)}>
+                <h3 className="tag-card-title"><NavLink className="tag-card-link" to={`/product-detail/${producto._id}`} onClick={(e) => handleReload(e)}>
                 {producto.productName}</NavLink></h3>
                 <p className="tag-card-description">
                     {producto.productDesc}

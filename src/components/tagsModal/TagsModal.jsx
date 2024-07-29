@@ -3,10 +3,24 @@ import { useProduct } from '../../context/ProductContext'
 import TagsCard from '../tagsCard/TagsCard'
 import './tags-modal.css'
 import { faFaceFrown } from '@fortawesome/free-regular-svg-icons'
+import { useEffect, useState } from 'react'
 
 export default function TagsModal({tag, producto}){
     const { product } = useProduct()
-    const array = product.filter(prod => prod.productTags.includes(tag)).filter(prod => prod.id !== producto.id)
+    console.log(tag)
+    console.log(Object.keys(producto))
+    const [array, setArray] = useState([])
+    function filterProducts(tag){
+        product.forEach(prod => {
+            prod.productTags.forEach(tagProd => {
+                if(tagProd.viewValue === tag && prod._id !== producto._id) setArray([ ...array, prod ])
+            })
+        })
+    }
+    useEffect(() => {
+        filterProducts(tag)
+    }, [])
+
     if(array.length < 1){
         return(
             <div className="tags-gallery">
@@ -21,7 +35,7 @@ export default function TagsModal({tag, producto}){
                 array.map((prod) =>{
                     return(
                         <>
-                        <TagsCard producto={prod}/>
+                        <TagsCard key={prod._id} producto={prod}/>
                         </>
                     )
                 })

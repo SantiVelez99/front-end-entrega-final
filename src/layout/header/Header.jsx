@@ -58,6 +58,7 @@ export default function Header() {
                                 <>
                                     <li className='nav-item'><NavLink to="/admin-product" onClick={() => burguerMenu()}>Admin Product</NavLink></li>
                                     <li className='nav-item'><NavLink to="/admin-users" onClick={() => burguerMenu()}>Admin Users</NavLink></li>
+                                    <li className='nav-item'><NavLink to="/admin-orders" onClick={() => burguerMenu()}>Admin Orders</NavLink></li>
                                 </>
                             )}
                             <li className='nav-item'><NavLink onClick={() => handleModalOpen("Fav")}><FontAwesomeIcon icon={faStar} /></NavLink></li>

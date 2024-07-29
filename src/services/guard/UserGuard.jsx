@@ -3,5 +3,5 @@ import { useUser } from "../../context/UserContext";
 
 export default function UserGuard({ children }){
     const { user } = useUser()
-    return user?.role === "ADMIN_ROLE" ? children : <Navigate to="/" replace/>
+    return user.userRole === "ADMIN_ROLE" ? children : <Navigate to="*" replace/>
 }

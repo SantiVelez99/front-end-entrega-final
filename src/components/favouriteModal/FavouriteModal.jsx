@@ -23,7 +23,7 @@ export default function FavouriteModal() {
                         {
                             favList.map(prod => {
                                 return (
-                                    <li key={prod.id}>
+                                    <li key={prod._id}>
                                         <FavouriteCard producto={prod} />
                                     </li>
                                 )

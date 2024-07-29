@@ -8,9 +8,10 @@ import TagsModal from '../tagsModal/TagsModal'
 import { useState } from 'react'
 
 export default function FavouriteCard({ producto }) {
-    const { addToFavList, addToCart, handleReload } = useProduct()
+    const { baseURL, addToFavList, addToCart, handleReload } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     const [tag, setTag] = useState()
+    console.log(producto.productTags)
     function handleModalOpen() {
         if (!isOpen) {
             setIsOpen(true)
@@ -25,16 +26,16 @@ export default function FavouriteCard({ producto }) {
         <>
             <div className="favcard-container">
                 <div className="image">
-                    <img src={producto.productImage} alt="" />
+                    <img src={`${baseURL}/images/products/card-images/${producto.productImage.id}`} alt="" />
                 </div>
                 <div className='info'>
-                    <h1 className='fav-card-title'><NavLink to={`/product-detail/${producto.id}`} onClick={(e) => handleReload(e)} className="fav-card-link">{producto.productName}</NavLink></h1>
+                    <h1 className='fav-card-title'><NavLink to={`/product-detail/${producto._id}`} onClick={(e) => handleReload(e)} className="fav-card-link">{producto.productName}</NavLink></h1>
                     <ul className='fav-card-list'>
                         {
                             producto.productTags.map((prod) => {
                                 return (
-                                    <NavLink className="fav-card-link" key={crypto.randomUUID()} onClick={() => getTag(prod)} >
-                                        <li className='fav-card-item' >{prod}</li>
+                                    <NavLink className="fav-card-link" key={prod._id} onClick={() => getTag(prod.viewValue)}>
+                                        <li className='fav-card-item' >{prod.viewValue}</li>
                                     </NavLink>
                                 )
                             })

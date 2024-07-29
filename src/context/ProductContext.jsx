@@ -6,18 +6,18 @@ import 'toastr/build/toastr.min.css'
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import useApi from "../services/interceptor/interceptor";
+import { useUser } from "./UserContext";
 
 const ProductContext = createContext();
 export const useProduct = () => useContext(ProductContext)
-
-
 
 export const ProductProvider = ({ children }) => {
     const url = import.meta.env.VITE_URL
     const baseURL = import.meta.env.VITE_BASE_URL
     const api = useApi()
+    const { user } = useUser()
     const [product, setProduct] = useState([]);
-    const [user, setUser] = useState([])
+    const [users, setUser] = useState([])
     const [editObj, setEditObj] = useState([])
     // const mockURL = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
     const [isClosed, setCart] = useState(false)
@@ -32,14 +32,14 @@ export const ProductProvider = ({ children }) => {
     // *FAVLIST
 
     function addToFavList(producto) {
-        const product = favList.find(prod => prod.id === producto.id)
+        const product = favList.find(prod => prod._id === producto._id)
         if (!product) {
             setFavList([...favList, producto])
             toastSuccessAlert("add", "favList")
             handleFavList()
         }
         if (product) {
-            const newOrder = favList.filter(prod => prod.id != producto.id)
+            const newOrder = favList.filter(prod => prod._id != producto._id)
             setFavList(newOrder)
             toastSuccessAlert("remove", "favList")
         }
@@ -51,7 +51,7 @@ export const ProductProvider = ({ children }) => {
     function favStar(product) {
         let isIn = false
         favList.forEach(prod => {
-            if (prod.id == product.id) isIn = true
+            if (prod._id == product._id) isIn = true
         })
         if (isIn) return faStar
         if (!isIn) return faStarEmpty
@@ -143,8 +143,25 @@ export const ProductProvider = ({ children }) => {
             setCount(count)
         })
     }
-    function checkOut(obj){
-
+    async function checkOut(obj){
+        let prods = []
+        obj.forEach((prod, i) => {
+            prods[i] = {
+                product: prod._id,
+                price: prod.productPrice,
+                quantity: prod.quantity
+            }
+        })
+        if(user._id){
+            const order = {
+                user: user._id,
+                products: prods,
+                total: cartTotal
+            }
+            const response = await api.post(`${url}/orders`, order)
+            postCorrect(response.data.message)
+        console.log(order)
+        }
     }
     useEffect(() => {
         localStorage.setItem("cartOrder", JSON.stringify(cartOrder))
@@ -170,16 +187,16 @@ export const ProductProvider = ({ children }) => {
         formData.get("productDescPictures") === "false" ? formData.delete("productDescPictures") : null
         if (id !== "undefined") {
             try {
-                await api.put(`${url}/products/${id}`, formData)
-                updateCorrectly("producto")
+                const response = await api.put(`${url}/products/${id}`, formData)
+                updateCorrectly(response.data.message)
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await api.post(`${url}/products`, formData)
+                const response = await api.post(`${url}/products`, formData)
                 getProducts()
-                postCorrect("producto")
+                postCorrect(response.data.message)
             } catch (error) {
                 console.log(error)
             }
@@ -189,8 +206,8 @@ export const ProductProvider = ({ children }) => {
     async function deleteMockData(string, id) {
         if (string === "producto") {
             try {
-                await api.delete(`${url}/products/${id}`)
-                deleteSuccess(string)
+                const response = await api.delete(`${url}/products/${id}`)
+                deleteSuccess(response.data.message)
                 getProducts()
             } catch (error) {
                 console.log(error)
@@ -198,8 +215,8 @@ export const ProductProvider = ({ children }) => {
         }
         if (string === "usuario") {
             try {
-                await api.delete(`${url}/users/${id}`)
-                deleteSuccess(string)
+                const response = await api.delete(`${url}/users/${id}`)
+                deleteSuccess(response.data.message)
                 getUsers()
             } catch (error) {
                 console.log(error)
@@ -207,9 +224,17 @@ export const ProductProvider = ({ children }) => {
         }
         if (string === "tag") {
             try {
-                await api.delete(`${url}/tags/${id}`)
-                deleteSuccess(string)
+                const response = await api.delete(`${url}/tags/${id}`)
+                deleteSuccess(response.data.message)
                 getTags()
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        if (string === "order") {
+            try {
+                const response = await api.delete(`${url}/orders/${id}`)
+                deleteSuccess(response.data.message)
             } catch (error) {
                 console.log(error)
             }
@@ -218,7 +243,7 @@ export const ProductProvider = ({ children }) => {
     async function editMockData(string, id) {
         if (string === "producto") {
             try {
-                const response = await axios.get(`${url}/products/${id}`)
+                const response = await api.get(`${url}/products/${id}`)
                 setEditObj(response.data.product)
             } catch (error) {
                 console.log(error)
@@ -226,7 +251,7 @@ export const ProductProvider = ({ children }) => {
         }
         if (string === "usuario") {
             try {
-                const response = await axios.get(`${url}/users/${id}`)
+                const response = await api.get(`${url}/users/${id}`)
                 setEditObj(response.data.user)
             } catch (error) {
                 console.log(error)
@@ -234,7 +259,7 @@ export const ProductProvider = ({ children }) => {
         }
         if (string === "tag") {
             try {
-                const response = await axios.get(`${url}/tags/${id}`)
+                const response = await api.get(`${url}/tags/${id}`)
                 setEditObj(response.data.tag)
             } catch (error) {
                 console.log(error)
@@ -254,17 +279,17 @@ export const ProductProvider = ({ children }) => {
         if (obj.get("userAvatar") === "false") obj.delete("userAvatar")
         if (id) {
             try {
-                await api.put(`${url}/users/${id}`, obj)
-                updateCorrectly("usuario")
+                const response = await api.put(`${url}/users/${id}`, obj)
+                updateCorrectly(response.data.message)
                 getUsers()
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await axios.post(`${url}/users`, obj)
+                const response = await axios.post(`${url}/users`, obj)
                 getUsers()
-                postCorrect("usuario")
+                postCorrect(response.data.message)
             } catch (error) {
                 console.log(error)
             }
@@ -279,22 +304,19 @@ export const ProductProvider = ({ children }) => {
         }
     }
     async function postTag(obj) {
-        console.log(obj)
-        console.log(obj._id)
-        // const id = obj.get("id")
         if (obj._id) {
             try {
-                await api.put(`${url}/tags/${obj._id}`, obj)
+                const response = await api.put(`${url}/tags/${obj._id}`, obj)
                 getTags()
-                updateCorrectly("tag")
+                updateCorrectly(response.data.message)
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await api.post(`${url}/tags`, obj)
+                const response = await api.post(`${url}/tags`, obj)
                 getTags()
-                postCorrect("tag")
+                postCorrect(response.data.message)
             } catch (error) {
                 console.log(error)
             }
@@ -306,7 +328,7 @@ export const ProductProvider = ({ children }) => {
     function postCorrect(string) {
         Swal.fire({
             icon: "success",
-            title: `El ${string} se ha creado correctamente`,
+            title: string,
             background: "#0E1014",
             color: "#DCDEDF",
             confirmButtonText: "Confirmar",
@@ -317,8 +339,7 @@ export const ProductProvider = ({ children }) => {
         Swal.fire({
             icon: "warning",
             iconColor: "#922",
-            title: `Borrar ${string}`,
-            text: `Desea Borrar este ${string}?`,
+            title: `Desea Borrar esto?`,
             showConfirmButton: true,
             confirmButtonColor: "#900",
             confirmButtonText: "Borrar",
@@ -335,7 +356,7 @@ export const ProductProvider = ({ children }) => {
     function deleteSuccess(string) {
         Swal.fire({
             icon: "success",
-            title: `El ${string} se ha borrado correctamente`,
+            title: string,
             background: "#0E1014",
             color: "#DCDEDF",
             confirmButtonText: "Confirmar",
@@ -346,7 +367,7 @@ export const ProductProvider = ({ children }) => {
     function updateCorrectly(string) {
         Swal.fire({
             icon: "success",
-            title: `El ${string} se ha actualizado correctamente`,
+            title: string,
             background: "#0E1014",
             color: "#DCDEDF",
             confirmButtonText: "Confirmar",
@@ -392,7 +413,7 @@ export const ProductProvider = ({ children }) => {
     }
     return (
         <ProductContext.Provider value={{
-            product, user, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
+            product, users, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
             handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut
         }}>
             {children}
