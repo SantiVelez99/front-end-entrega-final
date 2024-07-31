@@ -20,11 +20,16 @@
     margin: 1rem auto;
     overflow: auto;
 }
-
+.order-icon{
+    pointer-events: none;
+}
+.table-order{
+    margin: .5rem auto;
+    text-align: center;
+}
 .table-title {
     border-bottom: 2px solid var(--fontColor);
 }
-
 .products-table {
     margin: auto;
     width: 100%;

@@ -12,6 +12,7 @@ import AdminProducts from './pages/admin-products/AdminProducts'
 import AdminUsers from './pages/admin-users/AdminUsers'
 import UserGuard from './services/guard/UserGuard'
 import AdminOrders from './pages/adminOrders/AdminOrders'
+import MyOrders from './pages/my-orders/MyOrders'
 
 function App() {
 
@@ -26,7 +27,7 @@ function App() {
         <Route path='/about-us' element={<AboutUs />} />
         <Route path='/product-detail/:id' element={<ProductDetail />} />
         <Route path='*' element={<NotFound />} />
-
+        <Route path='/my-orders' element={<MyOrders />}></Route>
         <Route path='/admin-product' element={
           <UserGuard>
             <AdminProducts />

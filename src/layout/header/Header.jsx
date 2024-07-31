@@ -1,7 +1,7 @@
 import './header.css'
 import { NavLink } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDiceD20, faCartShopping, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faDiceD20, faCartShopping, faSortDown, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Modal from '../modal/Modal'
 import Register from '../../pages/register/Register'
 import { useState } from 'react'
@@ -29,8 +29,8 @@ export default function Header() {
         const bgMenu = document.getElementById("check-menu")
         bgMenu.checked(false)
     }
-    function showList() {
-        const list = document.getElementById("user-menu")
+    function showList(value) {
+        const list = document.getElementById(value)
         list.className === "display-off" ? list.className = "" : list.className = "display-off"
     }
     return (
@@ -54,16 +54,18 @@ export default function Header() {
                             }
                             <li className='nav-item'><NavLink to="/contact" onClick={() => burguerMenu()}>Contacto</NavLink></li>
                             <li className='nav-item'><NavLink to="/about-us" onClick={() => burguerMenu()}>Acerca de</NavLink></li>
-                            {user?.userRole === "ADMIN_ROLE" && (
-                                <>
-                                    <li className='nav-item'><NavLink to="/admin-product" onClick={() => burguerMenu()}>Admin Product</NavLink></li>
-                                    <li className='nav-item'><NavLink to="/admin-users" onClick={() => burguerMenu()}>Admin Users</NavLink></li>
-                                    <li className='nav-item'><NavLink to="/admin-orders" onClick={() => burguerMenu()}>Admin Orders</NavLink></li>
-                                </>
-                            )}
+
                             <li className='nav-item'><NavLink onClick={() => handleModalOpen("Fav")}><FontAwesomeIcon icon={faStar} /></NavLink></li>
+                            {user?.userRole === "ADMIN_ROLE" && (
+                                <li className='nav-item' onClick={() => showList("admin-list")}><NavLink>Admin <FontAwesomeIcon icon={faCaretDown} /></NavLink></li>
+                            )}
                         </ul>
                     </nav>
+                    <ul id='admin-list' className='display-off'>
+                        <li className='nav-item'><NavLink to="/admin-product" onClick={() => burguerMenu()}>Admin Product / Tags</NavLink></li>
+                        <li className='nav-item'><NavLink to="/admin-users" onClick={() => burguerMenu()}>Admin Users</NavLink></li>
+                        <li className='nav-item'><NavLink to="/admin-orders" onClick={() => burguerMenu()}>Admin Orders</NavLink></li>
+                    </ul>
                 </div>
                 <div className="header-container">
                     <NavLink to={"/"} className="title-link"><FontAwesomeIcon className="header-icon" icon={faDiceD20} /></NavLink>
@@ -77,13 +79,13 @@ export default function Header() {
                     </div>
                     <div className="user-info">
                         <img className="user-icon" srcSet={user?.userAvatar?.id ? `${baseURL}/images/users/user-avatar/${user.userAvatar.id}` : `${baseURL}/images/users/user-avatar/user-profile-default.png`} alt="user profile default" />
-                            <div className="user-name" onClick={user?._id ? () => showList() : null}>
-                                {user?.userName ? user.userName : "Usuario"}
-                                <FontAwesomeIcon icon={faSortDown} />
-                                <ul id='user-menu' className='display-off'>
-                                    <li>Mis Compras</li>
-                                    <li onClick={() => logOut()}>Cerrar sesión</li>
-                                </ul>
+                        <div className="user-name" onClick={user?._id ? () => showList('user-menu') : null}>
+                            {user?.userName ? user.userName : "Usuario"}
+                            <FontAwesomeIcon icon={faSortDown} />
+                            <ul id='user-menu' className='display-off'>
+                                <li className='nav-item'><NavLink  to="/my-orders">Mis Compras</NavLink></li>
+                                <li className='nav-item' onClick={() => logOut()}><NavLink>Cerrar sesión</NavLink></li>
+                            </ul>
                         </div>
                     </div>
                 </div>

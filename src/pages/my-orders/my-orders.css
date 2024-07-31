@@ -1,0 +1,89 @@
+.my-orders{
+    margin: 1rem auto;
+    max-width: 720px;
+    .my-order-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin: 1rem auto;
+        font-size: 1.25rem;
+        background-color: slategray;
+        border: 1px solid var(--fontColor);
+        border-radius: 10px;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        .my-order-item{
+            &:first-of-type{
+                padding: .5rem;
+                width: 100%;
+                text-align: left;
+                border: none;
+                border-bottom: 1px solid var(--fontColor);
+            }
+            &:last-of-type{
+                align-self: center;
+                flex: 1
+            }
+        }
+        .my-order-product{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            &:not(:last-child){
+                border-bottom: 1px solid var(--fontColor);
+            }
+            .my-order-button{
+                outline: none;
+                border: none;
+                padding: .5rem;
+                background-color: var(--galleryBgColor);
+                border-radius: 8px;
+                cursor: pointer;
+                color: var(--fontColor);
+                font-size: 1.25rem;
+            }
+            .my-order-image{
+                height: 70px;
+                width: 70px;
+                overflow: hidden;
+                
+                img{
+                    width: 100%;
+                }
+            }
+            .my-order-name{
+                font-size: 1.125rem;
+                width: 200px;
+                &:hover{
+                    font-weight: bolder;
+                }
+                a{
+                    text-decoration: none;
+                    color: var(--fontColor);
+                }
+            }
+            .my-order-details{
+                width: 50px;
+            }  
+        }
+    }
+}
+
+@media screen and (width <= 425px) {
+    .my-order-product{
+        max-width: 320px;
+    }
+    .my-order-details{
+        font-size: 1rem;
+    }
+    .my-order-name{
+        a{
+            font-size: 1rem;
+
+        }
+    }
+}

@@ -69,7 +69,6 @@ export const ProductProvider = ({ children }) => {
         if (!isClosed) setCart(true)
     }
     function addToCart(product) {
-        console.log(product)
         const producto = cartOrder.find(prod => prod._id === product._id)
         if (producto) {
             console.log(producto)
@@ -140,8 +139,8 @@ export const ProductProvider = ({ children }) => {
         let count = 0;
         cartOrder.forEach((prod) => {
             count += prod.quantity
-            setCount(count)
         })
+        setCount(count)
     }
     async function checkOut(obj){
         let prods = []
@@ -161,12 +160,13 @@ export const ProductProvider = ({ children }) => {
             const response = await api.post(`${url}/orders`, order)
             postCorrect(response.data.message)
         console.log(order)
+        setCartOrder([])
         }
     }
     useEffect(() => {
         localStorage.setItem("cartOrder", JSON.stringify(cartOrder))
-        calculateTotal();
-        calculateCount();
+        calculateTotal()
+        calculateCount()
     }, [cartOrder])
     // ?CART
 
@@ -277,7 +277,7 @@ export const ProductProvider = ({ children }) => {
     async function postUser(obj) {
         const id = obj.get("id")
         if (obj.get("userAvatar") === "false") obj.delete("userAvatar")
-        if (id) {
+        if (id !== "undefined") {
             try {
                 const response = await api.put(`${url}/users/${id}`, obj)
                 updateCorrectly(response.data.message)
