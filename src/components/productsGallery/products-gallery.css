@@ -1,13 +1,15 @@
-.gallery-container{
+.gallery-container {
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
+
     .gallery-title {
         width: 100%;
         margin: 1rem;
         color: var(--fontColor);
         border-bottom: 2px solid var(--fontColor);
     }
+
     .main-gallery {
         display: flex;
         flex-direction: row;
@@ -18,34 +20,64 @@
         width: 100%;
         max-width: 1280px;
     }
-    .ul-gallery{
-        display: flex;
-        gap: 1rem;
-        color: var(--fontColor);
-        list-style-type: none;
-        margin: 1rem;
+
+    .prod-gallery-pagination {
+        padding: .25rem;
         width: 100%;
-        justify-content: end;
-        font-size: 1.125rem;
-        .active{
-            font-size: 1.25rem;
-            font-weight: bold;
-        }
-        li:hover{
-            cursor: pointer;
-            font-size: 1.25rem;
-            font-weight: bold;
+        height: 75px;
+        gap: 3rem;
+        position: relative;
+
+        .select-container {
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            position: absolute;
+            display: flex;
+            width: 100px;
+            color: var(--fontColor);
+            gap: .25rem;
+            select {
+                width: 50px;
+                cursor: pointer;
+            }
         }
 
+        .ul-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            width: 100%;
+            color: var(--fontColor);
+            list-style-type: none;
+            margin: 1rem;
+            font-size: 1.125rem;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            .active {
+                font-size: 1.25rem;
+                font-weight: bold;
+            }
+
+            li:hover {
+                cursor: pointer;
+                font-size: 1.25rem;
+                font-weight: bold;
+            }
+
+        }
     }
 }
-@media screen and (width <= 768px) {
-    .gallery-container{
-        .ul-gallery{
+
+@media screen and (width <=768px) {
+    .gallery-container {
+        .ul-gallery {
             justify-content: center;
             gap: 2rem;
             font-size: 1.5rem;
-            .active{
+
+            .active {
                 font-size: 1.725rem;
             }
         }

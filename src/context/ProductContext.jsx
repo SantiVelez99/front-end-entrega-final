@@ -17,6 +17,7 @@ export const ProductProvider = ({ children }) => {
     const api = useApi()
     const { user } = useUser()
     const [product, setProduct] = useState([]);
+    const [ totalProducts, setTotalProducts ] = useState(0)
     const [users, setUser] = useState([])
     const [editObj, setEditObj] = useState([])
     // const mockURL = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
@@ -172,10 +173,15 @@ export const ProductProvider = ({ children }) => {
 
 
     // *AXIOS
-    async function getProducts() {
+    async function getProducts({ page = 0, limit , tag }) {
         try {
-            const response = await axios.get(`${url}/products`)
+            const tagQuery = tag? `&tag=${tag}` : ''
+            const response = await axios.get(`${url}/products?page=${page}&limit=${limit}${tagQuery}`)
             setProduct(response.data.products)
+            setTotalProducts(response.data.total)
+            console.log(page)
+            console.log(limit)
+            console.log(totalProducts)
         } catch (error) {
             console.log(error)
         }
@@ -195,20 +201,20 @@ export const ProductProvider = ({ children }) => {
         } else {
             try {
                 const response = await api.post(`${url}/products`, formData)
-                getProducts()
+                getProducts({})
                 postCorrect(response.data.message)
             } catch (error) {
                 console.log(error)
             }
         }
-        getProducts()
+        getProducts({})
     }
     async function deleteMockData(string, id) {
         if (string === "producto") {
             try {
                 const response = await api.delete(`${url}/products/${id}`)
                 deleteSuccess(response.data.message)
-                getProducts()
+                getProducts({})
             } catch (error) {
                 console.log(error)
             }
@@ -414,7 +420,7 @@ export const ProductProvider = ({ children }) => {
     return (
         <ProductContext.Provider value={{
             product, users, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
-            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts
         }}>
             {children}
         </ProductContext.Provider>

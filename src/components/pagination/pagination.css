@@ -1,0 +1,21 @@
+.pagination-list{
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    
+    .pagination-item{
+        flex-basis: 30px;
+        padding: .375rem 0;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        &:hover{
+            background-color: black;
+            color: white;
+        }
+        &.active{
+            background-color: lightblue;
+            color: red;
+        }
+    }
+}

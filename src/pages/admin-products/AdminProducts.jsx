@@ -21,7 +21,7 @@ export default function AdminProducts() {
         setEditObj([""])
     }
     useEffect(() => {
-        getProducts()
+        getProducts({})
     }, [])
     return (
         <main className='main-container' id='productsTableContainer'>

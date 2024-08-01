@@ -26,7 +26,7 @@ export default function ProductDetail() {
     }
     useEffect(() => {
         getProdByID(id);
-        getProducts()
+        getProducts({})
     }, [])
     function handleModalOpen(value){
         if(!isOpen) {

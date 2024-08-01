@@ -11,12 +11,11 @@ import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function ProductsGallery() {
-    const { favStar, product, getProducts, isOpen, handleFavList } = useProduct();
+    const { favStar, product, getProducts, isOpen, handleFavList, totalProducts } = useProduct();
     const [currentPage, setCurrentPage] = useState(0)
-    const prodsPerPage = 6
-    const pagesVisited = currentPage * prodsPerPage
-    const pageCount = Math.ceil(product.length / prodsPerPage);
-    const displayedProds = product.slice(pagesVisited, pagesVisited + prodsPerPage).map(producto => {
+    const [ prodsPerPage, setProdsPerPage ] = useState(6)
+    const pageCount = Math.ceil(totalProducts / prodsPerPage);
+    const displayedProds = product.map(producto => {
         return (
             <ProductCard producto={producto} favIcon={favStar(producto)} key={producto._id} />
         )
@@ -24,10 +23,10 @@ export default function ProductsGallery() {
     const changePage = ({ selected }) => {
         setCurrentPage(selected);
     }
-
+    console.log(product)
     useEffect(() => {
-        getProducts()
-    }, [])
+        getProducts({ page: currentPage , limit: prodsPerPage })
+    }, [currentPage, prodsPerPage])
 
     return (
         <>
@@ -35,14 +34,27 @@ export default function ProductsGallery() {
                 <div className="main-gallery">
                     <h1 className="gallery-title">Nuestros productos:</h1>
                     {displayedProds}
-                    <ReactPaginate
-                        previousLabel={<FontAwesomeIcon icon={faCaretLeft} />}
-                        nextLabel={<FontAwesomeIcon icon={faCaretRight} />}
-                        pageCount={pageCount}
-                        onPageChange={changePage}
-                        containerClassName="ul-gallery"
-                        activeClassName="active"
-                    />
+                    <div className="prod-gallery-pagination">
+                        <ReactPaginate
+                            previousLabel={<FontAwesomeIcon icon={faCaretLeft} />}
+                            nextLabel={<FontAwesomeIcon icon={faCaretRight} />}
+                            pageCount={pageCount}
+                            onPageChange={changePage}
+                            containerClassName="ul-gallery"
+                            activeClassName="active"
+                        />
+
+                        <div className="select-container">
+                            <label htmlFor="prodPerPage">Productos por pagina: </label>
+                            <select name="prodPerPage" id="prodPerPage" defaultValue={6} onChange={(e) => setProdsPerPage(e.target.value)}>
+                                <option value={1}>1</option>
+                                <option value={3}>3</option>
+                                <option value={6}>6</option>
+                                <option value={9}>9</option>
+                                <option value={12}>12</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <Modal isOpen={isOpen} handleModalClose={handleFavList}>
                     <FavouriteModal />
