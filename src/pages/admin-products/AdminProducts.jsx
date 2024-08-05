@@ -5,13 +5,14 @@ import { useProduct } from '../../context/ProductContext'
 import DateFormat from '../../utilities/dateFormat/DateFormat'
 import './admin-product.css'
 import Modal from '../../layout/modal/Modal'
-import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import AdminTags from '../../components/adminTags/AdminTags'
+import Pagination from '../../components/pagination/Pagination'
+import { useState } from 'react'
 
 
 export default function AdminProducts() {
-    const { product, getProducts, deleteConfirm, editMockData, editObj, setEditObj, baseURL } = useProduct()
+    const { product, getProducts, deleteConfirm, editMockData, editObj, setEditObj, baseURL, totalProducts } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     function handleModalOpen() {
         setIsOpen(true)
@@ -20,9 +21,6 @@ export default function AdminProducts() {
         setIsOpen(false)
         setEditObj([""])
     }
-    useEffect(() => {
-        getProducts({})
-    }, [])
     return (
         <main className='main-container' id='productsTableContainer'>
             <div className="table-container">
@@ -76,6 +74,7 @@ export default function AdminProducts() {
                 <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
                     <AdminProductForm handleModalClose={handleModalClose} editObj={editObj} isOpen={isOpen} />
                 </Modal>
+                <Pagination getItems={getProducts} totalItems={totalProducts}/>
             </div>
             <AdminTags/>
         </main>

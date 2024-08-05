@@ -7,6 +7,7 @@ import DateFormat from "../../utilities/dateFormat/DateFormat";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import Pagination from "../../components/pagination/Pagination";
 
 export default function MyOrders() {
 
@@ -14,10 +15,13 @@ export default function MyOrders() {
     const { url, baseURL, addToCart } = useProduct()
     const api = useApi()
     const [orders, setOrders] = useState([])
-    async function getOrdersByUserID() {
+    const [ total, setTotal ] = useState(0)
+    async function getOrdersByUserID({ page = 0, limit = 100 }) {
         const id = user._id
-        const response = await api.get(`${url}/orders/${id}`)
+        const response = await api.get(`${url}/orders/${id}?page=${page}&limit=${limit}`)
         setOrders(response.data.orders)
+        setTotal(response.data.total)
+        console.log(response.data)
     }
     useEffect(() => {
         getOrdersByUserID()
@@ -60,6 +64,9 @@ export default function MyOrders() {
                         )
                     })
                 }
+            </div>
+            <div className="my-orders-pagination">
+                <Pagination getItems={getOrdersByUserID} totalItems={total} type={"myOrders"}/>
             </div>
         </div>
     )

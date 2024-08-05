@@ -20,7 +20,6 @@ export const ProductProvider = ({ children }) => {
     const [ totalProducts, setTotalProducts ] = useState(0)
     const [users, setUser] = useState([])
     const [editObj, setEditObj] = useState([])
-    // const mockURL = "https://6622ed463e17a3ac846e4065.mockapi.io/api"
     const [isClosed, setCart] = useState(false)
     const [cartOrder, setCartOrder] = useState(JSON.parse(localStorage.getItem("cartOrder")) || [])
     const [cartTotal, setTotal] = useState(0)
@@ -28,7 +27,10 @@ export const ProductProvider = ({ children }) => {
     const [favList, setFavList] = useState(JSON.parse(localStorage.getItem("favList")) || [])
     const [isOpen, setFavListOpen] = useState(false)
     const [tags, setTags] = useState()
-
+    const [ totalUsers, setTotalUsers ] = useState(0)
+    const [ totalTags, setTotalTags ] = useState(0)
+    const [ orders, setOrders ] = useState([])
+    const [ totalOrders, setTotalOrders ] = useState()
 
     // *FAVLIST
 
@@ -155,6 +157,8 @@ export const ProductProvider = ({ children }) => {
         if(user._id){
             const order = {
                 user: user._id,
+                userName: user.userName,
+                userEmail: user.userEmail,
                 products: prods,
                 total: cartTotal
             }
@@ -173,10 +177,11 @@ export const ProductProvider = ({ children }) => {
 
 
     // *AXIOS
-    async function getProducts({ page = 0, limit , tag }) {
+    async function getProducts({ page = 0, limit = 100 , tag, name }) {
         try {
+            const nameQuery = name? `&name=${name}` : ''
             const tagQuery = tag? `&tag=${tag}` : ''
-            const response = await axios.get(`${url}/products?page=${page}&limit=${limit}${tagQuery}`)
+            const response = await axios.get(`${url}/products?page=${page}&limit=${limit}${tagQuery}${nameQuery}`)
             setProduct(response.data.products)
             setTotalProducts(response.data.total)
             console.log(page)
@@ -223,7 +228,7 @@ export const ProductProvider = ({ children }) => {
             try {
                 const response = await api.delete(`${url}/users/${id}`)
                 deleteSuccess(response.data.message)
-                getUsers()
+                getUsers({})
             } catch (error) {
                 console.log(error)
             }
@@ -232,7 +237,7 @@ export const ProductProvider = ({ children }) => {
             try {
                 const response = await api.delete(`${url}/tags/${id}`)
                 deleteSuccess(response.data.message)
-                getTags()
+                getTags({})
             } catch (error) {
                 console.log(error)
             }
@@ -241,6 +246,7 @@ export const ProductProvider = ({ children }) => {
             try {
                 const response = await api.delete(`${url}/orders/${id}`)
                 deleteSuccess(response.data.message)
+                getOrders({})
             } catch (error) {
                 console.log(error)
             }
@@ -272,10 +278,13 @@ export const ProductProvider = ({ children }) => {
             }
         }
     }
-    async function getUsers() {
+    async function getUsers({ page = 0, limit = 100, name, email }) {
         try {
-            const response = await axios.get(`${url}/users`)
+            const nameQuery = name? `&name=${name}` : ''
+            const emailQuery = email? `&email=${email}`: ''
+            const response = await axios.get(`${url}/users?page=${page}&limit=${limit}${nameQuery}${emailQuery}`)
             setUser(response.data.users)
+            setTotalUsers(response.data.total)
         } catch (error) {
             console.log(error)
         }
@@ -287,24 +296,26 @@ export const ProductProvider = ({ children }) => {
             try {
                 const response = await api.put(`${url}/users/${id}`, obj)
                 updateCorrectly(response.data.message)
-                getUsers()
+                getUsers({})
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
                 const response = await axios.post(`${url}/users`, obj)
-                getUsers()
+                getUsers({})
                 postCorrect(response.data.message)
             } catch (error) {
                 console.log(error)
             }
         }
     }
-    async function getTags() {
+    async function getTags({ page = 0, limit = 100, name }) {
         try {
-            const response = await axios.get(`${url}/tags`)
+            const nameQuery = name? `&name=${name}` : ''
+            const response = await axios.get(`${url}/tags?page=${page}&limit=${limit}${nameQuery}`)
             setTags(response.data.tags)
+            setTotalTags(response.data.total)
         } catch (error) {
             console.log(error)
         }
@@ -313,7 +324,7 @@ export const ProductProvider = ({ children }) => {
         if (obj._id) {
             try {
                 const response = await api.put(`${url}/tags/${obj._id}`, obj)
-                getTags()
+                getTags({})
                 updateCorrectly(response.data.message)
             } catch (error) {
                 console.log(error)
@@ -321,11 +332,23 @@ export const ProductProvider = ({ children }) => {
         } else {
             try {
                 const response = await api.post(`${url}/tags`, obj)
-                getTags()
+                getTags({})
                 postCorrect(response.data.message)
             } catch (error) {
                 console.log(error)
             }
+        }
+    }
+    async function getOrders({ page = 0, limit = 100, name, email }) {
+        try {
+            const nameQuery = name? `&name=${name}` : ''
+            const emailQuery = email? `&email=${email}` : ''
+            const response = await api.get(`${url}/orders?page=${page}&limit=${limit}${nameQuery}${emailQuery}`)
+            console.log(response.data)
+            setOrders(response.data.orders)
+            setTotalOrders(response.data.total)
+        } catch (error) {
+            console.log(error)
         }
     }
     // *FIN AXIOS
@@ -420,7 +443,7 @@ export const ProductProvider = ({ children }) => {
     return (
         <ProductContext.Provider value={{
             product, users, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
-            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts, totalUsers, totalTags, orders, totalOrders, getOrders
         }}>
             {children}
         </ProductContext.Provider>

@@ -3,13 +3,14 @@ import { useProduct } from '../../context/ProductContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './admin-users.css'
 import DateFormat from '../../utilities/dateFormat/DateFormat'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Modal from '../../layout/modal/Modal'
 import Register from '../register/Register'
+import Pagination from '../../components/pagination/Pagination'
 
 export default function AdminUsers() {
 
-    const { users, getUsers, deleteConfirm, editMockData, editObj, baseURL } = useProduct()
+    const { users, getUsers, deleteConfirm, editMockData, editObj, baseURL, totalUsers } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     console.log(users)
     function handleModalOpen() {
@@ -18,9 +19,6 @@ export default function AdminUsers() {
     function handleModalClose() {
         setIsOpen(false)
     }
-    useEffect(() => {
-        getUsers()
-    }, [])
     return (
         <main className="main-container">
             <div className="table-container">
@@ -70,6 +68,7 @@ export default function AdminUsers() {
                     <Register handleModalClose={handleModalClose} editObj={editObj} isOpen={isOpen} />
                 </Modal>
             </div>
+            <Pagination getItems={getUsers} totalItems={totalUsers}/>
         </main>
     )
 }

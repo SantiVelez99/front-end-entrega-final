@@ -15,10 +15,40 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+        position: relative;
         background-color: var(--galleryBgColor);
         margin: 0 auto;
         width: 100%;
         max-width: 1280px;
+        .search-form{
+            form{
+                display: flex;
+                align-items: center;
+            }
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .search-input{
+            height: 30px;
+            border: 1px solid black;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            padding: .25rem;
+            font-size: 1.125rem;
+        }
+        .search-button{
+            outline: none;
+            border: 1px solid black;
+            height: 30px;
+            width: 30px;
+            background-color: var(--buttonColor);
+            padding: .25rem;
+            cursor: pointer;
+            .icon{
+                pointer-events: none;
+            }
+        }
     }
 
     .prod-gallery-pagination {

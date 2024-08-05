@@ -1,27 +1,12 @@
-import { useEffect, useState } from "react";
 import { useProduct } from "../../context/ProductContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faCaretUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import DateFormat from "../../utilities/dateFormat/DateFormat";
-import useApi from "../../services/interceptor/interceptor";
+import Pagination from "../../components/pagination/Pagination";
 
 export default function AdminOrders() {
-    const { deleteConfirm, url } = useProduct()
-    const [ orders, setOrders ] = useState([])
-    const api = useApi()
-    async function getOrders() {
-        try {
-            const response = await api.get(`${url}/orders`)
-            console.log(response.data.orders)
-            setOrders(response.data.orders)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    useEffect(() => {
-        getOrders()
-    }, [])
+    const { deleteConfirm, getOrders, totalOrders, orders } = useProduct()
     function showOrder(e) {
         e.target.classList = "display-off"
         e.target.parentElement.children[1].classList = "close-order-icon"
@@ -112,6 +97,7 @@ export default function AdminOrders() {
                             </tbody>
                         </table>
                     </div>
+                    <Pagination getItems={getOrders} totalItems={totalOrders}/>
                 </div>
             </div>
         </>

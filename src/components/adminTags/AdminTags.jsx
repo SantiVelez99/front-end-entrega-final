@@ -4,10 +4,11 @@ import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Modal from "../../layout/modal/Modal"
 import AdminTagsForm from "./AdminTagsForm"
+import Pagination from "../pagination/Pagination"
 
 export default function AdminTags(){
     
-    const { tags, getTags, editMockData, deleteConfirm, editObj, setEditObj } = useProduct()
+    const { tags, getTags, editMockData, deleteConfirm, editObj, setEditObj, totalTags } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     function handleModalOpen() {
         setIsOpen(true)
@@ -16,9 +17,7 @@ export default function AdminTags(){
         setIsOpen(false)
         setEditObj([])
     }
-    useEffect(() => {
-        getTags()
-    }, [])
+    console.log(tags)
     return(
         <>
             <div className="table-container">
@@ -63,6 +62,7 @@ export default function AdminTags(){
                 <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
                         <AdminTagsForm handleModalClose={handleModalClose} editObj={editObj} isOpen={isOpen} />
                 </Modal>
+            <Pagination getItems={getTags} totalItems={totalTags} type="tag"/>
             </div>
         </>
     )

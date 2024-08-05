@@ -1,21 +1,92 @@
-.pagination-list{
-    margin: 0 auto;
+.gallery-pagination {
+    padding: .25rem;
+    width: 100%;
+    height: 125px;
+    gap: .25rem;
+    position: relative;
     display: flex;
-    justify-content: center;
-    
-    .pagination-item{
-        flex-basis: 30px;
-        padding: .375rem 0;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        &:hover{
-            background-color: black;
-            color: white;
+    flex-direction: column;
+    align-items: center;
+    .search-form {
+        form {
+            display: flex;
+            align-items: center;
         }
-        &.active{
-            background-color: lightblue;
-            color: red;
+
+        position: absolute;
+        top: -30px;
+        right: 5px;
+
+        .search-input {
+            height: 30px;
+            border: 1px solid black;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            padding: .25rem;
+            font-size: 1.125rem;
         }
+
+        .search-button {
+            outline: none;
+            border: 1px solid black;
+            height: 30px;
+            width: 30px;
+            background-color: var(--buttonColor);
+            padding: .25rem;
+            cursor: pointer;
+
+            .icon {
+                pointer-events: none;
+            }
+        }
+    }
+
+    .select-container {
+        display: flex;
+        width: 100px;
+        color: var(--fontColor);
+        gap: .25rem;
+
+        select {
+            width: 50px;
+            cursor: pointer;
+        }
+    }
+
+    .ul-gallery {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        width: 100%;
+        color: var(--fontColor);
+        list-style-type: none;
+        margin: 1rem;
+        font-size: 1.125rem;
+
+        .active {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--priceFontColor);
+        }
+
+        li:hover {
+            cursor: pointer;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+    }
+}
+@media screen and (width > 425px) {
+    .select-container{
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        position: absolute;
+    }
+    .ul-gallery{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }

@@ -57,7 +57,7 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
         setFormValues(editObj)
     }, [editObj])
     useEffect(() => {
-        getTags()
+        getTags({})
     }, [])
     async function setFormValues(editObj) {
         let array = []
