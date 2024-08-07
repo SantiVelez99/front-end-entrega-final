@@ -17,7 +17,7 @@ export const ProductProvider = ({ children }) => {
     const api = useApi()
     const { user } = useUser()
     const [product, setProduct] = useState([]);
-    const [ totalProducts, setTotalProducts ] = useState(0)
+    const [totalProducts, setTotalProducts] = useState(0)
     const [users, setUser] = useState([])
     const [editObj, setEditObj] = useState([])
     const [isClosed, setCart] = useState(false)
@@ -27,10 +27,13 @@ export const ProductProvider = ({ children }) => {
     const [favList, setFavList] = useState(JSON.parse(localStorage.getItem("favList")) || [])
     const [isOpen, setFavListOpen] = useState(false)
     const [tags, setTags] = useState()
-    const [ totalUsers, setTotalUsers ] = useState(0)
-    const [ totalTags, setTotalTags ] = useState(0)
-    const [ orders, setOrders ] = useState([])
-    const [ totalOrders, setTotalOrders ] = useState()
+    const [totalUsers, setTotalUsers] = useState(0)
+    const [totalTags, setTotalTags] = useState(0)
+    const [orders, setOrders] = useState([])
+    const [totalOrders, setTotalOrders] = useState(0)
+    const [carouselItems, setCarouselItems] = useState([])
+    const [totalCarouselItems, setTotalCarouselItems] = useState(0)
+
 
     // *FAVLIST
 
@@ -145,7 +148,7 @@ export const ProductProvider = ({ children }) => {
         })
         setCount(count)
     }
-    async function checkOut(obj){
+    async function checkOut(obj) {
         let prods = []
         obj.forEach((prod, i) => {
             prods[i] = {
@@ -154,7 +157,7 @@ export const ProductProvider = ({ children }) => {
                 quantity: prod.quantity
             }
         })
-        if(user._id){
+        if (user._id) {
             const order = {
                 user: user._id,
                 userName: user.userName,
@@ -164,8 +167,8 @@ export const ProductProvider = ({ children }) => {
             }
             const response = await api.post(`${url}/orders`, order)
             postCorrect(response.data.message)
-        console.log(order)
-        setCartOrder([])
+            console.log(order)
+            setCartOrder([])
         }
     }
     useEffect(() => {
@@ -177,10 +180,10 @@ export const ProductProvider = ({ children }) => {
 
 
     // *AXIOS
-    async function getProducts({ page = 0, limit = 100 , tag, name }) {
+    async function getProducts({ page = 0, limit = 100, tag, name }) {
         try {
-            const nameQuery = name? `&name=${name}` : ''
-            const tagQuery = tag? `&tag=${tag}` : ''
+            const nameQuery = name ? `&name=${name}` : ''
+            const tagQuery = tag ? `&tag=${tag}` : ''
             const response = await axios.get(`${url}/products?page=${page}&limit=${limit}${tagQuery}${nameQuery}`)
             setProduct(response.data.products)
             setTotalProducts(response.data.total)
@@ -251,6 +254,15 @@ export const ProductProvider = ({ children }) => {
                 console.log(error)
             }
         }
+        if (string === "carousel") {
+            try {
+                const response = await api.delete(`${url}/carouselItems/${id}`)
+                deleteSuccess(response.data.message)
+                getCarouselItems({})
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
     async function editMockData(string, id) {
         if (string === "producto") {
@@ -277,11 +289,19 @@ export const ProductProvider = ({ children }) => {
                 console.log(error)
             }
         }
+        if (string === "carousel") {
+            try {
+                const response = await api.get(`${url}/carouselItems/${id}`)
+                setEditObj(response.data.item)
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
     async function getUsers({ page = 0, limit = 100, name, email }) {
         try {
-            const nameQuery = name? `&name=${name}` : ''
-            const emailQuery = email? `&email=${email}`: ''
+            const nameQuery = name ? `&name=${name}` : ''
+            const emailQuery = email ? `&email=${email}` : ''
             const response = await axios.get(`${url}/users?page=${page}&limit=${limit}${nameQuery}${emailQuery}`)
             setUser(response.data.users)
             setTotalUsers(response.data.total)
@@ -312,7 +332,7 @@ export const ProductProvider = ({ children }) => {
     }
     async function getTags({ page = 0, limit = 100, name }) {
         try {
-            const nameQuery = name? `&name=${name}` : ''
+            const nameQuery = name ? `&name=${name}` : ''
             const response = await axios.get(`${url}/tags?page=${page}&limit=${limit}${nameQuery}`)
             setTags(response.data.tags)
             setTotalTags(response.data.total)
@@ -341,12 +361,47 @@ export const ProductProvider = ({ children }) => {
     }
     async function getOrders({ page = 0, limit = 100, name, email }) {
         try {
-            const nameQuery = name? `&name=${name}` : ''
-            const emailQuery = email? `&email=${email}` : ''
+            const nameQuery = name ? `&name=${name}` : ''
+            const emailQuery = email ? `&email=${email}` : ''
             const response = await api.get(`${url}/orders?page=${page}&limit=${limit}${nameQuery}${emailQuery}`)
             console.log(response.data)
             setOrders(response.data.orders)
             setTotalOrders(response.data.total)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async function getCarouselItems({ page = 0, limit = 100 }) {
+        try {
+            const response = await axios.get(`${url}/carouselItems`)
+            setCarouselItems(response.data.items)
+            setTotalCarouselItems(response.data.total)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async function postCarouselItem(formData) {
+        try {
+            const id = formData.get("id")
+            if (formData.get("carouselImage" === "false")) formData.delete("carouselImage")
+            if (id !== "undefined") {
+                try {
+                    const response = await api.put(`${url}/carouselItems/${id}`, formData)
+                    updateCorrectly(response.data.message)
+                    getCarouselItems({})
+                } catch (error) {
+                    console.log(error)
+                }
+            } else {
+                try {
+                    const response = await api.post(`${url}/carouselItems`, formData)
+                    postCorrect(response.data.message)
+                    getCarouselItems({})
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
         } catch (error) {
             console.log(error)
         }
@@ -443,7 +498,7 @@ export const ProductProvider = ({ children }) => {
     return (
         <ProductContext.Provider value={{
             product, users, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
-            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts, totalUsers, totalTags, orders, totalOrders, getOrders
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts, totalUsers, totalTags, orders, totalOrders, getOrders, carouselItems, totalCarouselItems, getCarouselItems, postCarouselItem
         }}>
             {children}
         </ProductContext.Provider>

@@ -22,7 +22,7 @@ export default function AdminTags(){
         <>
             <div className="table-container">
                 <div className="table-title">
-                <h1>Administrador de categorias</h1>
+                <h1>Administrador de Categorias</h1>
                 </div>
                 <div className="table-container">
                     <table className="products-table">

@@ -149,7 +149,9 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
         }
     }
     function addTag(value) {
-        if(!tagList.includes(value)) setTagList( [...tagList, value] )
+        if(value){
+            if(!tagList.includes(value)) setTagList( [...tagList, value] )
+        }
     }
     function tagListRender(id) {
         let name;
@@ -223,6 +225,7 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                     <div className="input-container">
                         <label className="input-title">Tags:</label>
                         <select className='input-select' name="tagSelect" id="tagSelect" onChange={(e) => addTag(e.target.value)}>
+                            <option value="">Tags...</option>
                             {
                                 tags.map(tag => {
                                     return (

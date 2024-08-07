@@ -13,6 +13,7 @@ import AdminUsers from './pages/admin-users/AdminUsers'
 import UserGuard from './services/guard/UserGuard'
 import AdminOrders from './pages/adminOrders/AdminOrders'
 import MyOrders from './pages/my-orders/MyOrders'
+import AdminCarousel from './pages/admin-carousel/AdminCarousel'
 
 function App() {
 
@@ -26,7 +27,6 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/about-us' element={<AboutUs />} />
         <Route path='/product-detail/:id' element={<ProductDetail />} />
-        <Route path='*' element={<NotFound />} />
         <Route path='/my-orders' element={<MyOrders />}></Route>
         <Route path='/admin-product' element={
           <UserGuard>
@@ -39,12 +39,18 @@ function App() {
             <AdminUsers />
           </UserGuard>
         } />
-        
+
         <Route path='/admin-orders' element={
           <UserGuard>
             <AdminOrders />
           </UserGuard>
-        }/>
+        } />
+        <Route path='/admin-carousel' element={
+          <UserGuard>
+            <AdminCarousel />
+          </UserGuard>
+        } />
+        <Route path='*' element={<NotFound />} />
       </Routes>
 
 

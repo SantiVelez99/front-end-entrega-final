@@ -63,6 +63,7 @@ export default function Header() {
                     </nav>
                     <ul id='admin-list' className='display-off'>
                         <li className='nav-item'><NavLink to="/admin-product" onClick={() => burguerMenu()}>Admin Product / Tags</NavLink></li>
+                        <li className='nav-item'><NavLink to="/admin-carousel" onClick={() => burguerMenu()}>Admin Carousel</NavLink></li>
                         <li className='nav-item'><NavLink to="/admin-users" onClick={() => burguerMenu()}>Admin Users</NavLink></li>
                         <li className='nav-item'><NavLink to="/admin-orders" onClick={() => burguerMenu()}>Admin Orders</NavLink></li>
                     </ul>

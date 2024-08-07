@@ -14,6 +14,7 @@ import { useState } from 'react'
 export default function AdminProducts() {
     const { product, getProducts, deleteConfirm, editMockData, editObj, setEditObj, baseURL, totalProducts } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
+    console.log(product)
     function handleModalOpen() {
         setIsOpen(true)
     }
@@ -36,6 +37,8 @@ export default function AdminProducts() {
                                 <th>Descripcion</th>
                                 <th>Fecha de alta</th>
                                 <th>Precio</th>
+                                <th>Ventas</th>
+                                <th>Ingresos</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -51,11 +54,12 @@ export default function AdminProducts() {
                                                 <p>{prod.productDesc}</p>
                                             </td>
                                             <td className="product-entry-date">{DateFormat(prod.productDate)}</td>
-                                            <td className="product-price">${prod.productPrice}</td>
+                                            <td className="product-price">$ {prod.productPrice}</td>
+                                            <td>{prod.timesSold}</td>
+                                            <td>$ {prod.productPrice * prod.timesSold}</td>
                                             <td className="actions">
                                                 <button type="button" className="edit-button" onClick={() => {
                                                     handleModalOpen(editMockData("producto", prod._id))
-
                                                 }} >
                                                     <FontAwesomeIcon className="product-button-icon" icon={faPenToSquare} />
                                                 </button>
