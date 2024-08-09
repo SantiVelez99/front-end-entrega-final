@@ -237,7 +237,7 @@
 .nav-item {
     display: flex;
     line-height: 1.5rem;
-    
+
     a {
         text-align: center;
         width: 40vw;
@@ -257,13 +257,19 @@
     text-align: center;
     list-style-type: none;
     position: absolute;
-    top: 70%;
-    right: 50%;
-    transform: translateX(50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: var(--navColor);
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     padding: .5rem;
+    .close-list-icon {
+        position: absolute;
+        color: var(--fontColor);
+        top: 5px;
+        right: 5px;
+    }
 
     li {
         margin-bottom: .25rem;
@@ -279,7 +285,6 @@ body:has(.check-menu:checked) {
     .main-header {
         overflow: hidden;
     }
-
     .main-container,
     .main-footer {
         display: none;

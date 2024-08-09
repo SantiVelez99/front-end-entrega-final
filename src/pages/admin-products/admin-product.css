@@ -20,6 +20,9 @@
     margin: 1rem auto;
     overflow: auto;
     scrollbar-width: none;
+    .icon{
+        pointer-events: none;
+    }
 }
 .order-icon{
     pointer-events: none;
@@ -122,6 +125,15 @@
         color: var(--fontColor);
         transform: translate();
     }
+}
+.sort-button{
+    outline: none;
+    border: none;
+    margin-left: .325rem;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--fontColor);
+    font-size: 1rem;
 }
 @media screen and (width <=768px) {
     #productsTableContainer {

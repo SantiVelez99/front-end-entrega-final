@@ -1,7 +1,7 @@
 import './header.css'
 import { NavLink } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDiceD20, faCartShopping, faSortDown, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faDiceD20, faCartShopping, faSortDown, faCaretDown, faX } from '@fortawesome/free-solid-svg-icons'
 import Modal from '../modal/Modal'
 import Register from '../../pages/register/Register'
 import { useState } from 'react'
@@ -62,6 +62,7 @@ export default function Header() {
                         </ul>
                     </nav>
                     <ul id='admin-list' className='display-off'>
+                        <FontAwesomeIcon className='close-list-icon' onClick={() => showList("admin-list")} icon={faX} />
                         <li className='nav-item'><NavLink to="/admin-product" onClick={() => burguerMenu()}>Admin Product / Tags</NavLink></li>
                         <li className='nav-item'><NavLink to="/admin-carousel" onClick={() => burguerMenu()}>Admin Carousel</NavLink></li>
                         <li className='nav-item'><NavLink to="/admin-users" onClick={() => burguerMenu()}>Admin Users</NavLink></li>

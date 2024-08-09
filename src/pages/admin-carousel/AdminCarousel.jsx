@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useProduct } from '../../context/ProductContext'
 import Modal from '../../layout/modal/Modal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import AdminCarouselForm from '../../components/adminCarouselForm/AdminCarouselForm'
+import Pagination from '../../components/pagination/Pagination'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 export default function AdminCarousel() {
 
-    const { setEditObj, editObj, getCarouselItems, carouselItems, totalCarouselItems, baseURL, editMockData, deleteConfirm } = useProduct()
+    const { setEditObj, editObj, getCarouselItems, carouselItems, totalCarouselItems, baseURL, editMockData, deleteConfirm, sortTable } = useProduct()
     const [ isOpen, setIsOpen ] = useState(false)
 
-    useEffect(() => {
-        getCarouselItems({})
-    }, [])
     function handleModalOpen() {
         setIsOpen(true)
     }
@@ -31,7 +30,10 @@ export default function AdminCarousel() {
                         <thead>
                             <tr>
                                 <th>Imagen</th>
-                                <th>Titulo</th>
+                                <th>Titulo
+                                <button type='button' className='sort-button' onClick={(e) => sortTable("title", "asc", e, "carousel")}><FontAwesomeIcon className='icon' icon={faChevronDown} /></button>
+                                <button type='button' className='display-off' onClick={(e) => sortTable("title", "desc", e, "carousel")}><FontAwesomeIcon className='icon' icon={faChevronUp} /></button>
+                                </th>
                                 <th>Descripcion</th>
                                 <th>Acciones</th>
                             </tr>
@@ -69,6 +71,7 @@ export default function AdminCarousel() {
                 <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
                             <AdminCarouselForm editObj={editObj} handleModalClose={handleModalClose}/>
                 </Modal>
+                <Pagination getItems={getCarouselItems} totalItems={totalCarouselItems}/>
             </div>
         </>
     )

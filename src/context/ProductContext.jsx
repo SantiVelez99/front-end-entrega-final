@@ -7,6 +7,7 @@ import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import useApi from "../services/interceptor/interceptor";
 import { useUser } from "./UserContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ProductContext = createContext();
 export const useProduct = () => useContext(ProductContext)
@@ -15,6 +16,7 @@ export const ProductProvider = ({ children }) => {
     const url = import.meta.env.VITE_URL
     const baseURL = import.meta.env.VITE_BASE_URL
     const api = useApi()
+    const navigate = useNavigate()
     const { user } = useUser()
     const [product, setProduct] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0)
@@ -165,10 +167,30 @@ export const ProductProvider = ({ children }) => {
                 products: prods,
                 total: cartTotal
             }
-            const response = await api.post(`${url}/orders`, order)
-            postCorrect(response.data.message)
-            console.log(order)
-            setCartOrder([])
+            try {
+                const response = await api.post(`${url}/orders`, order)
+                postCorrect(response.data.message)
+                console.log(order)
+                setCartOrder([])
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            throw new Error(Swal.fire({
+                icon: "error",
+                title: "Error",
+                titleText: "Para realizar una compra debe ingresar con su cuenta",
+                showConfirmButton: true,
+                confirmButtonText: "Ingresar",
+                background: "#0E1014",
+                color: "#DCDEDF"
+            }).then(res =>{
+                if(res.isConfirmed){
+                    navigate("/login")
+                }
+            })
+        );
+            
         }
     }
     useEffect(() => {
@@ -371,9 +393,10 @@ export const ProductProvider = ({ children }) => {
             console.log(error)
         }
     }
-    async function getCarouselItems({ page = 0, limit = 100 }) {
+    async function getCarouselItems({ page = 0, limit = 100, name }) {
         try {
-            const response = await axios.get(`${url}/carouselItems`)
+            const nameQuery = name ? `&name=${name}` : ''
+            const response = await axios.get(`${url}/carouselItems?page=${page}&limit=${limit}${nameQuery}`)
             setCarouselItems(response.data.items)
             setTotalCarouselItems(response.data.total)
         } catch (error) {
@@ -495,10 +518,114 @@ export const ProductProvider = ({ children }) => {
         e.preventDefault();
         window.location.href = e.currentTarget.href;
     }
+    const sortTable = (value, operation, e, type) => {
+        console.dir(e.target)
+        console.log(value)
+        if(type === "product"){
+            if (value === "productName") {
+                if (operation === "asc") {
+                    const sortProduct = product.sort((a, b) => b[value].localeCompare(a[value]))
+                    e.target.classList = "display-off"
+                    e.target.nextSibling.classList = "sort-button"
+                    setProduct([...sortProduct])
+                }
+                if (operation === "desc") {
+                    e.target.classList = "display-off"
+                    e.target.previousSibling.classList = "sort-button"
+                    const sortProduct = product.sort((a, b) => a[value].localeCompare(b[value]))
+                    setProduct([...sortProduct])
+                }
+            } else {
+                if (operation === "asc") {
+                    const sortProduct = product.sort((a, b) => b[value] - a[value])
+                    e.target.classList = "display-off"
+                    e.target.nextSibling.classList = "sort-button"
+                    setProduct([...sortProduct])
+                }
+                if (operation === "desc") {
+                    e.target.classList = "display-off"
+                    e.target.previousSibling.classList = "sort-button"
+                    const sortProduct = product.sort((a, b) => a[value] - b[value])
+                    setProduct([...sortProduct])
+                }
+            }
+        }
+        if(type === "tag"){
+            if (operation === "asc") {
+                const sortProduct = tags.sort((a, b) => b[value].localeCompare(a[value]))
+                e.target.classList = "display-off"
+                e.target.nextSibling.classList = "sort-button"
+                setTags([...sortProduct])
+            }
+            if (operation === "desc") {
+                e.target.classList = "display-off"
+                e.target.previousSibling.classList = "sort-button"
+                const sortProduct = tags.sort((a, b) => a[value].localeCompare(b[value]))
+                setTags([...sortProduct])
+            }
+        }
+        if(type === "carousel"){
+            if (operation === "asc") {
+                const sortProduct = carouselItems.sort((a, b) => b[value].localeCompare(a[value]))
+                e.target.classList = "display-off"
+                e.target.nextSibling.classList = "sort-button"
+                setTags([...sortProduct])
+            }
+            if (operation === "desc") {
+                e.target.classList = "display-off"
+                e.target.previousSibling.classList = "sort-button"
+                const sortProduct = carouselItems.sort((a, b) => a[value].localeCompare(b[value]))
+                setTags([...sortProduct])
+            }
+        }
+        if(type === "users"){
+            if (operation === "asc") {
+                const sortProduct = users.sort((a, b) => b[value].localeCompare(a[value]))
+                e.target.classList = "display-off"
+                e.target.nextSibling.classList = "sort-button"
+                setTags([...sortProduct])
+            }
+            if (operation === "desc") {
+                e.target.classList = "display-off"
+                e.target.previousSibling.classList = "sort-button"
+                const sortProduct = users.sort((a, b) => a[value].localeCompare(b[value]))
+                setTags([...sortProduct])
+            }
+        }
+        if(type === "orders"){
+            if(value === "total" || value === "createdAt"){
+                if (operation === "asc") {
+                    const sortProduct = orders.sort((a, b) => b[value] - a[value])
+                    e.target.classList = "display-off"
+                    e.target.nextSibling.classList = "sort-button"
+                    setProduct([...sortProduct])
+                }
+                if (operation === "desc") {
+                    e.target.classList = "display-off"
+                    e.target.previousSibling.classList = "sort-button"
+                    const sortProduct = orders.sort((a, b) => a[value] - b[value])
+                    setProduct([...sortProduct])
+                }
+            } else {
+                if (operation === "asc") {
+                    const sortProduct = orders.sort((a, b) => b[value].localeCompare(a[value]))
+                    e.target.classList = "display-off"
+                    e.target.nextSibling.classList = "sort-button"
+                    setTags([...sortProduct])
+                }
+                if (operation === "desc") {
+                    e.target.classList = "display-off"
+                    e.target.previousSibling.classList = "sort-button"
+                    const sortProduct = orders.sort((a, b) => a[value].localeCompare(b[value]))
+                    setTags([...sortProduct])
+                }
+            }
+        }
+    }
     return (
         <ProductContext.Provider value={{
-            product, users, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
-            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts, totalUsers, totalTags, orders, totalOrders, getOrders, carouselItems, totalCarouselItems, getCarouselItems, postCarouselItem
+            product, setProduct, users, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts, totalUsers, totalTags, orders, totalOrders, getOrders, carouselItems, totalCarouselItems, getCarouselItems, postCarouselItem, sortTable
         }}>
             {children}
         </ProductContext.Provider>

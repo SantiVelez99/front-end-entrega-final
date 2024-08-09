@@ -7,10 +7,11 @@ import { useState } from 'react'
 import Modal from '../../layout/modal/Modal'
 import Register from '../register/Register'
 import Pagination from '../../components/pagination/Pagination'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 export default function AdminUsers() {
 
-    const { users, getUsers, deleteConfirm, editMockData, editObj, baseURL, totalUsers } = useProduct()
+    const { users, getUsers, deleteConfirm, editMockData, editObj, baseURL, totalUsers, sortTable } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     console.log(users)
     function handleModalOpen() {
@@ -30,8 +31,14 @@ export default function AdminUsers() {
                         <thead>
                             <tr>
                                 <th>Imagen</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
+                                <th>Nombre
+                                <button type='button' className='sort-button' onClick={(e) => sortTable("userName", "asc", e, "users")}><FontAwesomeIcon className='icon' icon={faChevronDown} /></button>
+                                <button type='button' className='display-off' onClick={(e) => sortTable("userName", "desc", e, "users")}><FontAwesomeIcon className='icon' icon={faChevronUp} /></button>
+                                </th>
+                                <th>Email
+                                <button type='button' className='sort-button' onClick={(e) => sortTable("userEmail", "asc", e, "users")}><FontAwesomeIcon className='icon' icon={faChevronDown} /></button>
+                                <button type='button' className='display-off' onClick={(e) => sortTable("userEmail", "desc", e, "users")}><FontAwesomeIcon className='icon' icon={faChevronUp} /></button>
+                                </th>
                                 <th>Fecha de nacimiento</th>
                                 <th>Nacionalidad</th>
                                 <th>Acciones</th>

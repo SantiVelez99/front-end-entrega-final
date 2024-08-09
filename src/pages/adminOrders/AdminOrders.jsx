@@ -1,12 +1,12 @@
 import { useProduct } from "../../context/ProductContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { faCaretUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretUp, faChevronDown, faChevronUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import DateFormat from "../../utilities/dateFormat/DateFormat";
 import Pagination from "../../components/pagination/Pagination";
 
 export default function AdminOrders() {
-    const { deleteConfirm, getOrders, totalOrders, orders } = useProduct()
+    const { deleteConfirm, getOrders, totalOrders, orders, sortTable } = useProduct()
     function showOrder(e) {
         e.target.classList = "display-off"
         e.target.parentElement.children[1].classList = "close-order-icon"
@@ -28,11 +28,23 @@ export default function AdminOrders() {
                         <table className="users-table">
                             <thead>
                                 <tr>
-                                    <th>Usuario</th>
-                                    <th>Email</th>
+                                    <th>Usuario
+                                    <button type='button' className='sort-button' onClick={(e) => sortTable("userName", "asc", e, "orders")}><FontAwesomeIcon className='icon' icon={faChevronDown} /></button>
+                                    <button type='button' className='display-off' onClick={(e) => sortTable("userName", "desc", e, "orders")}><FontAwesomeIcon className='icon' icon={faChevronUp} /></button>
+                                    </th>
+                                    <th>Email
+                                    <button type='button' className='sort-button' onClick={(e) => sortTable("userEmail", "asc", e, "orders")}><FontAwesomeIcon className='icon' icon={faChevronDown} /></button>
+                                    <button type='button' className='display-off' onClick={(e) => sortTable("userEmail", "desc", e, "orders")}><FontAwesomeIcon className='icon' icon={faChevronUp} /></button>
+                                    </th>
                                     <th>Orden</th>
-                                    <th>Total</th>
-                                    <th>Fecha de compra</th>
+                                    <th>Total
+                                    <button type='button' className='sort-button' onClick={(e) => sortTable("total", "asc", e, "orders")}><FontAwesomeIcon className='icon' icon={faChevronDown} /></button>
+                                    <button type='button' className='display-off' onClick={(e) => sortTable("total", "desc", e, "orders")}><FontAwesomeIcon className='icon' icon={faChevronUp} /></button>
+                                    </th>
+                                    <th>Fecha de compra
+                                    <button type='button' className='sort-button' onClick={(e) => sortTable("createdAt", "asc", e, "orders")}><FontAwesomeIcon className='icon' icon={faChevronDown} /></button>
+                                    <button type='button' className='display-off' onClick={(e) => sortTable("createdAt", "desc", e, "orders")}><FontAwesomeIcon className='icon' icon={faChevronUp} /></button>
+                                    </th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>

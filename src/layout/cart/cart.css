@@ -1,5 +1,5 @@
 .cart-modal {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     position: fixed;
     z-index: 4;
@@ -9,7 +9,7 @@
 
 .cart-container {
     padding: 8px;
-    height: 100vh;
+    height: 100%;
     background-color: var(--backGroundColor);
     position: fixed;
     right: 0px;

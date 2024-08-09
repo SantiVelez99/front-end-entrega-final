@@ -23,6 +23,9 @@
   background-color: var(--backGroundColor);
   width: 100%;
   min-height: 100vh;
+  background-image: url('/src/assets/360_F_341837613_fWX1hwosoqYsEcKFGEX0Zsoc0m07qAiM.jpg');
+  background-size: auto;
+  /* background-repeat: no-repeat; */
   .main-header{
     width: 100%;
     background-color: var(--navColor);
