@@ -12,6 +12,9 @@ export default function Login() {
 
     return (
         <main className='main-container' id='loginForm'>
+            <div className="underline">
+                <h1 className='section-title'>Ingresa con tu cuenta</h1>
+            </div>
             <div className="login-form">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input-container">
@@ -26,7 +29,9 @@ export default function Login() {
                         {errors.userPassword?.type === "required" && (<span className='input-error'>El campo es requerido</span>)}
                         {errors.userPassword?.type === "maxLength" && (<span className='input-error'>La cantidad de caracteres es invalida</span>)}
                     </div>
-                    <button className='form-btn' type='submit'>Ingresar</button>
+                    <div className="input-container">
+                    <button type='submit'>Ingresar</button>
+                    </div>
                 </form>
             </div>
         </main>

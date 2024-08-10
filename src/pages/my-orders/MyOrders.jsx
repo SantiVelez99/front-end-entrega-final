@@ -24,10 +24,20 @@ export default function MyOrders() {
         console.log(response.data)
     }
     useEffect(() => {
-        getOrdersByUserID()
+        getOrdersByUserID({})
         console.log(orders)
     }, [])
-    return (
+
+    if(orders.length === 0 ) return(
+        <>
+        <div className="main-container">
+            <div className="my-orders">
+                <h1 className="order-title">Aun no has realizado ninguna compra</h1>
+            </div>
+        </div>
+        </>
+    )
+    if(orders.length > 0) return (
         <div className="main-container">
             <h1>Mis Ordenes</h1>
             <div className="my-orders">

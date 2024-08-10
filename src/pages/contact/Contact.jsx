@@ -1,15 +1,67 @@
 import { useForm } from 'react-hook-form'
 import './contact.css'
+import Swal from 'sweetalert2';
+import { useProduct } from '../../context/ProductContext';
+import axios from 'axios';
+import { success } from 'toastr';
 
 export default function Contact() {
-
-    const { register, handleSubmit, formState:{errors} } = useForm()
+    const { url } = useProduct() 
+    const { register, handleSubmit, formState:{errors}, reset } = useForm()
 
     const onSubmit = data => {
+        if(data.contactImages.length > 3){
+            throw new Error(Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Limite de imagenes superado (maximo 3)",
+                timer: 3000,
+                background: "#0E1014",
+                color: "#DCDEDF",
+            }));
+        }
         data.id = crypto.randomUUID()
         data.contactDate = new Date().getTime()
         console.log(data)
+        const formData = new FormData()
+        for(let i = 0; i < data.contactImages.length; i++){
+            formData.append(`contactImages`, data.contactImages[i])
+        }
+        formData.append("fullName", data.fullName)
+        formData.append("email", data.email)
+        formData.append("message", data.message)
+        try {
+            postContact(formData)
+        } catch (error) {
+            console.log(error)
+        }
+
+
     } 
+
+    async function postContact(obj){
+        try {
+            const response = await axios.post(`${url}/contact`, obj)
+            if(!response){
+                return Swal.fire({
+                    icon: "error",
+                    titleText: "Error al enviar su ticket",background: "#0E1014",
+                    color: "#DCDEDF",
+                })
+            }
+            Swal.fire({
+                icon: "success",
+                titleText: "Ticket enviado correctamente!",background: "#0E1014",
+                color: "#DCDEDF",
+            })
+            reset()
+        } catch (error) {
+            console.log(error)
+            Swal.fire({
+                icon:"error"
+            })
+        }
+    }
 
     return (
         <main className="main-container" id='contactContainer'>
@@ -37,8 +89,8 @@ export default function Contact() {
                         {errors.message?.type ==="maxLength" && (<span className='input-error'>Cantidad de caracteres invalida</span>)}
                     </div>
                     <div className="input-container">
-                        <label className="form-label">Adjutar imagen(opcional):</label>
-                        <input type="file" className="form-input" accept="image/*" {...register("picture")}/>
+                        <label className="form-label">Adjutar imagen/s (opcional, max 3):</label>
+                        <input type="file" className="form-input" accept="image/*" multiple {...register("contactImages")}/>
                     </div>
                     <div className="input-container"><button className="form-button" type="submit">Enviar</button></div>
                 </form>

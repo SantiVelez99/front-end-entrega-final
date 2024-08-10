@@ -23,6 +23,7 @@ export const UserProvider = ({ children }) => {
             console.log(response.data)
             setUser(response.data.user)
             setToken(response.data.token)
+            console.log(user)
             Swal.fire({
                 title: response.data.message,
                 icon: "success",

@@ -5,11 +5,22 @@ import { useForm } from 'react-hook-form';
 import { formatTimeStampToInputDate } from '../../utilities/formatTStampToInput/formatTStampToInput';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Swal from 'sweetalert2';
 export default function AdminProductForm({ handleModalClose, editObj }) {
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
     const { postProduct, tags, getTags } = useProduct()
     const [ tagList, setTagList ] = useState([])
     const onSubmit = data => {
+        if(data.contactImages.length > 4){
+            throw new Error(Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Limite de imagenes superado (maximo 3)",
+                timer: 3000,
+                background: "#0E1014",
+                color: "#DCDEDF",
+            }));
+        }
         console.log(data)
         data.productPrice = +data.productPrice
         data.productDate = new Date(data.productDate).getTime()
@@ -203,7 +214,6 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                     </div>
                     <button type='button' className='switch-button right' title='A 2/4' onClick={(e) => switchSection(e, "section2")}><FontAwesomeIcon className='btn-icon' icon={faCaretRight} /></button>
                 </div>
-
                 <div id="section2" className="section">
                     <button type='button' className='switch-button left' title='A 1/4' onClick={(e) => switchSection(e, "section1")}><FontAwesomeIcon className='btn-icon' icon={faCaretLeft} /></button>
                     <div className="input-container">

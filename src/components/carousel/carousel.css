@@ -12,7 +12,7 @@
         animation: fadeOut 1.25s ease-in-out;
         .item-image {
             text-align: center;
-            object-fit: fill;
+            object-fit: cover;
             cursor: pointer;
             img {
                 width: 100%;
@@ -96,22 +96,32 @@
 @media screen and (width <=768px) {
     .carousel-container {
         .carousel-item {
-            height: 360px;
+            height: 400px;
         }
     }
 }
 
 @media screen and (width <=425px) {
+    .carousel-container {
+        .carousel-item {
+            height: 230px;
+        }
+    }
     .item-text {
-        .item-title {
-            font-size: 1.5rem;
+        display: none;
         }
 
         .item-desc {
-            font-size: .8rem !important;
+            display: none;
         }
     }
 
+@media screen and (width <= 375px){
+    .carousel-container {
+        .carousel-item {
+            height: 200px;
+        }
+    }
 }
 
 @keyframes fadeOut {

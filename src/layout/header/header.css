@@ -266,6 +266,7 @@
     padding: .5rem;
     .close-list-icon {
         position: absolute;
+        cursor: pointer;
         color: var(--fontColor);
         top: 5px;
         right: 5px;
@@ -293,8 +294,8 @@ body:has(.check-menu:checked) {
 
 @media screen and (width > 1280px) {
     #admin-list {
-        top: 90px;
-        right: 25%;
+        top: 230px;
+        left:70%
     }
 
     .header-container {

@@ -8,14 +8,14 @@
     flex-direction: column;
     align-items: center;
     .search-form {
+        position: absolute;
+        top: -30px;
+        right: 5px;
         form {
             display: flex;
             align-items: center;
         }
 
-        position: absolute;
-        top: -30px;
-        right: 5px;
 
         .search-input {
             height: 30px;
@@ -88,5 +88,13 @@
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
+    }
+}
+@media screen and (width <= 425px){
+    .gallery-title{
+        font-size: 1.75rem;
+    }
+    .search-form{
+        top: 60px !important;
     }
 }

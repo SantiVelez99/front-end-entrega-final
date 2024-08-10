@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 .login-form{
     display: flex;
@@ -12,11 +13,26 @@
     margin: 2rem;
     background-color: var(--greyColor);
     border-radius: 10%;
+    border: 1px solid var(--fontColor);
     form{
         flex: 1;
     }
+    .form-input{
+        border: 1px solid var(--navColor) !important;
+    }
     button{
-        margin-top: 2rem;
-        margin-left: 2.5rem;
+        width: 100%;
+        border: 2px solid var(--navColor);
+        outline: none;
+        font-size: 1.25rem;
+        margin-top: .5rem;
+        border-radius: 10px;
+        padding: .25rem;
+        cursor: pointer;
+        &:hover{
+            color: var(--fontColor);
+            background-color: var(--navColor);
+            border-color: var(--fontColor);
+        }
     }
 }

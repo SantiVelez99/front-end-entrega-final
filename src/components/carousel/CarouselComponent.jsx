@@ -6,12 +6,12 @@ import { useProduct } from '../../context/ProductContext'
 import { useEffect, useState } from 'react'
 
 export default function CarouselComponent() {
-    const { carouselItems, totalCarouselItems, getCarouselItems, baseURL } = useProduct()
+    const { carouselItems, setCarouselActiveItems, carouselActiveItems, getCarouselItems, baseURL } = useProduct()
     const [timer, setTimer] = useState(0)
     function btnCarousel(id) {
         const items = Array.from(document.getElementsByClassName("carousel-item"))
-        id < 0 ? id = totalCarouselItems - 1 : id
-        id >= totalCarouselItems ? id = 0 : id
+        id < 0 ? id = carouselActiveItems.length - 1 : id
+        id >= carouselActiveItems.length ? id = 0 : id
         items.forEach((item) => {
             if (item.id == id) {
                 item.className = "carousel-item active"
@@ -23,29 +23,34 @@ export default function CarouselComponent() {
     useEffect(() => {
         getCarouselItems({})
     }, [])
+    useEffect(() =>{
+        activeItems(carouselItems)
+    }, [carouselItems])
 
     useEffect(() => {
         const carouselLoop = () => {
             setTimer((prevContador) => prevContador + 1)
-            // clickCarousel()
             const activeItem = Array.from(document.getElementsByClassName('carousel-item active'))
             btnCarousel(parseInt(activeItem[0].id) + 1)
         }
 
-        const intervalId = setInterval(carouselLoop, 5000)
+        const intervalId = setInterval(carouselLoop, 7000)
 
         return () => clearInterval(intervalId)
     }, [timer])
 
-    // function clickCarousel(){
-    //     const activeItem = Array.from(document.getElementsByClassName('carousel-item active'))
-    //     btnCarousel(parseInt(activeItem[0].id) + 1)
-    // }
-
+    function activeItems(array) {
+        array.forEach(item => {
+            if(item.active === true && !carouselActiveItems.some(citem => citem._id === item._id)) {
+                setCarouselActiveItems([...carouselActiveItems, item])
+            }
+        })
+        console.log(carouselActiveItems)
+    }
     return (
         <div className="carousel-container">
             {
-                carouselItems.map((item, i) => {
+                carouselActiveItems.map((item, i) => {
                     return (
                         <div className={i === 0 ? "carousel-item active" : "carousel-item unactive"} id={i} key={item._id}>
                             <button className="carousel-btn left" onClick={() => btnCarousel(i - 1)}><FontAwesomeIcon className="btn-icon" icon={faAngleLeft} /></button>

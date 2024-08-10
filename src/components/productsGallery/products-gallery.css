@@ -4,6 +4,7 @@
     margin: 0 auto;
 
     .gallery-title {
+        text-align: start;
         width: 100%;
         margin: 1rem;
         color: var(--fontColor);

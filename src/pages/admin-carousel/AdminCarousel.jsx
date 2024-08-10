@@ -1,17 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useProduct } from '../../context/ProductContext'
 import Modal from '../../layout/modal/Modal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons'
+import { faCircleQuestion, faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import AdminCarouselForm from '../../components/adminCarouselForm/AdminCarouselForm'
 import Pagination from '../../components/pagination/Pagination'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import useApi from '../../services/interceptor/interceptor'
+import toastr from 'toastr'
+import Swal from 'sweetalert2'
 
 export default function AdminCarousel() {
 
-    const { setEditObj, editObj, getCarouselItems, carouselItems, totalCarouselItems, baseURL, editMockData, deleteConfirm, sortTable } = useProduct()
+    const { setEditObj, editObj, getCarouselItems, carouselItems, totalCarouselItems, baseURL, editMockData, deleteConfirm, sortTable, setCarouselActiveItems, carouselActiveItems, url } = useProduct()
+    const api = useApi()
     const [ isOpen, setIsOpen ] = useState(false)
-
     function handleModalOpen() {
         setIsOpen(true)
     }
@@ -19,6 +22,38 @@ export default function AdminCarousel() {
         setIsOpen(false)
         setEditObj([""])
     }
+
+    function activeItems(array) {
+        array.forEach(item => {
+            if(item.active === true && !carouselActiveItems.some(citem => citem._id === item._id)) {
+                setCarouselActiveItems([...carouselActiveItems, item])
+            }
+        })
+    }
+
+    async function editActive(id, value){
+        try {
+            const object = {
+                active: value
+            }
+            const response = await api.put(`${url}/carouselItems/${id}`, object)
+            toastr.options = {
+                progressBar: true,
+                positionClass: "toast-bottom-center",
+                timeOut: "2000"
+            }
+            toastr.success(`${response.data.message}`)
+            getCarouselItems({})
+        } catch (error) {
+            console.log(error)
+            Swal.fire("error", "Error al editar")
+        }
+    }
+
+    useEffect(() => {
+        activeItems(carouselItems)
+    }, [carouselItems])
+
     return (
         <>
             <div className='main-container'>
@@ -35,6 +70,7 @@ export default function AdminCarousel() {
                                 <button type='button' className='display-off' onClick={(e) => sortTable("title", "desc", e, "carousel")}><FontAwesomeIcon className='icon' icon={faChevronUp} /></button>
                                 </th>
                                 <th>Descripcion</th>
+                                <th>Activo <FontAwesomeIcon title='Si la casilla esta desactivada, se excluira al item del carousel de home' icon={faCircleQuestion} /></th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -50,6 +86,9 @@ export default function AdminCarousel() {
                                                 {item.title}
                                             </td>
                                             <td>{item.description}</td>
+                                            <td>
+                                                <input type="checkbox" name="active" defaultChecked={item.active} onChange={(e) => editActive(item._id, e.target.checked)}/>
+                                            </td>
                                             <td className="actions">
                                                 <button type="button" className="edit-button" onClick={() => {
                                                     handleModalOpen(editMockData("carousel", item._id))

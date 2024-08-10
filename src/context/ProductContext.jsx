@@ -35,6 +35,7 @@ export const ProductProvider = ({ children }) => {
     const [totalOrders, setTotalOrders] = useState(0)
     const [carouselItems, setCarouselItems] = useState([])
     const [totalCarouselItems, setTotalCarouselItems] = useState(0)
+    const [ carouselActiveItems, setCarouselActiveItems ] = useState([])
 
 
     // *FAVLIST
@@ -209,9 +210,6 @@ export const ProductProvider = ({ children }) => {
             const response = await axios.get(`${url}/products?page=${page}&limit=${limit}${tagQuery}${nameQuery}`)
             setProduct(response.data.products)
             setTotalProducts(response.data.total)
-            console.log(page)
-            console.log(limit)
-            console.log(totalProducts)
         } catch (error) {
             console.log(error)
         }
@@ -625,7 +623,7 @@ export const ProductProvider = ({ children }) => {
     return (
         <ProductContext.Provider value={{
             product, setProduct, users, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
-            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts, totalUsers, totalTags, orders, totalOrders, getOrders, carouselItems, totalCarouselItems, getCarouselItems, postCarouselItem, sortTable
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts, totalUsers, totalTags, orders, totalOrders, getOrders, carouselItems, totalCarouselItems, getCarouselItems, postCarouselItem, sortTable, carouselActiveItems, setCarouselActiveItems
         }}>
             {children}
         </ProductContext.Provider>
