@@ -10,7 +10,8 @@ export default function CarouselComponent() {
     const [timer, setTimer] = useState(0)
     function btnCarousel(id) {
         const items = Array.from(document.getElementsByClassName("carousel-item"))
-        id < 0 ? id = carouselActiveItems.length : id
+        console.log(carouselActiveItems.length)
+        id < 0 ? id = carouselActiveItems.length - 1 : id
         id >= carouselActiveItems.length ? id = 0 : id
         items.forEach((item) => {
             if (item.id == id) {
@@ -50,7 +51,7 @@ export default function CarouselComponent() {
     return (
         <div className="carousel-container">
             {
-                carouselActiveItems.map((item, i) => {
+                carouselActiveItems.map((item, i = 0) => {
                     return (
                         <div className={i === 0 ? "carousel-item active" : "carousel-item unactive"} id={i} key={item._id}>
                             <button className="carousel-btn left" onClick={() => btnCarousel(i - 1)}><FontAwesomeIcon className="btn-icon" icon={faAngleLeft} /></button>
