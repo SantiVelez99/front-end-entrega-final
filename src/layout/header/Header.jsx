@@ -67,6 +67,7 @@ export default function Header() {
                         <li className='nav-item'><NavLink to="/admin-carousel" onClick={() => burguerMenu()}>Admin Carousel</NavLink></li>
                         <li className='nav-item'><NavLink to="/admin-users" onClick={() => burguerMenu()}>Admin Users</NavLink></li>
                         <li className='nav-item'><NavLink to="/admin-orders" onClick={() => burguerMenu()}>Admin Orders</NavLink></li>
+                        <li className='nav-item'><NavLink to="/admin-tickets" onClick={() => burguerMenu()}>Admin Tickets</NavLink></li>
                     </ul>
                 </div>
                 <div className="header-container">
@@ -86,6 +87,7 @@ export default function Header() {
                             <FontAwesomeIcon icon={faSortDown} />
                             <ul id='user-menu' className='display-off'>
                                 <li className='nav-item'><NavLink  to="/my-orders">Mis Compras</NavLink></li>
+                                <li className='nav-item'><NavLink  to="/my-tickets">Mis Consultas</NavLink></li>
                                 <li className='nav-item' onClick={() => logOut()}><NavLink>Cerrar sesión</NavLink></li>
                             </ul>
                         </div>

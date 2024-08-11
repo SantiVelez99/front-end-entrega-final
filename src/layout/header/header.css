@@ -294,7 +294,7 @@ body:has(.check-menu:checked) {
 
 @media screen and (width > 1280px) {
     #admin-list {
-        top: 230px;
+        top: 250px;
         left:70%
     }
 

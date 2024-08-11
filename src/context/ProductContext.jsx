@@ -36,6 +36,8 @@ export const ProductProvider = ({ children }) => {
     const [carouselItems, setCarouselItems] = useState([])
     const [totalCarouselItems, setTotalCarouselItems] = useState(0)
     const [ carouselActiveItems, setCarouselActiveItems ] = useState([])
+    const [tickets, setTickets] = useState([])
+    const [totalTickets, setTotalTickets] = useState(0)
 
 
     // *FAVLIST
@@ -427,6 +429,8 @@ export const ProductProvider = ({ children }) => {
             console.log(error)
         }
     }
+
+
     // *FIN AXIOS
 
     // !SWAL
@@ -517,8 +521,6 @@ export const ProductProvider = ({ children }) => {
         window.location.href = e.currentTarget.href;
     }
     const sortTable = (value, operation, e, type) => {
-        console.dir(e.target)
-        console.log(value)
         if(type === "product"){
             if (value === "productName") {
                 if (operation === "asc") {
@@ -619,11 +621,41 @@ export const ProductProvider = ({ children }) => {
                 }
             }
         }
+        if(type === 'tickets'){
+            if(value === "fullName" || value === "email"){
+                if (operation === "asc") {
+                    const sortProduct = tickets.sort((a, b) => b[value].localeCompare(a[value]))
+                    e.target.classList = "display-off"
+                    e.target.nextSibling.classList = "sort-button"
+                    setTags([...sortProduct])
+                }
+                if (operation === "desc") {
+                    e.target.classList = "display-off"
+                    e.target.previousSibling.classList = "sort-button"
+                    const sortProduct = tickets.sort((a, b) => a[value].localeCompare(b[value]))
+                    setTags([...sortProduct])
+                }
+            }
+            if(value === "createdAt"){
+                if (operation === "asc") {
+                    const sortProduct = tickets.sort((a, b) => b[value] - a[value])
+                    e.target.classList = "display-off"
+                    e.target.nextSibling.classList = "sort-button"
+                    setProduct([...sortProduct])
+                }
+                if (operation === "desc") {
+                    e.target.classList = "display-off"
+                    e.target.previousSibling.classList = "sort-button"
+                    const sortProduct = tickets.sort((a, b) => a[value] - b[value])
+                    setProduct([...sortProduct])
+                }
+            }
+        }
     }
     return (
         <ProductContext.Provider value={{
             product, setProduct, users, editObj, isClosed, cartOrder, cartTotal, cartCount, isOpen, favList, handleReload, favStar, handleFavList, addToFavList, addToCart, handleChangeQuantity, removeListItem,
-            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts, totalUsers, totalTags, orders, totalOrders, getOrders, carouselItems, totalCarouselItems, getCarouselItems, postCarouselItem, sortTable, carouselActiveItems, setCarouselActiveItems
+            handleCartClose, setEditObj, getProducts, postProduct, getUsers, postUser, deleteConfirm, editMockData, baseURL, url, tags, getTags, postTag, checkOut, totalProducts, totalUsers, totalTags, orders, totalOrders, getOrders, carouselItems, totalCarouselItems, getCarouselItems, postCarouselItem, sortTable, carouselActiveItems, setCarouselActiveItems, tickets, totalTickets, setTickets, setTotalTickets
         }}>
             {children}
         </ProductContext.Provider>

@@ -14,6 +14,8 @@ import UserGuard from './services/guard/UserGuard'
 import AdminOrders from './pages/adminOrders/AdminOrders'
 import MyOrders from './pages/my-orders/MyOrders'
 import AdminCarousel from './pages/admin-carousel/AdminCarousel'
+import AdminTicket from './pages/adminTickets/AdminTicket'
+import MyTickets from './pages/my-tickets/MyTickets'
 
 function App() {
 
@@ -28,6 +30,7 @@ function App() {
         <Route path='/about-us' element={<AboutUs />} />
         <Route path='/product-detail/:id' element={<ProductDetail />} />
         <Route path='/my-orders' element={<MyOrders />}></Route>
+        <Route path='/my-tickets' element={<MyTickets />}></Route>
         <Route path='/admin-product' element={
           <UserGuard>
             <AdminProducts />
@@ -48,6 +51,11 @@ function App() {
         <Route path='/admin-carousel' element={
           <UserGuard>
             <AdminCarousel />
+          </UserGuard>
+        } />
+        <Route path='/admin-tickets' element={
+          <UserGuard>
+            <AdminTicket />
           </UserGuard>
         } />
         <Route path='*' element={<NotFound />} />

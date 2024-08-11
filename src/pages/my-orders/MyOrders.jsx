@@ -39,7 +39,7 @@ export default function MyOrders() {
     )
     if(orders.length > 0) return (
         <div className="main-container">
-            <h1>Mis Ordenes</h1>
+            <h1 className="order-title">Mis Ordenes</h1>
             <div className="my-orders">
                 {
                     orders.map(order => {

@@ -1,0 +1,13 @@
+.admin-ticket-container{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    .admin-ticket-image-container{
+        width: 100%;
+        overflow: hidden;
+        .admin-ticket-image{
+            width: 100%;
+        }
+    }
+
+}

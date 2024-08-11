@@ -1,0 +1,24 @@
+.my-order-item.my-tickets-item {
+    padding: .25rem;
+    max-height: 300px;
+
+    &:last-of-type {
+        max-width: 200px;
+        font-size: 1.25rem;
+
+        button {
+            outline: none;
+            border: 2px solid var(--fontColor);
+            background-color: var(--navColor);
+            color: var(--fontColor);
+            padding: .325rem;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover {
+                border: 2px solid var(--navColor);
+                background-color: var(--fontColor);
+                color: var(--galleryBgColor);
+            }
+        }
+    }
+}

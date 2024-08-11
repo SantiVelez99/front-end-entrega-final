@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './modal.css'
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-export default function Modal( {title,handleModalClose, isOpen, children} ){
+export default function Modal( {title, handleModalClose, isOpen, children} ){
     if(!isOpen) return;
     return(
             <div className="modal-overlay" onClick={handleModalClose}>

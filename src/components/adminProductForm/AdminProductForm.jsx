@@ -9,9 +9,9 @@ import Swal from 'sweetalert2';
 export default function AdminProductForm({ handleModalClose, editObj }) {
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
     const { postProduct, tags, getTags } = useProduct()
-    const [ tagList, setTagList ] = useState([])
+    const [tagList, setTagList] = useState([])
     const onSubmit = data => {
-        if(data.contactImages.length > 4){
+        if (data.contactImages.length > 4) {
             throw new Error(Swal.fire({
                 icon: "error",
                 title: "Error!",
@@ -152,7 +152,7 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
             setValue(keys[i], values[i])
         }
     }
-    function setRequirementsEdit(obj){
+    function setRequirementsEdit(obj) {
         const keys = Object.keys(obj)
         const values = Object.values(obj)
         for (let i = 0; i < keys.length; i++) {
@@ -160,8 +160,8 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
         }
     }
     function addTag(value) {
-        if(value){
-            if(!tagList.includes(value)) setTagList( [...tagList, value] )
+        if (value) {
+            if (!tagList.includes(value)) setTagList([...tagList, value])
         }
     }
     function tagListRender(id) {
