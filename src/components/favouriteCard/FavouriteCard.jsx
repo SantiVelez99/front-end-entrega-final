@@ -11,7 +11,6 @@ export default function FavouriteCard({ producto }) {
     const { baseURL, addToFavList, addToCart, handleReload } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
     const [tag, setTag] = useState()
-    console.log(producto.productTags)
     function handleModalOpen() {
         if (!isOpen) {
             setIsOpen(true)

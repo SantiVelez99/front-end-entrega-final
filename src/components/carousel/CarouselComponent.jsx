@@ -10,7 +10,6 @@ export default function CarouselComponent() {
     const [timer, setTimer] = useState(0)
     function btnCarousel(id) {
         const items = Array.from(document.getElementsByClassName("carousel-item"))
-        console.log(carouselActiveItems.length)
         id < 0 ? id = carouselActiveItems.length - 1 : id
         id >= carouselActiveItems.length ? id = 0 : id
         items.forEach((item) => {
@@ -24,10 +23,9 @@ export default function CarouselComponent() {
     useEffect(() => {
         getCarouselItems({})
     }, [])
-    useEffect(() =>{
+    useEffect(() => {
         activeItems(carouselItems)
     }, [carouselItems])
-
     useEffect(() => {
         const carouselLoop = () => {
             setTimer((prevContador) => prevContador + 1)

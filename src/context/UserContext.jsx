@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const UserContext = createContext();
@@ -8,7 +7,6 @@ export const useUser = () => useContext(UserContext)
 
 export const UserProvider = ({ children }) => {
     const url = import.meta.env.VITE_URL
-    const navigate = useNavigate()
     const [ user, setUser ] = useState(JSON.parse(localStorage.getItem("user")) || {})
     const [ token, setToken ] = useState(JSON.parse(localStorage.getItem("token")))
 
@@ -31,7 +29,7 @@ export const UserProvider = ({ children }) => {
                 color: "#DCDEDF"
             }).then(res =>{
                 if(res.isConfirmed){
-                    navigate("/")
+                    location.replace("/")
                 }
             })
         } catch (error) {
@@ -49,7 +47,7 @@ export const UserProvider = ({ children }) => {
     function logOut(){
         setUser()
         setToken()
-        navigate("/")
+        location.replace("/")
     }
     return (
         <UserContext.Provider value={{ url, user, token, logIn, logOut }}>

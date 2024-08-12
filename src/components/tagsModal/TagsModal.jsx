@@ -11,11 +11,14 @@ export default function TagsModal({tag, producto}){
     console.log(Object.keys(producto))
     const [array, setArray] = useState([])
     function filterProducts(tag){
+        let arrayFilter = []
         product.forEach(prod => {
             prod.productTags.forEach(tagProd => {
-                if(tagProd.viewValue === tag && prod._id !== producto._id) setArray([ ...array, prod ])
+                console.log(tagProd)
+                if(tagProd.viewValue === tag && prod._id !== producto._id) arrayFilter.push(prod)
             })
         })
+        setArray(arrayFilter)
     }
     useEffect(() => {
         filterProducts(tag)
@@ -27,19 +30,20 @@ export default function TagsModal({tag, producto}){
                 <h1 className='tags-gallery-title'>No se encontraron mas juegos <FontAwesomeIcon icon={faFaceFrown} /></h1>
             </div>
         )
+    } else {
+        return(
+                <div className="tags-gallery">
+                <h1 className='tags-gallery-title'>Mas Juegos de {tag}:</h1>
+                {
+                    array.map(prod =>{
+                        return(
+                            <>
+                                <TagsCard key={prod._id} producto={prod}/>
+                            </>
+                        )
+                    })
+                }
+                </div>
+        )
     }
-    return(
-            <div className="tags-gallery">
-            <h1 className='tags-gallery-title'>Mas Juegos de {tag}:</h1>
-            {
-                array.map((prod) =>{
-                    return(
-                        <>
-                        <TagsCard key={prod._id} producto={prod}/>
-                        </>
-                    )
-                })
-            }
-            </div>
-    )
 }

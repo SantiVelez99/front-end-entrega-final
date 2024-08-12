@@ -35,12 +35,58 @@ export const ProductProvider = ({ children }) => {
     const [totalOrders, setTotalOrders] = useState(0)
     const [carouselItems, setCarouselItems] = useState([])
     const [totalCarouselItems, setTotalCarouselItems] = useState(0)
-    const [ carouselActiveItems, setCarouselActiveItems ] = useState([])
+    const [carouselActiveItems, setCarouselActiveItems] = useState([])
     const [tickets, setTickets] = useState([])
     const [totalTickets, setTotalTickets] = useState(0)
-
-
+    const [favListDB, setFavListDB] = useState({})
     // *FAVLIST
+
+    async function getUserFavList(userID) {
+        try {
+            const response = await api.get(`${url}/favList/${userID}`)
+            if(response.data.list.length === 0){
+                postFavList([])
+            } else {
+                setFavList(response.data.list[0].favList)
+                setFavListDB(response.data.list[0])
+            }
+            console.log(favList)
+            console.log(favListDB)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async function updateFavList(listID, array) {
+        try {
+            console.log(favListDB._id)
+            const obj = {
+                user: user._id,
+                favList: array
+            }
+            const response = await api.put(`${url}/favList/${listID}`, obj)
+            console.log(response.data)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async function postFavList(array) {
+        try {
+            const obj = {
+                user: user._id,
+                favList: array
+            }
+            const response = await api.post(`${url}/favList`, obj)
+            console.log(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        if (user._id) {
+            getUserFavList(user._id)
+        }
+    }, [user])
 
     function addToFavList(producto) {
         const product = favList.find(prod => prod._id === producto._id)
@@ -68,8 +114,20 @@ export const ProductProvider = ({ children }) => {
         if (!isIn) return faStarEmpty
     }
     useEffect(() => {
-        localStorage.setItem("favList", JSON.stringify(favList))
+        let array = []
+        favList.forEach(item => {
+            array.push(item._id)
+        })
+        if (user._id && favListDB._id) {
+            updateFavList(favListDB._id, array)
+        }
+        else {
+            localStorage.setItem("favList", JSON.stringify(favList))
+        }
     }, [favList])
+
+
+
     // *FIN FAVLIST
 
 
@@ -187,13 +245,13 @@ export const ProductProvider = ({ children }) => {
                 confirmButtonText: "Ingresar",
                 background: "#0E1014",
                 color: "#DCDEDF"
-            }).then(res =>{
-                if(res.isConfirmed){
+            }).then(res => {
+                if (res.isConfirmed) {
                     navigate("/login")
                 }
             })
-        );
-            
+            );
+
         }
     }
     useEffect(() => {
@@ -333,9 +391,11 @@ export const ProductProvider = ({ children }) => {
     }
     async function postUser(obj) {
         const id = obj.get("id")
+        console.log(id)
         if (obj.get("userAvatar") === "false") obj.delete("userAvatar")
-        if (id !== "undefined") {
+        if (id !== "" && id !== "undefined") {
             try {
+                obj.delete("userPassword")
                 const response = await api.put(`${url}/users/${id}`, obj)
                 updateCorrectly(response.data.message)
                 getUsers({})
@@ -521,7 +581,7 @@ export const ProductProvider = ({ children }) => {
         window.location.href = e.currentTarget.href;
     }
     const sortTable = (value, operation, e, type) => {
-        if(type === "product"){
+        if (type === "product") {
             if (value === "productName") {
                 if (operation === "asc") {
                     const sortProduct = product.sort((a, b) => b[value].localeCompare(a[value]))
@@ -550,7 +610,7 @@ export const ProductProvider = ({ children }) => {
                 }
             }
         }
-        if(type === "tag"){
+        if (type === "tag") {
             if (operation === "asc") {
                 const sortProduct = tags.sort((a, b) => b[value].localeCompare(a[value]))
                 e.target.classList = "display-off"
@@ -564,7 +624,7 @@ export const ProductProvider = ({ children }) => {
                 setTags([...sortProduct])
             }
         }
-        if(type === "carousel"){
+        if (type === "carousel") {
             if (operation === "asc") {
                 const sortProduct = carouselItems.sort((a, b) => b[value].localeCompare(a[value]))
                 e.target.classList = "display-off"
@@ -578,7 +638,7 @@ export const ProductProvider = ({ children }) => {
                 setTags([...sortProduct])
             }
         }
-        if(type === "users"){
+        if (type === "users") {
             if (operation === "asc") {
                 const sortProduct = users.sort((a, b) => b[value].localeCompare(a[value]))
                 e.target.classList = "display-off"
@@ -592,8 +652,8 @@ export const ProductProvider = ({ children }) => {
                 setTags([...sortProduct])
             }
         }
-        if(type === "orders"){
-            if(value === "total" || value === "createdAt"){
+        if (type === "orders") {
+            if (value === "total" || value === "createdAt") {
                 if (operation === "asc") {
                     const sortProduct = orders.sort((a, b) => b[value] - a[value])
                     e.target.classList = "display-off"
@@ -621,8 +681,8 @@ export const ProductProvider = ({ children }) => {
                 }
             }
         }
-        if(type === 'tickets'){
-            if(value === "fullName" || value === "email"){
+        if (type === 'tickets') {
+            if (value === "fullName" || value === "email") {
                 if (operation === "asc") {
                     const sortProduct = tickets.sort((a, b) => b[value].localeCompare(a[value]))
                     e.target.classList = "display-off"
@@ -636,7 +696,7 @@ export const ProductProvider = ({ children }) => {
                     setTags([...sortProduct])
                 }
             }
-            if(value === "createdAt"){
+            if (value === "createdAt") {
                 if (operation === "asc") {
                     const sortProduct = tickets.sort((a, b) => b[value] - a[value])
                     e.target.classList = "display-off"

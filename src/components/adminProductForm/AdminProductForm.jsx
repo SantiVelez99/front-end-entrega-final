@@ -11,7 +11,7 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
     const { postProduct, tags, getTags } = useProduct()
     const [tagList, setTagList] = useState([])
     const onSubmit = data => {
-        if (data.contactImages.length > 4) {
+        if (data.productDescPictures.length > 4) {
             throw new Error(Swal.fire({
                 icon: "error",
                 title: "Error!",

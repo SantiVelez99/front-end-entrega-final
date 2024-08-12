@@ -25,7 +25,6 @@ export default function ProductsGallery() {
     const changePage = ({ selected }) => {
         setCurrentPage(selected);
     }
-    console.log(product)
     useEffect(() => {
         getProducts({ page: currentPage, limit: prodsPerPage, tag: tag })
     }, [currentPage, prodsPerPage, tag])
