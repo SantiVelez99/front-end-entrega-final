@@ -9,6 +9,7 @@ export default function CarouselComponent() {
     const { carouselItems, setCarouselActiveItems, carouselActiveItems, getCarouselItems, baseURL } = useProduct()
     const [timer, setTimer] = useState(0)
     function btnCarousel(id) {
+        activeItems(carouselItems)
         const items = Array.from(document.getElementsByClassName("carousel-item"))
         id < 0 ? id = carouselActiveItems.length - 1 : id
         id >= carouselActiveItems.length ? id = 0 : id
