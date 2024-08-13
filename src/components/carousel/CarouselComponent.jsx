@@ -24,7 +24,9 @@ export default function CarouselComponent() {
         getCarouselItems({})
     }, [])
     useEffect(() => {
+        console.log(carouselItems)
         activeItems(carouselItems)
+        console.log(carouselActiveItems)
     }, [carouselItems])
     useEffect(() => {
         const carouselLoop = () => {
