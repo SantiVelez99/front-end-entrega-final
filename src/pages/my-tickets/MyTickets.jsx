@@ -22,7 +22,6 @@ export default function MyTickets() {
             const response = await api.get(`${url}/contact/${user._id}?page=${page}&limit=${limit}`)
             setTickets(response.data.tickets)
             setTotalTickets(response.data.total)
-            console.log(tickets)
         } catch (error) {
             console.log(error)
         }
@@ -30,8 +29,7 @@ export default function MyTickets() {
 
     async function getTicketByID(id) {
         try {
-            const response = await api.get(`${url}/contact/ticket/${id}`)
-            console.log(response.data.ticket)
+            const response = await api.get(`${url}/contact/ticket/${id}`)   
             setTicket(response.data.ticket)
             handleModalClose(isOpen)
         } catch (error) {

@@ -39,7 +39,6 @@ export default function ProductsGallery() {
         e.preventDefault()
         const input = document.getElementById("name")
         setName(input.value)
-        console.log(name)
         if (name.length >= 3) {
             getProducts({ name: input.value })
         }

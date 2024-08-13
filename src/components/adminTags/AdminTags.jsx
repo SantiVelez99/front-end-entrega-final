@@ -18,7 +18,6 @@ export default function AdminTags(){
         setIsOpen(false)
         setEditObj([])
     }
-    console.log(tags)
     return(
         <>
             <div className="table-container">

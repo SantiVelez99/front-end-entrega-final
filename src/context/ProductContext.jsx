@@ -50,21 +50,17 @@ export const ProductProvider = ({ children }) => {
                 setFavList(response.data.list[0].favList)
                 setFavListDB(response.data.list[0])
             }
-            console.log(favList)
-            console.log(favListDB)
         } catch (error) {
             console.log(error)
         }
     }
     async function updateFavList(listID, array) {
         try {
-            console.log(favListDB._id)
             const obj = {
                 user: user._id,
                 favList: array
             }
-            const response = await api.put(`${url}/favList/${listID}`, obj)
-            console.log(response.data)
+            await api.put(`${url}/favList/${listID}`, obj)
 
         } catch (error) {
             console.log(error)
@@ -76,8 +72,7 @@ export const ProductProvider = ({ children }) => {
                 user: user._id,
                 favList: array
             }
-            const response = await api.post(`${url}/favList`, obj)
-            console.log(response.data)
+            await api.post(`${url}/favList`, obj)
         } catch (error) {
             console.log(error)
         }
@@ -140,7 +135,6 @@ export const ProductProvider = ({ children }) => {
     function addToCart(product) {
         const producto = cartOrder.find(prod => prod._id === product._id)
         if (producto) {
-            console.log(producto)
             handleChangeQuantity(producto._id, producto.quantity + 1)
             setCart(true)
         } else {
@@ -231,7 +225,6 @@ export const ProductProvider = ({ children }) => {
             try {
                 const response = await api.post(`${url}/orders`, order)
                 postCorrect(response.data.message)
-                console.log(order)
                 setCartOrder([])
             } catch (error) {
                 console.log(error)
@@ -391,7 +384,6 @@ export const ProductProvider = ({ children }) => {
     }
     async function postUser(obj) {
         const id = obj.get("id")
-        console.log(id)
         if (obj.get("userAvatar") === "false") obj.delete("userAvatar")
         if (id !== "" && id !== "undefined") {
             try {
@@ -446,7 +438,6 @@ export const ProductProvider = ({ children }) => {
             const nameQuery = name ? `&name=${name}` : ''
             const emailQuery = email ? `&email=${email}` : ''
             const response = await api.get(`${url}/orders?page=${page}&limit=${limit}${nameQuery}${emailQuery}`)
-            console.log(response.data)
             setOrders(response.data.orders)
             setTotalOrders(response.data.total)
         } catch (error) {

@@ -21,10 +21,8 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
                 color: "#DCDEDF",
             }));
         }
-        console.log(data)
         data.productPrice = +data.productPrice
         data.productDate = new Date(data.productDate).getTime()
-        console.log(data.productDescPictures)
         const productMinReq = {
             productSoMin: data.productSoMin,
             productCPUMin: data.productCPUMin,
@@ -74,7 +72,6 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
         let array = []
 
         if (Object.keys(editObj).length > 0) {
-            console.log(editObj)
             const keys = Object.keys(editObj);
             const values = Object.values(editObj);
             setRequirementsEdit(editObj.productMinReq)
@@ -173,7 +170,6 @@ export default function AdminProductForm({ handleModalClose, editObj }) {
     }
     function tagListRemove(id) {
         const newTagList = tagList.filter(tag => tag !== id)
-        console.log(newTagList)
         setTagList(newTagList)
     }
     return (

@@ -28,7 +28,6 @@ export default function AdminCarouselForm({ handleModalClose, editObj }) {
     }
     const onSubmit = data => {
         checkItems(data.product)
-        console.log(data)
         const formData = new FormData()
         formData.append("id", data._id)
         formData.append("title", data.title)
@@ -44,7 +43,6 @@ export default function AdminCarouselForm({ handleModalClose, editObj }) {
         }
     }
     async function setFormValues(editObj) {
-        console.log(editObj)
         if(Object.keys(editObj).length > 0) {
             const keys = Object.keys(editObj)
             const values = Object.values(editObj)

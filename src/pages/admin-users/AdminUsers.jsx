@@ -13,7 +13,6 @@ export default function AdminUsers() {
 
     const { users, getUsers, deleteConfirm, editMockData, editObj, baseURL, totalUsers, sortTable } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
-    console.log(users)
     function handleModalOpen() {
         setIsOpen(true)
     }

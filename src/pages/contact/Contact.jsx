@@ -54,7 +54,6 @@ export default function Contact() {
         }
         data.id = crypto.randomUUID()
         data.contactDate = new Date().getTime()
-        console.log(data)
         const formData = new FormData()
         for (let i = 0; i < data.contactImages.length; i++) {
             formData.append(`contactImages`, data.contactImages[i])

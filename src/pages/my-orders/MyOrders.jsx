@@ -21,11 +21,9 @@ export default function MyOrders() {
         const response = await api.get(`${url}/orders/${id}?page=${page}&limit=${limit}`)
         setOrders(response.data.orders)
         setTotal(response.data.total)
-        console.log(response.data)
     }
     useEffect(() => {
         getOrdersByUserID({})
-        console.log(orders)
     }, [])
 
     if(orders.length === 0 ) return(

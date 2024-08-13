@@ -10,7 +10,6 @@ export default function AdminTagsForm({ handleModalClose, editObj, isOpen }) {
     const { postTag, setEditObj } = useProduct()
 
     const onSubmit = data => {
-        console.log(data)
         postTag(data)
         reset()
         handleModalClose()

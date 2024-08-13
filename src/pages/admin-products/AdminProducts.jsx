@@ -14,7 +14,6 @@ import { useState } from 'react'
 export default function AdminProducts() {
     const { product, getProducts, deleteConfirm, editMockData, editObj, setEditObj, baseURL, totalProducts, sortTable } = useProduct()
     const [isOpen, setIsOpen] = useState(false)
-    console.log(product)
     function handleModalOpen() {
         setIsOpen(true)
     }

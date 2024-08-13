@@ -18,10 +18,8 @@ export const UserProvider = ({ children }) => {
     async function logIn(data) {
         try {
             const response = await axios.post(`${url}/login`, data)
-            console.log(response.data)
             setUser(response.data.user)
             setToken(response.data.token)
-            console.log(user)
             Swal.fire({
                 title: response.data.message,
                 icon: "success",

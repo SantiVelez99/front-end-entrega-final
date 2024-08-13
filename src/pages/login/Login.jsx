@@ -6,7 +6,6 @@ export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { logIn } = useUser()
     const onSubmit = data => {
-        console.log(data)
         logIn(data)
     }
 

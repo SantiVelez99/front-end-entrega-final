@@ -33,7 +33,6 @@ export default function AdminTicket() {
     async function getTicketByID(id) {
         try {
             const response = await api.get(`${url}/contact/ticket/${id}`)
-            console.log(response.data.ticket)
             setTicket(response.data.ticket)
             handleModalClose(isOpen)
         } catch (error) {

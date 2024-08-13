@@ -7,14 +7,11 @@ import { useEffect, useState } from 'react'
 
 export default function TagsModal({tag, producto}){
     const { product } = useProduct()
-    console.log(tag)
-    console.log(Object.keys(producto))
     const [array, setArray] = useState([])
     function filterProducts(tag){
         let arrayFilter = []
         product.forEach(prod => {
             prod.productTags.forEach(tagProd => {
-                console.log(tagProd)
                 if(tagProd.viewValue === tag && prod._id !== producto._id) arrayFilter.push(prod)
             })
         })

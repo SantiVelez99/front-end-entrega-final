@@ -44,7 +44,6 @@ export default function CarouselComponent() {
                 setCarouselActiveItems([...carouselActiveItems, item])
             }
         })
-        console.log(carouselActiveItems)
     }
     return (
         <div className="carousel-container">
