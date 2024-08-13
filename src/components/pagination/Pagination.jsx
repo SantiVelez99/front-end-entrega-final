@@ -47,7 +47,7 @@ export default function Pagination({ getItems, totalItems, type }) {
             />
 
             <div className="select-container">
-                <label htmlFor="prodPerPage">Productos por pagina: </label>
+                <label htmlFor="prodPerPage">Items por pagina: </label>
                 <select name="prodPerPage" id="prodPerPage" defaultValue={6} onChange={(e) => setItemsPerPage(e.target.value)}>
                     <option value={1}>1</option>
                     <option value={3}>3</option>
