@@ -27,7 +27,9 @@ export default function AdminCarouselForm({ handleModalClose, editObj }) {
         })
     }
     const onSubmit = data => {
-        checkItems(data.product)
+        if(!data._id){
+            checkItems(data.product)
+        }
         const formData = new FormData()
         formData.append("id", data._id)
         formData.append("title", data.title)
